@@ -8,8 +8,8 @@ In this reop, I implement some common and useful data structures. Do not expect 
 
 ### Prepare
 - [x] Enthusiasm
-- [ ] Clear Mind
-- [ ] Damn fast hands
+- [x] Clear Mind
+- [x] Damn fast hands
 
 ### Linear Data Structure
 - [ ] Linked List
