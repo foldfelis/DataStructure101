@@ -1,5 +1,5 @@
 using Test
-include("LinkedList.jl")
+include("../src/LinkedList.jl")
 
 #############
 # Node Test #

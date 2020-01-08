@@ -1,5 +1,28 @@
 import Base: show, push!, +
-include("node.jl")
+
+mutable struct Node
+    data::Union{Number, Nothing}
+    prev::Union{Node, Nothing}
+    next::Union{Node, Nothing}
+
+    Node(data) = new(data, nothing, nothing)
+end
+
+function show(io::IO, node::Node)
+    if node.prev != nothing
+        print("PrevNode($(node.prev.data)) => ")
+    else
+        print("Nothing => ")
+    end
+
+    print("Node($(node.data)) => ")
+
+    if node.next != nothing
+        print("NextNode($(node.next.data))")
+    else
+        print("Nothing")
+    end
+end
 
 mutable struct LinkedList
     current_node::Node
@@ -15,7 +38,7 @@ function head(ll::LinkedList)
     return node
 end
 
-function rear(ll::LinkedList)
+function tail(ll::LinkedList)
     node = ll.current_node
     while node.next != nothing
         node = node.next
