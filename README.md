@@ -13,10 +13,10 @@ In this reop, I implement some common and useful data structures. Do not expect 
 - [x] Clear Mind
 
 ### Linear Data Structure
-- [ ] Linked List
-- [ ] Stack
-- [ ] Queue
-- [ ] Circular List
+- [x] Linked List
+- [x] Stack
+- [x] Queue
+- [x] Circular List
 - [ ] Deque
 - [ ] Circular Deque
 - [ ] Priority Queue
