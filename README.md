@@ -17,7 +17,7 @@ In this reop, I implement some common and useful data structures. Do not expect 
 - [x] Stack
 - [x] Queue
 - [x] Circular List
-- [ ] Deque
+- [x] Deque
 - [ ] Circular Deque
 - [ ] Priority Queue
 - [ ] Sparse Array
