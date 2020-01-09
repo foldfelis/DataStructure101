@@ -1,4 +1,4 @@
-import Base: show
+import Base: show, push!
 
 mutable struct Queue
    data::Vector
@@ -10,9 +10,9 @@ function show(io::IO, q::Queue)
 end
 
 function pop!(q::Queue)
-   deleteat!(q.data, 1)
+   popfirst!(q.data)
 end
 
-function add!(q::Queue, d)
+function push!(q::Queue, d)
    push!(q.data, d)
 end

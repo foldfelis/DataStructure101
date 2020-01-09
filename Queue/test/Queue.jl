@@ -7,7 +7,7 @@ type_result = @test typeof(a) == Queue
 println(type_result)
 
 for i = 1:20
-    add!(a, i)
+    push!(a, i)
 end
 println(a)
 
