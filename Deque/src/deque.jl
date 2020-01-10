@@ -1,12 +1,12 @@
 import Base: show, push!, pushfirst!, pop!, popfirst!
 
-mutable struct Deque
-    data::Vector{Any}
-    Deque(d) = new([d])
+mutable struct Deque{T}
+    data::Vector{T}
+    Deque{T}(d::T) where T = new(T[d])
 end
 
 function show(io::IO, deque::Deque)
-    print("Deque($(deque.data))")
+    print(io, "Deque($(deque.data))")
 end
 
 function push!(deque::Deque, d)
