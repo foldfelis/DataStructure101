@@ -1,17 +1,19 @@
-a = Queue(0)
-println(a)
-type_result = @test typeof(a) == Queue
-println(type_result)
+@info "Initial a Queue with data '0'"
+T = Queue{Int64}
+queue = T(0)
+println("Show: $(queue)\n")
 
+@info "Type test: " @test queue isa T
+println()
+
+@info "Push test: Push data into queue 20 times by 1:20"
 for i = 1:20
-    push!(a, i)
+    push!(queue, i)
 end
-println(a)
+println("Show: $(queue)\n")
 
-pop!(a)
-println(a)
-
+@info "Pop test: Pop data from queue 5 times"
 for i = 1:5
-    pop!(a)
+    pop!(queue)
 end
-println(a)
+println("Show: $(queue)\n")
