@@ -5,6 +5,8 @@ module DataStructure101
     export
 
     # LinkedList
+    AbstractNode,
+    NullNode,
     Node,
     show,
     LinkedList,
@@ -24,12 +26,18 @@ module DataStructure101
     pop!,
 
     # Stack
-    Stack
+    Stack,
+
+    # Deque
+
+    # CircularList
+    CircularList
 
     filename = [
         "stack",
         "linkedlist",
         "queue",
+        "circularlist"
     ]
 
     for f in filename

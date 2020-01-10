@@ -5,6 +5,7 @@ filename = [
     "linkedlist",
     "stack",
     "queue",
+    "circularlist",
 ]
 
 for f in filename
@@ -12,7 +13,7 @@ for f in filename
         ###########\n
         Test '$(f)'\n
         ###########\n"
-        
+
     fname = string(f, ".jl")
     include(fname)
 end

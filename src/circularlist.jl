@@ -1,35 +1,8 @@
+mutable struct CircularList{T}
+    current_node::Node{T}
 
-import Base: show, push! ,delete!
-
-mutable struct Node
-    data::Union{Any, Nothing}
-    prev::Union{Node, Nothing}
-    next::Union{Node, Nothing}
-
-    Node(data) = new(data, nothing, nothing)
-end
-
-function show(io::IO, node::Node)
-    if node.prev != nothing
-        print("PrevNode($(node.prev.data)) => ")
-    else
-        print("Nothing => ")
-    end
-
-    print("Node($(node.data)) => ")
-
-    if node.next != nothing
-        print("NextNode($(node.next.data))")
-    else
-        print("Nothing")
-    end
-end
-
-mutable struct CircularList
-    current_node::Node
-
-    function CircularList(data)
-        node = Node(data)
+    function CircularList{T}(data::T) where T
+        node = Node{T}(data)
         node.next = node
         node.prev = node
 
@@ -63,7 +36,8 @@ function movePtr(cl::CircularList, n)
 end
 
 function push!(cl::CircularList, data)
-    node = Node(data)
+    T = typeof(data)
+    node = Node{T}(data)
     current = cl.current_node
 
     node.next = current
