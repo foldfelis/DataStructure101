@@ -1,6 +1,3 @@
-using Test
-include("../src/LinkedList.jl")
-
 #############
 # Node Test #
 #############

@@ -1,6 +1,3 @@
-using Test
-include("../src/Queue.jl")
-
 a = Queue(0)
 println(a)
 type_result = @test typeof(a) == Queue

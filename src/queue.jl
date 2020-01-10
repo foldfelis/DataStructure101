@@ -1,5 +1,3 @@
-import Base: show, push!
-
 mutable struct Queue
    data::Vector
    Queue(d) = new([d])

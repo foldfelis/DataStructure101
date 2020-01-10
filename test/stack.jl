@@ -1,6 +1,3 @@
-using Test
-include("../src/stack.jl")
-
 a = Stack(0)
 println(a)
 type_result = @test typeof(a) == Stack

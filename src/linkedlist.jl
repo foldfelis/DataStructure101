@@ -1,5 +1,3 @@
-import Base: show, push!, pushfirst!
-
 mutable struct Node
     data::Union{Any, Nothing}
     prev::Union{Node, Nothing}
@@ -170,6 +168,7 @@ function delete!(ll::LinkedList)
 
     return current_node.data
 end
+
 function delete!(ll::LinkedList, i::Int64)
     if i > 1
         movePtr2head(ll)

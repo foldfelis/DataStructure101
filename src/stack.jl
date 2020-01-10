@@ -1,5 +1,3 @@
-import Base: show, push!
-
 mutable struct Stack
     data::Vector
     Stack(d) = new([d, nothing])
