@@ -1,17 +1,19 @@
-a = Stack(0)
-println(a)
-type_result = @test typeof(a) == Stack
-println(type_result)
+@info "Initial a Stack with data '0'"
+T = Stack{Int64}
+stake = T(0)
+println("Show: $(stake)\n")
 
+@info "Type test: " @test stake isa T
+println()
+
+@info "Push test: Push data into stake 20 times by 1:20"
 for i = 1:20
-    push!(a, i)
+    push!(stake, i)
 end
-println(a)
+println("Show: $(stake)\n")
 
-pop!(a)
-println(a)
-
+@info "Pop test: Pop data from stack 5 times"
 for i = 1:5
-    pop!(a)
+    pop!(stake)
 end
-println(a)
+println("Show: $(stake)\n")

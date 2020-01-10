@@ -1,22 +1,19 @@
-mutable struct Stack
-    data::Vector
-    Stack(d) = new([d, nothing])
+mutable struct Stack{T}
+    data::Vector{T}
+    Stack{T}(d::T) where T = new(T[d])
 end
 
 function show(io::IO, s::Stack)
-    print("Stack([")
-    for i in s.data
-        if i != nothing
-            print("$(i), ")
+    print(io, "Stack([")
+    for (i, x) in enumerate(s.data)
+        print(io, "$(x)")
+        if i != length(s.data)
+            print(io, ", ")
         end
     end
-    print("end])")
+    print(io, "])")
 end
 
-function pop!(s::Stack)
-    deleteat!(s.data, 1)
-end
+pop!(s::Stack) = deleteat!(s.data, 1)
 
-function push!(s::Stack, d)
-    pushfirst!(s.data, d)
-end
+push!(s::Stack, d) = pushfirst!(s.data, d)
