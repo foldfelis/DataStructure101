@@ -28,16 +28,19 @@ module DataStructure101
     # Stack
     Stack,
 
-    # Deque
-
     # CircularList
-    CircularList
+    CircularList,
+
+    # Deque
+    Deque,
+    popfirst!
 
     filename = [
         "stack",
         "linkedlist",
         "queue",
-        "circularlist"
+        "circularlist",
+        "deque",
     ]
 
     for f in filename

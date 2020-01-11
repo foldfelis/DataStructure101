@@ -6,6 +6,7 @@ filename = [
     "stack",
     "queue",
     "circularlist",
+    "deque",
 ]
 
 for f in filename
