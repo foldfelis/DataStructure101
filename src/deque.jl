@@ -1,5 +1,3 @@
-import Base: show, push!, pushfirst!, pop!, popfirst!
-
 mutable struct Deque{T}
     data::Vector{T}
     Deque{T}(d::T) where T = new(T[d])

@@ -1,6 +1,3 @@
-using Test
-include("../src/deque.jl")
-
 @info "Initial a Deque with data '0'"
 T = Deque{Int64}
 deque = T(0)

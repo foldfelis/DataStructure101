@@ -19,17 +19,22 @@ module DataStructure101
     insert!,
     delete!,
 
-    # queue
+    # Queue
     Queue,
     pop!,
 
     # Stack
-    Stack
+    Stack,
+
+    # Deque
+    Deque,
+    popfirst!
 
     filename = [
         "stack",
         "linkedlist",
         "queue",
+        "deque"
     ]
 
     for f in filename
