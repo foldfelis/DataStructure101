@@ -35,8 +35,7 @@ function movePtr(cl::CircularList, n)
     end
 end
 
-function push!(cl::CircularList, data)
-    T = typeof(data)
+function push!(cl::CircularList{T}, data) where T
     node = Node{T}(data)
     current = cl.current_node
 

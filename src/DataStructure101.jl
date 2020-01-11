@@ -21,7 +21,7 @@ module DataStructure101
     insert!,
     delete!,
 
-    # queue
+    # Queue
     Queue,
     pop!,
 
