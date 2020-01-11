@@ -5,7 +5,8 @@ filename = [
     "linkedlist",
     "stack",
     "queue",
-    "deque"
+    "circularlist",
+    "deque",
 ]
 
 for f in filename
