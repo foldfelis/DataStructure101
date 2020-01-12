@@ -19,11 +19,12 @@ In this reop, I implement some common and useful data structures. Do not expect 
 - [x] Circular List
 - [x] Deque
 - [ ] Circular Deque
-- [ ] Priority Queue
 - [ ] Sparse Array
 
 ### Hierarchical Data Structure
-- [ ] Binary Tree
-- [ ] Heap
+- [ ] Priority Queue/Heap
+- [ ] Minmax heap
 - [ ] Trie
+
+### Indexing Data Structure
 - [ ] Hash Table
