@@ -22,11 +22,16 @@ In this reop, I implement some common and useful data structures. Do not expect 
 - [ ] Sparse Array
 
 ### Hierarchical Data Structure
+- [ ] Binary Tree
 - [ ] Priority Queue/Heap (100 days: 86)
-- [ ] Minmax heap
+- [ ] Minmax Heap
 - [ ] Trie
 
 ### Indexing Data Structure
 - [ ] Union-find structure (100 days: 41)
 - [ ] Hash Table - chaining (100 days: 71)
 - [ ] Hash Table - open addressing (100 days: 72)
+
+## Graph
+- [ ] Adjacency Matrix
+- [ ] Adjacency List
