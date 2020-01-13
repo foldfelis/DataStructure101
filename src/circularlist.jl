@@ -1,39 +1,60 @@
 mutable struct CircularList{T}
-    data::Vector{Union{T, Missing}}
+    data::Vector{T}
     length::Int64
+    limit::Int64
     head::Int64
 
     CircularList{T}(n::Int64) where T = new(
-        Vector{Union{T, Missing}}(missing, n), n, 0)
+        Vector{T}(undef, n), 0, n, 0)
 end
+
+length(cl::CircularList) = cl.length
 
 function show(io::IO, cl::CircularList{T}) where T
     head = cl.head
     length = cl.length
 
-    print(io, "CircularList{$(T)}([..., ")
+    print(io, "CircularList{$(T), $(cl.limit)}([")
 
-    for i = head:head+length-1
+    for i = head:-1:head-length+1
         index = i%length
-        if index == 0
-            index = length
+        if index < 1
+            index += length
         end
         print(io, "$(cl.data[index]), ")
     end
 
-    print(io, " ...])")
+    print(io, "])")
 end
 
-function movePtr(cl::CircularList, n::Int64)
-    length = cl.length
+function move(cl::CircularList, n::Int64)
+    limit = cl.limit
 
     cl.head += n
-    if cl.head > length
-        cl.head = cl.head%length
+    if cl.head > limit
+        cl.head = cl.head%limit
     end
 end
 
 function push!(cl::CircularList, data)
-    movePtr(cl, 1)
+    move(cl, 1)
     cl.data[cl.head] = data
+    cl.length += 1
+
+    if cl.length > cl.limit
+        cl.length = cl.limit
+    end
+end
+
+function pop!(cl::CircularList, n::Int64)
+    length = cl.length
+    index = cl.head
+
+    if n < 1 return nothing end
+
+    index -= n-1
+    if index < 1
+        index += length
+    end
+    return cl.data[index]
 end
