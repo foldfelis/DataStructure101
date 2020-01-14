@@ -31,8 +31,9 @@ function move(cl::CircularList, n::Int64)
     limit = cl.limit
 
     cl.head += n
-    if cl.head > limit
-        cl.head = cl.head%limit
+    cl.head %= limit
+    if cl.head == 0
+        cl.head = cl.limit
     end
 end
 
