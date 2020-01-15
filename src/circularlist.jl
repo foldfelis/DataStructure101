@@ -30,11 +30,10 @@ end
 function move(cl::CircularList, n::Int64)
     limit = cl.limit
 
+    cl.head -= 1 # Change to 0-based index
     cl.head += n
     cl.head %= limit
-    if cl.head == 0
-        cl.head = cl.limit
-    end
+    cl.head += 1 # Change to 1-based index
 end
 
 function push!(cl::CircularList, data)
