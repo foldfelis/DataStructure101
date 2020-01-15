@@ -1,77 +1,60 @@
 mutable struct CircularList{T}
-    current_node::Node{T}
+    data::Vector{T}
+    length::Int64
+    limit::Int64
+    head::Int64
 
-    function CircularList{T}(data::T) where T
-        node = Node{T}(data)
-        node.next = node
-        node.prev = node
-
-        return new(node)
-    end
+    CircularList{T}(n::Int64) where T = new(
+        Vector{T}(undef, n), 0, n, 0)
 end
 
-function show(io::IO, cl::CircularList)
-    print("CircularList([..., ")
+length(cl::CircularList) = cl.length
 
-    current = cl.current_node
-    while current.next != cl.current_node
-        print("$(current.data), ")
-        current = current.next
-    end
-    print("$(current.data), ...])")
-end
+function show(io::IO, cl::CircularList{T}) where T
+    head = cl.head
+    length = cl.length
 
-function movePtr(cl::CircularList, n)
-    if n > 0
-        while n != 0
-            cl.current_node = cl.current_node.next
-            n -= 1
+    print(io, "CircularList{$(T), $(cl.limit)}([")
+
+    for i = head:-1:head-length+1
+        index = i%length
+        if index < 1
+            index += length
         end
-    elseif n < 0
-        while n != 0
-            cl.current_node = cl.current_node.prev
-            n += 1
-        end
+        print(io, "$(cl.data[index]), ")
+    end
+
+    print(io, "])")
+end
+
+function move(cl::CircularList, n::Int64)
+    limit = cl.limit
+
+    cl.head -= 1 # Change to 0-based index
+    cl.head += n
+    cl.head %= limit
+    cl.head += 1 # Change to 1-based index
+end
+
+function push!(cl::CircularList, data)
+    move(cl, 1)
+    cl.data[cl.head] = data
+    cl.length += 1
+
+    if cl.length > cl.limit
+        cl.length = cl.limit
     end
 end
 
-function push!(cl::CircularList{T}, data) where T
-    node = Node{T}(data)
-    current = cl.current_node
+function pop!(cl::CircularList, n::Int64)
+    length = cl.length
+    index = cl.head
 
-    node.next = current
-    node.prev = current.prev
-    current.prev = node
-    node.prev.next = node
+    if n < 1 return nothing end
 
-    cl.current_node = node
-end
-
-function push!(cl::CircularList, data, i::Int64)
-    if i > 0    # To match the Jilia index system
-        i -= 1
+    index -= n-1
+    if index < 1
+        index += length
     end
-    movePtr(cl, i)
-
-    push!(cl, data)
-end
-
-function delete!(cl::CircularList)
-    current = cl.current_node
-
-    current.next.prev = current.prev
-    current.prev.next = current.next
-
-    cl.current_node = current.next
-
-    return current.data
-end
-
-function delete!(cl::CircularList, i::Int64)
-    if i > 0    # To match the Jilia index system
-        i -= 1
-    end
-    movePtr(cl, i)
-
-    return delete!(cl)
+    return cl.data[index]
 end
