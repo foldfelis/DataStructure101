@@ -29,7 +29,7 @@ module DataStructure101
     Stack,
 
     # CircularDeque
-    CircularDeque,
+    CircularQueue,
 
     # Deque
     Deque,
@@ -39,7 +39,7 @@ module DataStructure101
         "stack",
         "linkedlist",
         "queue",
-        "circulardeque",
+        "circularqueue",
         "deque",
     ]
 
