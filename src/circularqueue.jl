@@ -12,13 +12,9 @@ end
 length(cl::CircularQueue) = cl.length
 
 function nextindex(i::Int64, limit::Int64)
-    #=
-    To move next, head += 1 must apply,
-    yet change head to 0-based head -= 1 must apply as well,
-    therefore skiped.
-    =#
+    # to move next, i += 1 must apply, yet change i to 0-based i -= 1 must apply as well. Skiped those to reduce calculation.
     i %= limit
-    i += 1 # Change to 1-based index
+    i += 1 # change to 1-based index
 
     return i
 end
@@ -35,12 +31,12 @@ function show(io::IO, cl::CircularQueue{T}) where T
         return
     end
 
-    for i = head.-collect(1:length) # Change to 0-based index
+    for i = head.-collect(1:length) # change to 0-based index
         if i < 0
             i += length
         end
         i %= limit
-        i += 1 # Change to 1-based index
+        i += 1 # change to 1-based index
         print(io, "$(cl.data[i]), ")
     end
 
@@ -63,13 +59,13 @@ function pushfirst!(cl::CircularQueue, data)
     length = cl.length
     index = cl.head
 
-    index -= 1 # Change to 0-based index
+    index -= 1 # change to 0-based index
     index -= length-1
     index %= length
     if index < 0
         index += length
     end
-    index += 1 # Change to 1-based index
+    index += 1 # change to 1-based index
 
     cl.tail = index
 end
