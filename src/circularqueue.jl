@@ -12,7 +12,11 @@ end
 length(cl::CircularQueue) = cl.length
 
 function nextindex(i::Int64, limit::Int64)
-    # to move next, i += 1 must apply, yet change i to 0-based i -= 1 must apply as well. Skiped those to reduce calculation.
+    #=
+    to move next, i += 1 must apply,
+    yet change i to 0-based i -= 1 must apply as well.
+    Skiped those to reduce calculation.
+    =#
     i %= limit
     i += 1 # change to 1-based index
 
@@ -53,9 +57,7 @@ function pushfirst!(cl::CircularQueue, data)
         cl.length = limit
     end
 
-    #=
-        Adj Tail
-    =#
+    # adjust tail
     length = cl.length
     index = cl.head
 
