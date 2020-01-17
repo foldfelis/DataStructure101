@@ -22,8 +22,9 @@ In this reop, I implement some common and useful data structures. Do not expect 
 
 ### Hierarchical Data Structure
 - [ ] Binary Tree
-- [ ] Priority Queue/Heap (100 days: 86)
+- [ ] Heap (100 days: 86)
 - [ ] Minmax Heap
+- [ ] Priority Queue
 - [ ] Trie
 
 ### Indexing Data Structure
