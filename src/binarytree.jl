@@ -1,12 +1,3 @@
-#=
-### Binary tree (node impl.)
-
-* `Base.show` (in pre-order)
-* `root`
-* `leftchild`
-* `rightchild`
-* `value`
-=#
 mutable struct TreeNode{T} <: AbstractNode
     value::T
     parent::AbstractNode
@@ -16,6 +7,30 @@ mutable struct TreeNode{T} <: AbstractNode
     TreeNode{T}(value::T) where T = new(value, NullNode(), NullNode(), NullNode())
 end
 
+function show(io::IO, node::TreeNode{T}) where T
+    println(io, "TreeNode{$T}(")
+    if !(node.parent isa NullNode)
+        println(io, " Parent($(node.parent.value))")
+    else
+        println(io, " Current node is root")
+    end
+
+    println(io, " \tNode($(node.value))")
+
+    if !(node.right isa NullNode)
+        println(io, " \t\tRightChild($(node.right.value))")
+    else
+        println(io, " \t\tNull")
+    end
+
+    if !(node.left isa NullNode)
+        println(io, " \t\tLeftChild($(node.left.value))")
+    else
+        println(io, " \t\tNull")
+    end
+    print(io, ")")
+end
+
 mutable struct BinaryTree{T}
     root::TreeNode{T}
     length::Int
@@ -23,7 +38,9 @@ mutable struct BinaryTree{T}
     BinaryTree{T}(root_val::T) where T = new(TreeNode{T}(root_val), 1)
 end
 
-function findpath(index::Int, getparent=false)
+# TODO: function show(io::IO, bt::BinaryTree{T}) where T
+
+function calc_path(index::Int, getparent=false)
     path = []
     while index != 1
         push!(path, rem(index, 2))
@@ -39,20 +56,25 @@ function findpath(index::Int, getparent=false)
     end
 end
 
+function getpath(bt::BinaryTree, path::BitArray)
+    node = bt.root
+    for isright in path
+        if isright
+            node = node.right
+        else
+            node = node.left
+        end
+    end
+
+    return node
+end
+
 function push!(bt::BinaryTree{T}, v::T) where T
     node = TreeNode{T}(v)
 
     index = bt.length + 1
-    path = findpath(index)
-
-    parent = bt.root
-    for isright in path[1:end-1]
-        if isright
-            parent = parent.right
-        else
-            parent = parent.left
-        end
-    end
+    path = calc_path(index)
+    parent = getpath(bt, path[1:end-1])
 
     node.parent = parent
 
@@ -64,4 +86,52 @@ function push!(bt::BinaryTree{T}, v::T) where T
     end
 
     bt.length += 1
+end
+
+function checklength(bt::BinaryTree, i::Int)
+    if i > bt.length
+        @error "BoundaryError"
+        return false
+    end
+
+    return true
+end
+
+function getindex(bt::BinaryTree, i::Int)
+    if !checklength(bt, i) return end
+
+    path = calc_path(i)
+    node = getpath(bt, path)
+
+    return node
+end
+
+function leftchild(bt::BinaryTree, i::Int)
+    if !checklength(bt, i) return end
+
+    node = getindex(bt, i)
+    if !(node.left isa NullNode)
+        return node.left.value
+    end
+
+    return
+end
+
+function rightchild(bt::BinaryTree, i::Int)
+    if !checklength(bt, i) return end
+
+    node = getindex(bt, i)
+    if !(node.right isa NullNode)
+        return node.right.value
+    end
+
+    return
+end
+
+function value(bt::BinaryTree, i::Int)
+    if !checklength(bt, i) return end
+
+    node = getindex(bt, i)
+
+    return node.value
 end
