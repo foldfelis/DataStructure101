@@ -28,5 +28,6 @@ println(@test val == 21)
 println("Right child of 10th value in tree: $val \n")
 
 @info "Get Root"
-node = bt.root
-println("Root: $(node.value) \n")
+val = root(bt)
+println(@test val == 1)
+println("Root: $val \n")

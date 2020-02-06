@@ -1,14 +1,16 @@
 mutable struct TreeNode{T} <: AbstractNode
     value::T
+    index::Int
     parent::AbstractNode
     left::AbstractNode
     right::AbstractNode
 
-    TreeNode{T}(value::T) where T = new(value, NullNode(), NullNode(), NullNode())
+    TreeNode{T}(value::T, index::Int) where T =
+        new(value, index, NullNode(), NullNode(), NullNode())
 end
 
 function show(io::IO, node::TreeNode{T}) where T
-    println(io, "TreeNode{$T}(")
+    println(io, "TreeNode{$T}( index=$(node.index)")
     if !(node.parent isa NullNode)
         println(io, " Parent($(node.parent.value))")
     else
@@ -35,7 +37,7 @@ mutable struct BinaryTree{T}
     root::TreeNode{T}
     length::Int
 
-    BinaryTree{T}(root_val::T) where T = new(TreeNode{T}(root_val), 1)
+    BinaryTree{T}(root_val::T) where T = new(TreeNode{T}(root_val, 1), 1)
 end
 
 # TODO: function show(io::IO, bt::BinaryTree{T}) where T
@@ -70,9 +72,9 @@ function getpath(bt::BinaryTree, path::BitArray)
 end
 
 function push!(bt::BinaryTree{T}, v::T) where T
-    node = TreeNode{T}(v)
-
     index = bt.length + 1
+    node = TreeNode{T}(v, index)
+
     path = calc_path(index)
     parent = getpath(bt, path[1:end-1])
 
@@ -135,3 +137,5 @@ function value(bt::BinaryTree, i::Int)
 
     return node.value
 end
+
+root(bt::BinaryTree) = bt.root.value
