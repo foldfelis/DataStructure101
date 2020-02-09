@@ -1,15 +1,27 @@
+@info "
+#############
+# Tree Node #
+#############"
+@info "Initial a TreeNode with data '1'"
+tn = TreeNode{Int64}(1, 1)
+println(tn, "\n")
+
+@info "
+###############
+# Binary Tree #
+###############"
 @info "Initial a Binary Tree with data '1'"
 bt = BinaryTree{Int64}(1)
 println(bt, "\n")
 
 @info "Push Test: Push 2:25 value into tree"
-for i=2:25
+for i=2:27
     push!(bt, i)
 end
 println(bt, "\n")
 
 @info "Get Test: Get 10th node from tree"
-node = getindex(bt, 10)
+node = bt[10]
 println(node, "\n")
 
 @info "Value Test: Get 10th value from tree"
