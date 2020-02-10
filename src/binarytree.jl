@@ -12,6 +12,13 @@ mutable struct TreeNode{T} <: AbstractNode
         new(value, index, NullNode(), NullNode(), NullNode())
 end
 
+function String(node::AbstractNode)
+    if node isa NullNode return "" end
+
+    return "$(node.value)"
+end
+
+
 function show(io::IO, node::TreeNode{T}) where T
     println(io, "TreeNode{$T}( index=$(node.index)")
     if !(node.parent isa NullNode)
@@ -36,24 +43,21 @@ function show(io::IO, node::TreeNode{T}) where T
     print(io, ")")
 end
 
-
-function leftchild(tn::TreeNode)
-    if !(tn.left isa NullNode)
-        return tn.left.value
+function level(node::AbstractNode)
+    if node isa TreeNode
+        return Int(floor(log2(node.index))+1)
     end
 
     return
 end
 
-function rightchild(tn::TreeNode)
-    if !(tn.right isa NullNode)
-        return tn.right.value
-    end
+leftchild(tn::TreeNode) = tn.left
 
-    return
-end
+rightchild(tn::TreeNode) = tn.right
 
 value(tn::TreeNode) = node.value
+
+value(tn::NullNode) = nothing
 
 ###############
 # Binary Tree #
@@ -66,19 +70,18 @@ mutable struct BinaryTree{T}
 end
 
 function show(io::IO, bt::BinaryTree{T}) where T
-    println(io, "BinaryTree{$T}(\n$(gettreestr(bt.root))\n)")
+    println(io, "BinaryTree{$T}(\n$(tree_repr(bt.root))\n)")
 end
 
-function gettreestr(node::AbstractNode, treestr="")
-    if node isa NullNode return treestr end
+tree_repr(node::NullNode, treestr="") = treestr
 
-    level = Int(floor(log2(node.index))+1)
-    treestr = "$(treestr)\n$("\t"^level)TreeNode($(String(node)))"
+function tree_repr(node::TreeNode, treestr="")
+    treestr = "$(treestr)\n$("\t"^level(node))TreeNode($(String(node)))"
 
     right = node.right
-    treestr = gettreestr(right, treestr)
+    treestr = tree_repr(right, treestr)
     left = node.left
-    treestr = gettreestr(left, treestr)
+    treestr = tree_repr(left, treestr)
 
     return treestr
 end
@@ -179,4 +182,4 @@ function value(bt::BinaryTree, i::Int)
     return node.value
 end
 
-root(bt::BinaryTree) = bt.root.value
+root(bt::BinaryTree) = bt.root

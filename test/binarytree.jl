@@ -5,6 +5,8 @@
 @info "Initial a TreeNode with data '1'"
 tn = TreeNode{Int64}(1, 1)
 println(tn, "\n")
+println("Left Child: $(String(leftchild(tn))) $(value(leftchild(tn)))")
+println("Right Child: $(String(rightchild(tn))) $(value(leftchild(tn)))")
 
 @info "
 ###############
@@ -40,6 +42,9 @@ println(@test val == 21)
 println("Right child of 10th value in tree: $val \n")
 
 @info "Get Root"
-val = root(bt)
-println(@test val == 1)
+rootnode = root(bt)
+val = String(rootnode)
+println(@test val == "1")
 println("Root: $val \n")
+println("Left Child: $(leftchild(rootnode))")
+println("Right Child: $(rightchild(rootnode))")
