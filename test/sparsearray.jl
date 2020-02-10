@@ -21,7 +21,7 @@ println("Show: $(sa)\n")
 @info "SetIndex test: SetIndex many data into SparseArray"
 for i = 1:6
     for j = 2:8
-        setindex!(sa, i, j, i*10+j)
+        sa[i, j] = i*10+j
     end
 end
 println("Length of array: $(length(sa))")
