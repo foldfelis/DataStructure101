@@ -6,7 +6,7 @@ println("Show: $(sa)\n")
 println()
 
 @info "SetIndex test: SetIndex data into SparseArray"
-setindex!(sa, 5, 4, 20)
+sa[5, 4] = 20
 len = length(sa)
 println(@test len == 1)
 println("Length of array: $(len)")
@@ -37,7 +37,7 @@ println("Length of array: $(length(sa))")
 println("Show: $(sa)\n")
 
 @info "GetIndex test: (1, 5)"
-println("Value at ndex(1, 5): $(getindex(sa, 1, 5))\n")
+println("Value at ndex(1, 5): $(sa[1, 5])\n")
 
 @info "eltype test"
 println(eltype(sa))

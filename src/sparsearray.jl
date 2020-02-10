@@ -31,26 +31,19 @@ function show(io::IO, sa::SparseArray{T}) where T
 end
 
 function checkboundary(sa::SparseArray, row_i::Int, col_i::Int)
-    if row_i > sa.n_row || row_i < 1
-        throw(BoundsError())
-        return false
-    end
-
-    if col_i > sa.n_col || col_i < 1
-        throw(BoundsError())
-        return false
-    end
+    if row_i > sa.n_row || row_i < 1 return false end
+    if col_i > sa.n_col || col_i < 1 return false end
 
     return true
 end
 
-function existindex(sa::SparseArray, row_i::Int, col_i::Int)
+function getexistindex(sa::SparseArray, row_i::Int, col_i::Int)
     index = row_i*10+col_i
     for (i, valueentry) in enumerate(sa.data)
-        if valueentry.index == index return (i, true) end
+        if valueentry.index == index return i end
     end
 
-    return (-1, false)
+    return -1
 end
 
 function sort!(data::Vector{ValueEntry{T}}) where T
@@ -66,14 +59,17 @@ end
 function push!(sa::SparseArray{T}, row_i::Int, col_i::Int, value::T) where T
     valueentry = ValueEntry{T}(row_i, col_i, value)
     push!(sa.data, valueentry)
-    ezbubblesort!(sa.data)
+    sort!(sa.data)
 end
 
 function setindex!(sa::SparseArray{T}, value::T, row_i::Int, col_i::Int) where T
-    if !checkboundary(sa, row_i, col_i) return end
+    if !checkboundary(sa, row_i, col_i)
+        throw(BoundsError())
+        return
+    end
 
-    (i, exist) = existindex(sa, row_i, col_i)
-    if exist
+    i = getexistindex(sa, row_i, col_i)
+    if i != -1
         if value == 0
             deleteat!(sa.data, i)
             return
@@ -86,7 +82,10 @@ function setindex!(sa::SparseArray{T}, value::T, row_i::Int, col_i::Int) where T
 end
 
 function getindex(sa::SparseArray{T}, row_i::Int, col_i::Int) where T
-    if !checkboundary(sa, row_i, col_i) return end
+    if !checkboundary(sa, row_i, col_i)
+        throw(BoundsError())
+        return
+    end
 
     index = row_i*10+col_i
     for valueentry in sa.data
@@ -100,11 +99,4 @@ size(sa::SparseArray) = (sa.n_row, sa.n_col)
 
 length(sa::SparseArray) = length(sa.data)
 
-function eltype(sa::SparseArray{T}) where T
-    types = []
-    for valueentry in sa.data
-        push!(types, (valueentry.row_i, valueentry.col_i, T))
-    end
-
-    return types
-end
+function eltype(sa::SparseArray{T}) where T return T end
