@@ -7,13 +7,15 @@ filename = [
     "queue",
     "circularqueue",
     "deque",
+    # "sparsearray",
+    "binarytree",
 ]
 
 for f in filename
-    @info "\n
-        ###########\n
-        Test '$(f)'\n
-        ###########\n"
+    teststr = "# Test '$(f)' #"
+    len = length(teststr)
+    teststr = "\n$("#"^len)\n$(teststr)\n$("#"^len)\n"
+    @info teststr
 
     fname = string(f, ".jl")
     include(fname)

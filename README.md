@@ -21,7 +21,7 @@ In this reop, I implement some common and useful data structures. Do not expect 
 - [ ] Sparse Array
 
 ### Hierarchical Data Structure
-- [ ] Binary Tree
+- [x] Binary Tree
 - [ ] Heap (100 days: 86)
 - [ ] Minmax Heap
 - [ ] Priority Queue

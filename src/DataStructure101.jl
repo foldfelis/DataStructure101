@@ -1,6 +1,6 @@
 module DataStructure101
     import  Base: show, push!, pop!, pushfirst!, popfirst!, length,
-     delete!, insert!
+     delete!, insert!, setindex!, getindex, String
 
     export
 
@@ -33,7 +33,21 @@ module DataStructure101
 
     # Deque
     Deque,
-    popfirst!
+    popfirst!,
+
+    # Sparse Array
+    # ValueEntry,
+    # SparseArray,
+
+    # BinaryTree
+    TreeNode,
+    String,
+    BinaryTree,
+    getindex,
+    value,
+    leftchild,
+    rightchild,
+    root
 
     filename = [
         "stack",
@@ -41,6 +55,8 @@ module DataStructure101
         "queue",
         "circularqueue",
         "deque",
+        # "sparsearray",
+        "binarytree",
     ]
 
     for f in filename
