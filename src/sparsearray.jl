@@ -69,7 +69,7 @@ function push!(sa::SparseArray{T}, row_i::Int, col_i::Int, value::T) where T
     ezbubblesort!(sa.data)
 end
 
-function setindex!(sa::SparseArray{T}, row_i::Int, col_i::Int, value::T) where T
+function setindex!(sa::SparseArray{T}, value::T, row_i::Int, col_i::Int) where T
     if !checkboundary(sa, row_i, col_i) return end
 
     (i, exist) = existindex(sa, row_i, col_i)
