@@ -20,7 +20,7 @@ function show(io::IO, node::TreeNode{T}) where T
         println(io, " Current node is root")
     end
 
-    println(io, " \tNode($(node.value))")
+    println(io, " \tNode($(String(node)))")
 
     if !(node.right isa NullNode)
         println(io, " \t\tRightChild($(node.right.value))")
