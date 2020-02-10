@@ -23,7 +23,7 @@ function show(io::IO, node::TreeNode{T}) where T
     println(io, " \tNode($(String(node)))")
 
     if !(node.right isa NullNode)
-        println(io, " \t\tRightChild($(node.right.value))")
+        println(io, " \t\tRightChild($(String(node.right)))")
     else
         println(io, " \t\tNull")
     end
