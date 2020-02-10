@@ -1,12 +1,3 @@
-#=
-Sparse Matrix
-* `Base.show`
-* `Base.getindex`
-* `Base.setindex!`
-* `Base.length`
-* `Base.size`
-* `Base.eltype`
-=#
 mutable struct ValueEntry{T}
     row_i::Int
     col_i::Int
@@ -29,14 +20,14 @@ mutable struct SparseArray{T}
 end
 
 function show(io::IO, sa::SparseArray{T}) where T
-    println(io, "SparseArray{$T}($(sa.n_row), $(sa.n_col))[")
+    println(io, "SparseArray{$T}$(size(sa))[")
     for value in sa.data
         println(io, "\t",
             "row: $(value.row_i), ",
             "col: $(value.col_i), ",
             "value: $(value.value)")
     end
-    println(io, "]")
+    print(io, "]")
 end
 
 function checkboundary(sa::SparseArray, row_i::Int, col_i::Int)
@@ -92,4 +83,28 @@ function setindex!(sa::SparseArray{T}, row_i::Int, col_i::Int, value::T) where T
         if value == 0 return end
         push!(sa, row_i, col_i, value)
     end
+end
+
+function getindex(sa::SparseArray{T}, row_i::Int, col_i::Int) where T
+    if !checkboundary(sa, row_i, col_i) return end
+
+    index = row_i*10+col_i
+    for valueentry in sa.data
+        if index == valueentry.index return valueentry.value end
+    end
+
+    return 0
+end
+
+size(sa::SparseArray) = (sa.n_row, sa.n_col)
+
+length(sa::SparseArray) = length(sa.data)
+
+function eltype(sa::SparseArray{T}) where T
+    types = []
+    for valueentry in sa.data
+        push!(types, (valueentry.row_i, valueentry.col_i, T))
+    end
+
+    return types
 end
