@@ -83,8 +83,13 @@ function setindex!(sa::SparseArray{T}, row_i::Int, col_i::Int, value::T) where T
 
     (i, exist) = existindex(sa, row_i, col_i)
     if exist
+        if value == 0
+            deleteat!(sa.data, i)
+            return
+        end
         sa.data[i].value = value
     else
+        if value == 0 return end
         push!(sa, row_i, col_i, value)
     end
 end
