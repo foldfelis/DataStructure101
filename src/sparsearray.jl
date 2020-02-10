@@ -22,10 +22,7 @@ end
 function show(io::IO, sa::SparseArray{T}) where T
     println(io, "SparseArray{$T}$(size(sa))[")
     for value in sa.data
-        println(io, "\t",
-            "row: $(value.row_i), ",
-            "col: $(value.col_i), ",
-            "value: $(value.value)")
+        println(io, "\t[$(value.row_i), $(value.col_i)]: $(value.value)")
     end
     print(io, "]")
 end
@@ -99,4 +96,4 @@ size(sa::SparseArray) = (sa.n_row, sa.n_col)
 
 length(sa::SparseArray) = length(sa.data)
 
-function eltype(sa::SparseArray{T}) where T return T end
+eltype(sa::SparseArray{T}) where {T} = T

@@ -37,7 +37,7 @@ println("Length of array: $(length(sa))")
 println("Show: $(sa)\n")
 
 @info "GetIndex test: (1, 5)"
-println("Value at ndex(1, 5): $(sa[1, 5])\n")
+println("Value at index(1, 5): $(sa[1, 5])\n")
 
 @info "eltype test"
 println(eltype(sa))
