@@ -13,7 +13,7 @@ println("Length of array: $(len)")
 println("Show: $(sa)\n")
 
 @info "SetIndex test: SetIndex data into SparseArray at same place"
-setindex!(sa, 5, 4, 21)
+sa[5, 4] = 21
 println(@test len == 1)
 println("Length of array: $(len)")
 println("Show: $(sa)\n")
