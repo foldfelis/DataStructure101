@@ -66,7 +66,7 @@ mutable struct BinaryTree{T}
 end
 
 function show(io::IO, bt::BinaryTree{T}) where T
-    println(io, "BinaryTree{Int64}(\n$(gettreestr(bt.root))\n)")
+    println(io, "BinaryTree{$T}(\n$(gettreestr(bt.root))\n)")
 end
 
 function gettreestr(node::AbstractNode, treestr="")
