@@ -53,7 +53,7 @@ function existindex(sa::SparseArray, row_i::Int, col_i::Int)
     return (-1, false)
 end
 
-function ezbubblesort!(data::Vector{ValueEntry{T}}) where T
+function sort!(data::Vector{ValueEntry{T}}) where T
     i = length(data)
     while i > 1
         if data[i].index > data[i-1].index break end
