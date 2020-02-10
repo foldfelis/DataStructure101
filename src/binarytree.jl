@@ -15,7 +15,7 @@ end
 function show(io::IO, node::TreeNode{T}) where T
     println(io, "TreeNode{$T}( index=$(node.index)")
     if !(node.parent isa NullNode)
-        println(io, " Parent($(node.parent.value))")
+        println(io, " Parent($(String(node.parent)))")
     else
         println(io, " Current node is root")
     end
