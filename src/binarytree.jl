@@ -73,7 +73,7 @@ function gettreestr(node::AbstractNode, treestr="")
     if node isa NullNode return treestr end
 
     level = Int(floor(log2(node.index))+1)
-    treestr = "$(treestr)\n$("\t"^level)TreeNode($(node.value))"
+    treestr = "$(treestr)\n$("\t"^level)TreeNode($(String(node)))"
 
     right = node.right
     treestr = gettreestr(right, treestr)
