@@ -1,0 +1,50 @@
+@info "
+#############
+# Tree Node #
+#############"
+@info "Initial a TreeNode with data '1'"
+tn = TreeNode{Int64}(1, 1)
+println(tn, "\n")
+println("Left Child: $(String(leftchild(tn))) $(value(leftchild(tn)))")
+println("Right Child: $(String(rightchild(tn))) $(value(leftchild(tn)))")
+
+@info "
+###############
+# Binary Tree #
+###############"
+@info "Initial a Binary Tree with data '1'"
+bt = BinaryTree{Int64}(1)
+println(bt, "\n")
+
+@info "Push Test: Push 2:25 value into tree"
+for i=2:27
+    push!(bt, i)
+end
+println(bt, "\n")
+
+@info "Get Test: Get 10th node from tree"
+node = bt[10]
+println(node, "\n")
+
+@info "Value Test: Get 10th value from tree"
+val = value(bt, 10)
+println(@test val == 10)
+println("10th value in tree: $val \n")
+
+@info "Value Test: Get Left child of 10th value from tree"
+val = leftchild(bt, 10)
+println(@test val == 20)
+println("Left child of 10th value in tree: $val \n")
+
+@info "Value Test: Get Right child of 10th value from tree"
+val = rightchild(bt, 10)
+println(@test val == 21)
+println("Right child of 10th value in tree: $val \n")
+
+@info "Get Root"
+rootnode = root(bt)
+val = String(rootnode)
+println(@test val == "1")
+println("Root: $val \n")
+println("Left Child: $(leftchild(rootnode))")
+println("Right Child: $(rightchild(rootnode))")
