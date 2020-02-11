@@ -1,11 +1,11 @@
 mutable struct ValueEntry{T}
     row_i::Int
     col_i::Int
-    index::Int
+    index::Tuple{Int64, Int64}
     value::T
 
     ValueEntry{T}(row_i::Int, col_i::Int, value::T) where T = new(
-        row_i, col_i, row_i*10+col_i, value
+        row_i, col_i, (row_i, col_i), value
     )
 end
 
@@ -35,7 +35,7 @@ function checkboundary(sa::SparseArray, row_i::Int, col_i::Int)
 end
 
 function getexistindex(sa::SparseArray, row_i::Int, col_i::Int)
-    index = row_i*10+col_i
+    index = (row_i, col_i)
     for (i, valueentry) in enumerate(sa.data)
         if valueentry.index == index return i end
     end
@@ -43,20 +43,9 @@ function getexistindex(sa::SparseArray, row_i::Int, col_i::Int)
     return -1
 end
 
-function sort!(data::Vector{ValueEntry{T}}) where T
-    i = length(data)
-    while i > 1
-        if data[i].index > data[i-1].index break end
-
-        data[i], data[i-1] = data[i-1], data[i]
-        i -= 1
-    end
-end
-
 function push!(sa::SparseArray{T}, row_i::Int, col_i::Int, value::T) where T
     valueentry = ValueEntry{T}(row_i, col_i, value)
     push!(sa.data, valueentry)
-    sort!(sa.data)
 end
 
 function setindex!(sa::SparseArray{T}, value::T, row_i::Int, col_i::Int) where T
@@ -84,7 +73,7 @@ function getindex(sa::SparseArray{T}, row_i::Int, col_i::Int) where T
         return
     end
 
-    index = row_i*10+col_i
+    index = (row_i, col_i)
     for valueentry in sa.data
         if index == valueentry.index return valueentry.value end
     end
