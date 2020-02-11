@@ -1,6 +1,6 @@
 module DataStructure101
     import  Base: show, push!, pop!, pushfirst!, popfirst!, length,
-     delete!, insert!, setindex!, getindex, String
+     delete!, insert!, setindex!, getindex, String, size, eltype
 
     export
 
@@ -36,8 +36,11 @@ module DataStructure101
     popfirst!,
 
     # Sparse Array
-    # ValueEntry,
-    # SparseArray,
+    ValueEntry,
+    SparseArray,
+    setindex!,
+    getindex,
+    eltype,
 
     # BinaryTree
     TreeNode,
@@ -55,7 +58,7 @@ module DataStructure101
         "queue",
         "circularqueue",
         "deque",
-        # "sparsearray",
+        "sparsearray",
         "binarytree",
     ]
 

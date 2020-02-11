@@ -7,7 +7,7 @@ filename = [
     "queue",
     "circularqueue",
     "deque",
-    # "sparsearray",
+    "sparsearray",
     "binarytree",
 ]
 
