@@ -3,13 +3,14 @@
     # Initial a Queue with data '0'
     T_e = Int64
     T = Queue{T_e}
+    data= T_e[0]
     queue = T(0)
+    @test queue.data == data
 
     # Type test:
     @test queue isa T
 
     # Push test: Push data into queue 20 times by 1:20
-    data= T_e[0]
     passed_checkdata = []
     for i = 1:20
         push!(queue, i)
