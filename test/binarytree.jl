@@ -33,20 +33,15 @@ end
     @test all(passed_push)
 
     # Value Test: Get 10th value from tree
-    val = value(bt, 10)
-    @test val == 10
+    @test value(bt, 10) == 10
 
     # Value Test: Get Left child of 10th value from tree
-    val = leftchild(bt, 10)
-    @test val == 20
+    @test leftchild(bt, 10) == 20
 
     # Value Test: Get Right child of 10th value from tree
-    val = rightchild(bt, 10)
-    @test val == 21
+    @test rightchild(bt, 10) == 21
 
     # Get Root
-    rootnode = root(bt)
-    val = String(rootnode)
-    @test val == "1"
+    @test String(root(bt)) == "1"
 
 end
