@@ -2,7 +2,7 @@ using DataStructure101
 using Test
 
 filename = [
-#     "linkedlist",
+    "linkedlist",
     "stack",
     "queue",
 #     "circularqueue",
