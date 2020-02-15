@@ -8,7 +8,7 @@ filename = [
     "circularqueue",
     "deque",
     "sparsearray",
-#     "binarytree",
+    "binarytree",
 ]
 
 for f in filename
