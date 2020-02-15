@@ -1,29 +1,44 @@
-@info "Initial a Deque with data '0'"
-T = Deque{Int64}
-deque = T(0)
-println("Show: $(deque)\n")
+@testset "Test Deque" begin
 
-@info "Type test: " @test deque isa T
-println()
+    # Initial a Deque with data '0'
+    T_e = Int64
+    T = Deque{T_e}
+    data= T_e[0]
+    deque = T(0)
+    @test deque.data == data
 
-@info "Push test: Push data into deque 20 times by 1:20"
-for i = 1:20
-    push!(deque, i)
+    #Type test:
+    @test deque isa T
+
+    # Push test: Push data into deque 20 times by 1:20
+    passed_checkdata = []
+    for i = 1:20
+        push!(deque, i)
+        push!(data, i)
+        push!(passed_checkdata, deque.data == data)
+    end
+    @test all(passed_checkdata)
+
+    # Pushfirst test: Push data into deque 20 times by 31:35
+    for i = 31:35
+        pushfirst!(deque, i)
+        pushfirst!(data, i)
+        push!(passed_checkdata, deque.data == data)
+    end
+    @test all(passed_checkdata)
+
+    # Pop test: Pop data from tail of deque
+    passed_pop = [
+        pop!(deque) == pop!(data),
+        deque.data == data
+    ]
+    @test all(passed_pop)
+
+    # Pop test: Pop data from head of deque
+    passed_pop = [
+        popfirst!(deque) == popfirst!(data),
+        deque.data == data
+    ]
+    @test all(passed_pop)
+
 end
-println("Show: $(deque)\n")
-
-@info "Pushfirst test: Push data into deque 20 times by 31:35"
-for i = 31:35
-    pushfirst!(deque, i)
-end
-println("Show: $(deque)\n")
-
-@info "Pop test: Pop data from tail of deque"
-removed_data = pop!(deque)
-println("Removed from tail: $(removed_data)")
-println("Show: $(deque)\n")
-
-@info "Pop test: Pop data from head of deque"
-removed_data = popfirst!(deque)
-println("Removed from head: $(removed_data)")
-println("Show: $(deque)\n")

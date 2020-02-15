@@ -15,6 +15,7 @@ for f in filename
     teststr = "# Test '$(f)' #"
     len = length(teststr)
     teststr = "\n$("#"^len)\n$(teststr)\n$("#"^len)\n"
+    println()
     @info teststr
 
     fname = string(f, ".jl")

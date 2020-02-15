@@ -1,19 +1,31 @@
-@info "Initial a Queue with data '0'"
-T = Queue{Int64}
-queue = T(0)
-println("Show: $(queue)\n")
+@testset "Test Queue" begin
 
-@info "Type test: " @test queue isa T
-println()
+    # Initial a Queue with data '0'
+    T_e = Int64
+    T = Queue{T_e}
+    data= T_e[0]
+    queue = T(0)
+    @test queue.data == data
 
-@info "Push test: Push data into queue 20 times by 1:20"
-for i = 1:20
-    push!(queue, i)
+    # Type test:
+    @test queue isa T
+
+    # Push test: Push data into queue 20 times by 1:20
+    passed_checkdata = []
+    for i = 1:20
+        push!(queue, i)
+        push!(data, i)
+        push!(passed_checkdata, queue.data == data)
+    end
+    @test all(passed_checkdata)
+
+    # Pop test: Pop data from queue 5 times
+    passed_checkdata = []
+    for i = 1:5
+        pop!(queue)
+        popfirst!(data)
+        push!(passed_checkdata, queue.data == data)
+    end
+    @test all(passed_checkdata)
+
 end
-println("Show: $(queue)\n")
-
-@info "Pop test: Pop data from queue 5 times"
-for i = 1:5
-    pop!(queue)
-end
-println("Show: $(queue)\n")
