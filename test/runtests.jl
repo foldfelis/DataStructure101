@@ -2,19 +2,20 @@ using DataStructure101
 using Test
 
 filename = [
-    "linkedlist",
+#     "linkedlist",
     "stack",
-    "queue",
-    "circularqueue",
-    "deque",
+#     "queue",
+#     "circularqueue",
+#     "deque",
     "sparsearray",
-    "binarytree",
+#     "binarytree",
 ]
 
 for f in filename
     teststr = "# Test '$(f)' #"
     len = length(teststr)
     teststr = "\n$("#"^len)\n$(teststr)\n$("#"^len)\n"
+    println()
     @info teststr
 
     fname = string(f, ".jl")
