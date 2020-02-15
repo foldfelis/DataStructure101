@@ -5,7 +5,7 @@ filename = [
     "linkedlist",
     "stack",
     "queue",
-#     "circularqueue",
+    "circularqueue",
     "deque",
     "sparsearray",
 #     "binarytree",
