@@ -4,7 +4,7 @@ using Test
 filename = [
 #     "linkedlist",
     "stack",
-#     "queue",
+    "queue",
 #     "circularqueue",
 #     "deque",
     "sparsearray",

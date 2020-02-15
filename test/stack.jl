@@ -14,7 +14,7 @@
     for i = 1:20
         push!(stake, i)
         pushfirst!(data, i)
-        push!(passed_checkdata, stake.data[end] == data[end])
+        push!(passed_checkdata, stake.data == data)
     end
     @test all(passed_checkdata)
 
@@ -23,7 +23,7 @@
     for i = 1:5
         pop!(stake)
         deleteat!(data, 1)
-        push!(passed_checkdata, stake.data[end] == data[end])
+        push!(passed_checkdata, stake.data == data)
     end
     @test all(passed_checkdata)
 
