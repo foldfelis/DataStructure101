@@ -55,7 +55,7 @@ leftchild(tn::TreeNode) = tn.left
 
 rightchild(tn::TreeNode) = tn.right
 
-value(tn::TreeNode) = node.value
+value(tn::TreeNode) = tn.value
 
 value(tn::NullNode) = nothing
 

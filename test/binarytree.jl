@@ -12,6 +12,16 @@
     ]
     @test all(passed_node)
 
+    # TODO:
+    #
+    # leftchild(tn::TreeNode) = tn.left
+    #
+    # rightchild(tn::TreeNode) = tn.right
+    #
+    # value(tn::TreeNode) = tn.value
+    #
+    # value(tn::NullNode) = nothing
+
 end
 
 @testset "Test BinaryTree" begin
