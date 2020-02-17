@@ -76,10 +76,11 @@ end
 tree_repr(node::NullNode, treestr="") = treestr
 
 function tree_repr(node::TreeNode, treestr="")
-    treestr = "$(treestr)\n$("\t"^level(node))TreeNode($(String(node)))"
-
     right = node.right
     treestr = tree_repr(right, treestr)
+
+    treestr = "$(treestr)\n$("\t"^level(node))TreeNode($(String(node)))"
+
     left = node.left
     treestr = tree_repr(left, treestr)
 
