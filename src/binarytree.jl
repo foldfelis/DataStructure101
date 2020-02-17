@@ -65,9 +65,9 @@ value(tn::NullNode) = nothing
 mutable struct BinaryTree{T}
     root::TreeNode{T}
     length::Int
-
-    BinaryTree{T}(root_val::T) where T = new(TreeNode{T}(root_val, 1), 1)
 end
+
+BinaryTree{T}(root_val::T) where T = BinaryTree{T}(TreeNode{T}(root_val, 1), 1)
 
 function show(io::IO, bt::BinaryTree{T}) where T
     println(io, "BinaryTree{$T}(\n$(tree_repr(bt.root))\n)")
