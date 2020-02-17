@@ -77,16 +77,12 @@ function show(io::IO, bt::BinaryTree{T}) where T
     println(io, "BinaryTree{$T}(\n$(tree_repr(bt.root))\n)")
 end
 
-tree_repr(node::NullNode, treestr="") = treestr
+tree_repr(node::NullNode, treestr="", level=0) = treestr
 
-function tree_repr(node::TreeNode, treestr="")
-    right = node.right
-    treestr = tree_repr(right, treestr)
-
-    treestr = "$(treestr)\n$("\t"^level(node))TreeNode($(String(node)))"
-
-    left = node.left
-    treestr = tree_repr(left, treestr)
+function tree_repr(node::TreeNode, treestr="", level=0)
+    treestr = tree_repr(node.right, treestr, level+1)
+    treestr = "$(treestr)\n$("\t"^level)TreeNode($(String(node)))"
+    treestr = tree_repr(node.left, treestr, level+1)
 
     return treestr
 end
