@@ -12,15 +12,10 @@
     ]
     @test all(passed_node)
 
-    # TODO:
-    #
-    # leftchild(tn::TreeNode) = tn.left
-    #
-    # rightchild(tn::TreeNode) = tn.right
-    #
-    # value(tn::TreeNode) = tn.value
-    #
-    # value(tn::NullNode) = nothing
+    @test leftchild(tn) isa NullNode
+    @test rightchild(tn) isa NullNode
+    @test value(tn) == 1
+    @test value(NullNode()) isa Nothing
 
 end
 
