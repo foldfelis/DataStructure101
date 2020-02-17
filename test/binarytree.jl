@@ -15,7 +15,7 @@
     @test leftchild(tn) isa NullNode
     @test rightchild(tn) isa NullNode
     @test value(tn) == 1
-    @test value(NullNode()) isa Nothing
+    @test value(NullNode()) == nothing
 
 end
 
