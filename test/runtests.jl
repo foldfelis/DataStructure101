@@ -9,6 +9,7 @@ filename = [
     "deque",
     "sparsearray",
     "binarytree",
+    "unionfind",
 ]
 
 for f in filename
