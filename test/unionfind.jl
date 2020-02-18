@@ -12,7 +12,6 @@
     union!(set, 1, 2)
     union!(set, 2, 3)
     union!(set, 3, 4)
-    @show set
     for i in 1:n
         if i in 2:4 push!(passed_find, find(set, i) == 1)
         else push!(passed_find, find(set, i) == i) end
