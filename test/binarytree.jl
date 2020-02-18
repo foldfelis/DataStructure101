@@ -49,5 +49,4 @@ end
     # Get Root
     @test String(root(bt)) == "1"
 
-    println(bt)
 end
