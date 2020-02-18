@@ -145,7 +145,7 @@ function checkboundary(bt::BinaryTree, i::Int)
 end
 
 function getindex(bt::BinaryTree, i::Int)
-    if !checkboundary(bt, i) return end
+    if !checkboundary(bt, i) return NullNode() end
 
     path = calc_path(i)
     node = getpath(bt, path)
@@ -154,30 +154,19 @@ function getindex(bt::BinaryTree, i::Int)
 end
 
 function leftchild(bt::BinaryTree, i::Int)
-    if !checkboundary(bt, i) return end
+    if !checkboundary(bt, i) return NullNode() end
 
-    node = bt[i]
-    if !(node.left isa NullNode)
-        return node.left.value
-    end
-
-    return
+    return bt[i].left
 end
 
 function rightchild(bt::BinaryTree, i::Int)
-    if !checkboundary(bt, i) return end
+    if !checkboundary(bt, i) return NullNode() end
 
-    node = bt[i]
-    if !(node.right isa NullNode)
-        return node.right.value
-    end
-
-    return
+    return bt[i].right
 end
 
 function value(bt::BinaryTree, i::Int)
-    if !checkboundary(bt, i) return end
-
+    if !checkboundary(bt, i) return NullNode() end
     node = bt[i]
 
     return node.value

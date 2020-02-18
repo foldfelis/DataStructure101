@@ -41,10 +41,10 @@ end
     @test value(bt, 10) == 10
 
     # Value Test: Get Left child of 10th value from tree
-    @test leftchild(bt, 10) == 20
+    @test value(leftchild(bt, 10)) == 20
 
     # Value Test: Get Right child of 10th value from tree
-    @test rightchild(bt, 10) == 21
+    @test value(rightchild(bt, 10)) == 21
 
     # Get Root
     @test String(root(bt)) == "1"
