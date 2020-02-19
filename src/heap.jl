@@ -10,8 +10,8 @@ function show(io::IO, heap::Heap{T}) where T
 end
 
 function tree_repr(
-    heap::Heap{T}, i::Int64, n::Int64,
-    treestr::String="", level::Int64=0) where T
+    heap::Heap, i::Int64, n::Int64,
+    treestr::String="", level::Int64=0)
 
     right_index = rightchild(heap, i)
     left_index = leftchild(heap, i)
@@ -27,28 +27,28 @@ function tree_repr(
     return treestr
 end
 
-getindex(heap::Heap{T}, i::Int64) where T = heap.data[i]
+getindex(heap::Heap, i::Int64) = heap.data[i]
 
-setindex!(heap::Heap{T}, v::Int64, i::Int64) where T = (heap.data[i] = v)
+setindex!(heap::Heap{T}, v::T, i::Int64) where T = (heap.data[i] = v)
 
-length(heap::Heap{T}) where T = length(heap.data)
+length(heap::Heap) = length(heap.data)
 
-root(heap::Heap{T}) where T = 1
+root(heap::Heap) = 1
 
-function parent(heap::Heap{T}, i::Int64) where T
+function parent(heap::Heap, i::Int64)
     index = Int(floor(i/2))
     if index > length(heap) || index < 1 return -1 end
 
     return index
 end
 
-leftchild(heap::Heap{T}, i::Int64) where T = 2 * i
+leftchild(heap::Heap, i::Int64) = 2 * i
 
-rightchild(heap::Heap{T}, i::Int64) where T = 2 * i + 1
+rightchild(heap::Heap, i::Int64) = 2 * i + 1
 
-ismax(heap::Heap{T}) where T = heap.ismax_heap
+ismax(heap::Heap) = heap.ismax_heap
 
-function max_heapify!(heap::Heap{T}, i::Int64, n::Int64) where T
+function max_heapify!(heap::Heap, i::Int64, n::Int64)
     largest_index = i
     right_index = rightchild(heap, i)
     left_index = leftchild(heap, i)
@@ -66,7 +66,7 @@ function max_heapify!(heap::Heap{T}, i::Int64, n::Int64) where T
     end
 end
 
-function min_heapify!(heap::Heap{T}, i::Int64, n::Int64) where T
+function min_heapify!(heap::Heap, i::Int64, n::Int64)
     smallest_index = i
     right_index = rightchild(heap, i)
     left_index = leftchild(heap, i)
@@ -84,7 +84,7 @@ function min_heapify!(heap::Heap{T}, i::Int64, n::Int64) where T
     end
 end
 
-function heapify!(heap::Heap{T}, n::Int64) where T
+function heapify!(heap::Heap, n::Int64)
     if ismax(heap)
         for i = parent(heap, n):-1:1
             max_heapify!(heap, i, n)
@@ -101,7 +101,7 @@ function push!(heap::Heap{T}, v::T) where T
     heapify!(heap, length(heap))
 end
 
-function pop!(heap::Heap{T}) where T
+function pop!(heap::Heap)
     len = length(heap)
     heap[1], heap[len] = heap[len], heap[1]
     value = pop!(heap.data)
@@ -110,7 +110,7 @@ function pop!(heap::Heap{T}) where T
     return value
 end
 
-function sort!(heap::Heap{T}) where T
+function sort!(heap::Heap)
     sorted = []
     len = length(heap)
     for i=1:len
