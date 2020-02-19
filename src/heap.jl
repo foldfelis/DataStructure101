@@ -36,8 +36,8 @@ length(heap::Heap) = length(heap.data)
 root(heap::Heap) = 1
 
 function parent(heap::Heap, i::Int64)
-    index = Int(floor(i/2))
-    if index > length(heap) || index < 1 return -1 end
+    if i > length(heap) || i < 1 return -1 end
+    index = floor(Int, i/2)
 
     return index
 end
@@ -84,15 +84,18 @@ function min_heapify!(heap::Heap, i::Int64, n::Int64)
     end
 end
 
-function heapify!(heap::Heap, n::Int64)
+function heapify!(heap::Heap, i::Int64, n::Int64)
     if ismax(heap)
-        for i = parent(heap, n):-1:1
-            max_heapify!(heap, i, n)
-        end
+        max_heapify!(heap, i, n)
     else
-        for i = parent(heap, n):-1:1
-            min_heapify!(heap, i, n)
-        end
+        min_heapify!(heap, i, n)
+    end
+end
+
+function heapify!(heap::Heap, n::Int64)
+    p = parent(heap, n)
+    for i = p:-1:1
+        heapify!(heap, i, n)
     end
 end
 
@@ -105,7 +108,7 @@ function pop!(heap::Heap)
     len = length(heap)
     heap[1], heap[len] = heap[len], heap[1]
     value = pop!(heap.data)
-    heapify!(heap, length(heap))
+    heapify!(heap, 1, len-1)
 
     return value
 end
