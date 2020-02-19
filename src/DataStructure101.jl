@@ -61,8 +61,6 @@ module DataStructure101
     # Heap
     Heap,
     heapify!
-    # Heapll,
-    # swap!
 
     filename = [
         "stack",
