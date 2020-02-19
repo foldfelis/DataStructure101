@@ -35,16 +35,23 @@ length(heap::Heap{T}) where T = length(heap.data)
 
 root(heap::Heap{T}) where T = 1
 
+function parent(heap::Heap{T}, i::Int64) where T
+    index = Int(floor(i/2))
+    if index > length(heap) || index < 1 return -1 end
+
+    return index
+end
+
 function leftchild(heap::Heap{T}, i::Int64) where T
     index = 2 * i
-    if index > length(heap) return -1 end
+    if index > length(heap) || index < 1 return -1 end
 
     return index
 end
 
 function rightchild(heap::Heap{T}, i::Int64) where T
     index = 2 * i + 1
-    if index > length(heap) return -1 end
+    if index > length(heap) || index < 1 return -1 end
 
     return index
 end
