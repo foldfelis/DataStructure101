@@ -51,11 +51,18 @@ module DataStructure101
     leftchild,
     rightchild,
     root,
+    tree_repr,
 
     # UnionFind
     makeset,
     find,
-    union!
+    union!,
+
+    # Heap
+    Heap,
+    heapify!
+    # Heapll,
+    # swap!
 
     filename = [
         "stack",
@@ -66,6 +73,7 @@ module DataStructure101
         "sparsearray",
         "binarytree",
         "unionfind",
+        "heap",
     ]
 
     for f in filename

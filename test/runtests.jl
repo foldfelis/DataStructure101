@@ -10,6 +10,7 @@ filename = [
     "sparsearray",
     "binarytree",
     "unionfind",
+    "heap",
 ]
 
 for f in filename
