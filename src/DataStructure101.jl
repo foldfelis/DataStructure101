@@ -1,6 +1,6 @@
 module DataStructure101
     import  Base: show, push!, pop!, pushfirst!, popfirst!, length, union!,
-     delete!, insert!, setindex!, getindex, String, size, eltype
+     delete!, insert!, setindex!, getindex, String, size, eltype, sort!
 
     export
 
@@ -60,7 +60,8 @@ module DataStructure101
 
     # Heap
     Heap,
-    heapify!
+    heapify!,
+    sort!
 
     filename = [
         "stack",
