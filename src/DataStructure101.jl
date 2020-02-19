@@ -1,6 +1,6 @@
 module DataStructure101
     import  Base: show, push!, pop!, pushfirst!, popfirst!, length, union!,
-     delete!, insert!, setindex!, getindex, String, size, eltype
+     delete!, insert!, setindex!, getindex, String, size, eltype, sort!
 
     export
 
@@ -51,11 +51,18 @@ module DataStructure101
     leftchild,
     rightchild,
     root,
+    tree_repr,
 
     # UnionFind
     makeset,
     find,
-    union!
+    union!,
+
+    # Heap
+    Heap,
+    heapify!,
+    build!,
+    sort!
 
     filename = [
         "stack",
@@ -66,6 +73,7 @@ module DataStructure101
         "sparsearray",
         "binarytree",
         "unionfind",
+        "heap",
     ]
 
     for f in filename
