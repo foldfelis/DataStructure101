@@ -1,8 +1,9 @@
 mutable struct Heap{T}
     data::Vector{T}
+    isheap::Bool
     ismax_heap::Bool
 
-    Heap{T}(ismax_heap::Bool) where T = new(T[], ismax_heap)
+    Heap{T}(ismax_heap::Bool) where T = new(T[], true, ismax_heap)
 end
 
 function show(io::IO, heap::Heap{T}) where T
@@ -47,6 +48,8 @@ rightchild(heap::Heap, i::Int64) = 2 * i + 1
 
 ismax(heap::Heap) = heap.ismax_heap
 
+isheap(heap::Heap) = heap.isheap
+
 function max_heapify!(heap::Heap, i::Int64, n::Int64)
     largest_index = i
     right_index = rightchild(heap, i)
@@ -83,28 +86,31 @@ function min_heapify!(heap::Heap, i::Int64, n::Int64)
     end
 end
 
-function heapify!(heap::Heap, i::Int64, n::Int64)
-    if ismax(heap)
-        max_heapify!(heap, i, n)
-    else
-        min_heapify!(heap, i, n)
+heapify!(heap::Heap, i::Int64, n::Int64) =
+    if ismax(heap) max_heapify!(heap, i, n)
+    else min_heapify!(heap, i, n)
     end
-end
 
 function build!(heap::Heap)
+    if isheap(heap) return end
+
     len = length(heap)
     p = parent(heap, len)
     for i = p:-1:1
         heapify!(heap, i, len)
     end
+
+    heap.isheap = true
 end
 
 function push!(heap::Heap{T}, v::T) where T
     push!(heap.data, v)
-    build!(heap)
+    heap.isheap = false
 end
 
 function pop!(heap::Heap)
+    if !isheap(heap) throw("Not Heap") end
+
     len = length(heap)
     heap[1], heap[len] = heap[len], heap[1]
     value = pop!(heap.data)
@@ -113,8 +119,10 @@ function pop!(heap::Heap)
     return value
 end
 
-function sort!(heap::Heap)
-    sorted = []
+function sort!(heap::Heap{T}) where T
+    if !isheap(heap) throw("Not Heap") end
+
+    sorted = T[]
     len = length(heap)
     for i=1:len
         push!(sorted, pop!(heap))

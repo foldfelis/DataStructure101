@@ -61,6 +61,7 @@ module DataStructure101
     # Heap
     Heap,
     heapify!,
+    build!,
     sort!
 
     filename = [
