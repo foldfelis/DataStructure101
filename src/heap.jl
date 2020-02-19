@@ -37,9 +37,8 @@ root(heap::Heap) = 1
 
 function parent(heap::Heap, i::Int64)
     if i > length(heap) || i < 1 return -1 end
-    index = floor(Int, i/2)
 
-    return index
+    return floor(Int, i/2)
 end
 
 leftchild(heap::Heap, i::Int64) = 2 * i
@@ -92,16 +91,17 @@ function heapify!(heap::Heap, i::Int64, n::Int64)
     end
 end
 
-function heapify!(heap::Heap, n::Int64)
-    p = parent(heap, n)
+function build!(heap::Heap)
+    len = length(heap)
+    p = parent(heap, len)
     for i = p:-1:1
-        heapify!(heap, i, n)
+        heapify!(heap, i, len)
     end
 end
 
 function push!(heap::Heap{T}, v::T) where T
     push!(heap.data, v)
-    heapify!(heap, length(heap))
+    build!(heap)
 end
 
 function pop!(heap::Heap)
