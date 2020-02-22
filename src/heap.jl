@@ -2,14 +2,14 @@ abstract type Heap{T} end
 
 mutable struct MaxHeap{T} <: Heap{T}
     data::Vector{T}
-    isheap::Bool
+    heapified::Bool
 
     MaxHeap{T}() where T = new(T[], true)
 end
 
 mutable struct MinHeap{T} <: Heap{T}
     data::Vector{T}
-    isheap::Bool
+    heapified::Bool
 
     MinHeap{T}() where T = new(T[], true)
 end
@@ -54,7 +54,7 @@ leftchild(heap::Heap, i::Int64) = 2 * i
 
 rightchild(heap::Heap, i::Int64) = 2 * i + 1
 
-isheap(heap::Heap) = heap.isheap
+heapified(heap::Heap) = heap.heapified
 
 function heapify!(heap::MaxHeap, i::Int64, n::Int64)
     largest_index = i
@@ -93,7 +93,7 @@ function heapify!(heap::MinHeap, i::Int64, n::Int64)
 end
 
 function build!(heap::Heap)
-    if isheap(heap) return end
+    if heapified(heap) return end
 
     len = length(heap)
     p = parent(heap, len)
@@ -101,16 +101,16 @@ function build!(heap::Heap)
         heapify!(heap, i, len)
     end
 
-    heap.isheap = true
+    heap.heapified = true
 end
 
 function push!(heap::Heap{T}, v::T) where T
     push!(heap.data, v)
-    heap.isheap = false
+    heap.heapified = false
 end
 
 function pop!(heap::Heap)
-    if !isheap(heap) throw("Not Heap") end
+    if !heapified(heap) throw("Not Heap") end
 
     len = length(heap)
     heap[1], heap[len] = heap[len], heap[1]
@@ -121,7 +121,7 @@ function pop!(heap::Heap)
 end
 
 function sort!(heap::Heap{T}) where T
-    if !isheap(heap) throw("Not Heap") end
+    if !heapified(heap) throw("Not Heap") end
 
     sorted = T[]
     len = length(heap)
