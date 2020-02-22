@@ -11,6 +11,7 @@ filename = [
     "binarytree",
     "unionfind",
     "heap",
+    "minmaxheap",
 ]
 
 for f in filename
