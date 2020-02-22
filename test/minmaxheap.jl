@@ -22,4 +22,5 @@
     @test maximum(heap) == 30
 
     @test sort!(heap) == collect(1:30)
+    
 end

@@ -1,17 +1,3 @@
-#=
-- [x] `build!`
-- [x] `heapify!`
-    - [x] `max_heapify!`
-    - [x] `min_heapify!`
-- [ ] `bubble_up!`
-    - [x] `max_bubble_up!`
-    - [x] `min_bubble_up!`
-- [x] `maximum`
-- [x] `minimum`
-- [x] `popmax!`
-- [x] `popmin!`
-=#
-
 mutable struct MinMaxHeap{T} <: Heap{T}
     data::Vector{T}
     heapified::Bool
