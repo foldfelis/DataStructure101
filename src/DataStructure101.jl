@@ -1,6 +1,7 @@
 module DataStructure101
     import  Base: show, push!, pop!, pushfirst!, popfirst!, length, union!,
-     delete!, insert!, setindex!, getindex, String, size, eltype, sort!
+     delete!, insert!, setindex!, getindex, String, size, eltype, sort!,
+     maximum, minimum
 
     export
 
@@ -64,10 +65,16 @@ module DataStructure101
     MinHeap,
     heapify!,
     build!,
-    sort!
+    sort!,
 
     # MinMaxHeap
-#     MinMaxHeap
+    MinMaxHeap,
+    maximum,
+    minimum,
+    popmin!,
+    popmax!,
+    bubble_up!,
+    pushbubble!
 
     filename = [
         "stack",
@@ -79,7 +86,7 @@ module DataStructure101
         "binarytree",
         "unionfind",
         "heap",
-#         "minmaxheap",
+        "minmaxheap",
     ]
 
     for f in filename
