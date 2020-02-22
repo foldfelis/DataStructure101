@@ -79,7 +79,7 @@ module DataStructure101
         "binarytree",
         "unionfind",
         "heap",
-        "minmaxheap",
+#         "minmaxheap",
     ]
 
     for f in filename
