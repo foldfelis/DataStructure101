@@ -6,10 +6,10 @@
 - [ ] `bubble_up!`
     - [ ] `max_bubble_up!`
     - [ ] `min_bubble_up!`
-- [ ] `maximum`
-- [ ] `minimum`
-- [ ] `popmax!`
-- [ ] `popmin!`
+- [x] `maximum`
+- [x] `minimum`
+- [x] `popmax!`
+- [x] `popmin!`
 =#
 
 mutable struct MinMaxHeap{T} <: Heap{T}
@@ -101,7 +101,38 @@ function max_heapify!(heap::MinMaxHeap, i::Int64, n::Int64)
     end
 end
 
-heapify!(heap::MinMaxHeap, i::Int64, n::Int64) =
-    if isminlevel(heap, i) min_heapify!(heap, i, n)
-    else max_heapify!(heap, i, n)
-    end
+heapify!(heap::MinMaxHeap, i::Int64, n::Int64) = isminlevel(heap, i) ?
+ min_heapify!(heap, i, n) : max_heapify!(heap, i, n)
+
+minimum(heap::MinMaxHeap) = heapified(heap) ?
+    heap.data[1] : throw("Not Heap")
+
+maximum(heap::MinMaxHeap) = heapified(heap) ?
+    (heap.data[2] > heap.data[3] ?
+        heap.data[2] : heap.data[3]
+    ) : throw("Not Heap")
+
+function popmin!(heap::MinMaxHeap)
+    if !heapified(heap) throw("Not Heap") end
+
+    len = length(heap)
+    heap[1], heap[len] = heap[len], heap[1]
+    value = pop!(heap.data)
+    heapify!(heap, 1, len-1)
+
+    return value
+end
+
+function popmax!(heap::MinMaxHeap)
+    if !heapified(heap) throw("Not Heap") end
+
+    index = heap.data[2] > heap.data[3] ?
+        2 : 3
+
+    len = length(heap)
+    heap[index], heap[len] = heap[len], heap[index]
+    value = pop!(heap.data)
+    heapify!(heap, index, len-1)
+
+    return value
+end

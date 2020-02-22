@@ -1,6 +1,7 @@
 module DataStructure101
     import  Base: show, push!, pop!, pushfirst!, popfirst!, length, union!,
-     delete!, insert!, setindex!, getindex, String, size, eltype, sort!
+     delete!, insert!, setindex!, getindex, String, size, eltype, sort!,
+     maximum, minimum
 
     export
 
@@ -67,7 +68,11 @@ module DataStructure101
     sort!,
 
     # MinMaxHeap
-    MinMaxHeap
+    MinMaxHeap,
+    maximum,
+    minimum,
+    popmin!,
+    popmax!
 
     filename = [
         "stack",
