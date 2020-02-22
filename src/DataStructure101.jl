@@ -72,7 +72,9 @@ module DataStructure101
     maximum,
     minimum,
     popmin!,
-    popmax!
+    popmax!,
+    bubble_up!,
+    pushbubble!
 
     filename = [
         "stack",

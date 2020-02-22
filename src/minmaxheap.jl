@@ -4,8 +4,8 @@
     - [x] `max_heapify!`
     - [x] `min_heapify!`
 - [ ] `bubble_up!`
-    - [ ] `max_bubble_up!`
-    - [ ] `min_bubble_up!`
+    - [x] `max_bubble_up!`
+    - [x] `min_bubble_up!`
 - [x] `maximum`
 - [x] `minimum`
 - [x] `popmax!`
@@ -101,16 +101,13 @@ function max_heapify!(heap::MinMaxHeap, i::Int64, n::Int64)
     end
 end
 
-heapify!(heap::MinMaxHeap, i::Int64, n::Int64) = isminlevel(heap, i) ?
- min_heapify!(heap, i, n) : max_heapify!(heap, i, n)
+heapify!(heap::MinMaxHeap, i::Int64, n::Int64) =
+    isminlevel(heap, i) ? min_heapify!(heap, i, n) : max_heapify!(heap, i, n)
 
-minimum(heap::MinMaxHeap) = heapified(heap) ?
-    heap.data[1] : throw("Not Heap")
+minimum(heap::MinMaxHeap) = heapified(heap) ? heap.data[1] : throw("Not Heap")
 
 maximum(heap::MinMaxHeap) = heapified(heap) ?
-    (heap.data[2] > heap.data[3] ?
-        heap.data[2] : heap.data[3]
-    ) : throw("Not Heap")
+    (heap.data[2] > heap.data[3] ? heap.data[2] : heap.data[3]) : throw("Not Heap")
 
 function popmin!(heap::MinMaxHeap)
     if !heapified(heap) throw("Not Heap") end
@@ -126,8 +123,7 @@ end
 function popmax!(heap::MinMaxHeap)
     if !heapified(heap) throw("Not Heap") end
 
-    index = heap.data[2] > heap.data[3] ?
-        2 : 3
+    index = heap.data[2] > heap.data[3] ? 2 : 3
 
     len = length(heap)
     heap[index], heap[len] = heap[len], heap[index]
@@ -135,4 +131,47 @@ function popmax!(heap::MinMaxHeap)
     heapify!(heap, index, len-1)
 
     return value
+end
+
+function min_bubble_up!(heap::MinMaxHeap, i::Int64)
+    gp = parent(heap, parent(heap, i))
+    if gp > 0 && heap[i] < heap[gp]
+        heap[i], heap[gp] = heap[gp], heap[i]
+        min_bubble_up!(heap, gp)
+    end
+end
+
+function max_bubble_up!(heap::MinMaxHeap, i::Int64)
+    gp = parent(heap, parent(heap, i))
+    if gp > 0 && heap[i] > heap[gp]
+        heap[i], heap[gp] = heap[gp], heap[i]
+        max_bubble_up!(heap, gp)
+    end
+end
+
+function bubble_up!(heap::MinMaxHeap, i::Int64)
+    if i > 1
+        p = parent(heap, i)
+        if isminlevel(heap, i)
+            if heap[i] > heap[p]
+                heap[i], heap[p] = heap[p], heap[i]
+                max_bubble_up!(heap, p)
+            else
+                min_bubble_up!(heap, i)
+            end
+        else
+            if heap[i] < heap[p]
+                heap[i], heap[p] = heap[p], heap[i]
+                min_bubble_up!(heap, p)
+            else
+                max_bubble_up!(heap, i)
+            end
+        end
+    end
+end
+
+function pushbubble!(heap::MinMaxHeap{T}, v::T) where T
+    push!(heap, v)
+    bubble_up!(heap, length(heap))
+    heap.heapified = true
 end
