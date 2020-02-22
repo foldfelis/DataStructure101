@@ -1,6 +1,6 @@
 @testset "Heap" begin
 
-    heap = Heap{Int64}(true)
+    heap = MaxHeap{Int64}()
     @test heap isa Heap
     for i=1:27
         push!(heap, i)
@@ -8,7 +8,7 @@
     build!(heap)
     @test sort!(heap) == collect(27:-1:1)
 
-    heap = Heap{Int64}(false)
+    heap = MinHeap{Int64}()
     for i=30:-1:1
         push!(heap, i)
     end

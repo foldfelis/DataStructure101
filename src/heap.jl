@@ -1,9 +1,17 @@
-mutable struct Heap{T}
+abstract type Heap{T} end
+
+mutable struct MaxHeap{T} <: Heap{T}
     data::Vector{T}
     isheap::Bool
-    ismax_heap::Bool
 
-    Heap{T}(ismax_heap::Bool) where T = new(T[], true, ismax_heap)
+    MaxHeap{T}() where T = new(T[], true)
+end
+
+mutable struct MinHeap{T} <: Heap{T}
+    data::Vector{T}
+    isheap::Bool
+
+    MinHeap{T}() where T = new(T[], true)
 end
 
 function show(io::IO, heap::Heap{T}) where T
@@ -46,11 +54,9 @@ leftchild(heap::Heap, i::Int64) = 2 * i
 
 rightchild(heap::Heap, i::Int64) = 2 * i + 1
 
-ismax(heap::Heap) = heap.ismax_heap
-
 isheap(heap::Heap) = heap.isheap
 
-function max_heapify!(heap::Heap, i::Int64, n::Int64)
+function heapify!(heap::MaxHeap, i::Int64, n::Int64)
     largest_index = i
     right_index = rightchild(heap, i)
     left_index = leftchild(heap, i)
@@ -64,11 +70,11 @@ function max_heapify!(heap::Heap, i::Int64, n::Int64)
 
     if largest_index != i
         heap[i], heap[largest_index] = heap[largest_index], heap[i]
-        max_heapify!(heap, largest_index, n)
+        heapify!(heap, largest_index, n)
     end
 end
 
-function min_heapify!(heap::Heap, i::Int64, n::Int64)
+function heapify!(heap::MinHeap, i::Int64, n::Int64)
     smallest_index = i
     right_index = rightchild(heap, i)
     left_index = leftchild(heap, i)
@@ -82,14 +88,9 @@ function min_heapify!(heap::Heap, i::Int64, n::Int64)
 
     if smallest_index != i
         heap[i], heap[smallest_index] = heap[smallest_index], heap[i]
-        min_heapify!(heap, smallest_index, n)
+        heapify!(heap, smallest_index, n)
     end
 end
-
-heapify!(heap::Heap, i::Int64, n::Int64) =
-    if ismax(heap) max_heapify!(heap, i, n)
-    else min_heapify!(heap, i, n)
-    end
 
 function build!(heap::Heap)
     if isheap(heap) return end
