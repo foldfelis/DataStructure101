@@ -60,9 +60,14 @@ module DataStructure101
 
     # Heap
     Heap,
+    MaxHeap,
+    MinHeap,
     heapify!,
     build!,
     sort!
+
+    # MinMaxHeap
+#     MinMaxHeap
 
     filename = [
         "stack",
@@ -74,6 +79,7 @@ module DataStructure101
         "binarytree",
         "unionfind",
         "heap",
+#         "minmaxheap",
     ]
 
     for f in filename
