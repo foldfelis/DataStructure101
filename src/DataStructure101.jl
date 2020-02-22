@@ -64,10 +64,10 @@ module DataStructure101
     MinHeap,
     heapify!,
     build!,
-    sort!,
+    sort!
 
     # MinMaxHeap
-    MinMaxHeap
+#     MinMaxHeap
 
     filename = [
         "stack",
