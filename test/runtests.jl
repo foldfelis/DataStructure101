@@ -12,6 +12,7 @@ filename = [
     "unionfind",
     "heap",
     "minmaxheap",
+    "priorityqueue",
 ]
 
 for f in filename
