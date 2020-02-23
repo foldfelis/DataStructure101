@@ -74,7 +74,11 @@ module DataStructure101
     popmin!,
     popmax!,
     bubble_up!,
-    pushbubble!
+    pushbubble!,
+
+    # PriorityQueue
+    PriorityQueue,
+    update!
 
     filename = [
         "stack",
@@ -87,6 +91,7 @@ module DataStructure101
         "unionfind",
         "heap",
         "minmaxheap",
+        "priorityqueue",
     ]
 
     for f in filename
