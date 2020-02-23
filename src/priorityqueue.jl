@@ -15,19 +15,26 @@ function push!(pq::PriorityQueue{T}, v::T) where T
     pushbubble!(pq.priority, priority)
 end
 
-firstpriority(pq::PriorityQueue) = pq.data[minimum(pq.priority)]
+minimum(pq::PriorityQueue) = minimum(pq.priority) => pq.data[minimum(pq.priority)]
 
-lastpriority(pq::PriorityQueue) = pq.data[maximum(pq.priority)]
+maximum(pq::PriorityQueue) = maximum(pq.priority) => pq.data[maximum(pq.priority)]
 
-function popfirst!(pq::PriorityQueue)
+function popmin!(pq::PriorityQueue)
     popmin!(pq.priority)
     pq.priority.data .-= 1
 
     return popfirst!(pq.data)
 end
 
-function pop!(pq::PriorityQueue)
+function popmax!(pq::PriorityQueue)
     popmax!(pq.priority)
 
     return pop!(pq.data)
+end
+
+function update!(pq::PriorityQueue, p::Int64, offset::Int64)
+    space = offset > 0 ? 1 : -1
+    for i = p:space:p+(offset-space)
+        pq.data[i], pq.data[i+space] = pq.data[i+space], pq.data[i]
+    end
 end

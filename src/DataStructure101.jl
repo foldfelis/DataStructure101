@@ -78,8 +78,7 @@ module DataStructure101
 
     # PriorityQueue
     PriorityQueue,
-    firstpriority,
-    lastpriority
+    update!
 
     filename = [
         "stack",
