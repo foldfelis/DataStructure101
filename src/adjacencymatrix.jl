@@ -37,9 +37,11 @@ nv(g::Graph) = g.n_vertices
 
 ne(g::Graph) = sum(g.relation .!= 0)
 
+neighbor(g::Graph, v::Int64) = sum(g.relation[v, 1:end] .!= 0)
+
 relate(g::AdjacencyMatrix, v1::Int64, v2::Int64) = (g.relation[v1, v2] = true)
 
 relate(g::WeightedAdjacencyMatrix{T}, v1::Int64, v2::Int64, w::T) where T =
     (g.relation[v1, v2] = w)
 
-neighbor(g::Graph, v::Int64) = sum(g.relation[v, 1:end] .!= 0)
+weight(g::WeightedAdjacencyMatrix) = g.relation
