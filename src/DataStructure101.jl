@@ -78,7 +78,13 @@ module DataStructure101
 
     # PriorityQueue
     PriorityQueue,
-    update!
+    update!,
+
+    # AdjacencyMatrix
+    Graph,
+    AdjacencyMatrix,
+    nv,
+    ne
 
     filename = [
         "stack",
@@ -92,6 +98,7 @@ module DataStructure101
         "heap",
         "minmaxheap",
         "priorityqueue",
+        "adjacencymatrix",
     ]
 
     for f in filename
