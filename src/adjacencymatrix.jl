@@ -37,11 +37,19 @@ nv(g::Graph) = g.n_vertices
 
 ne(g::Graph) = sum(g.relation .!= 0)
 
-neighbor(g::Graph, v::Int64) = sum(g.relation[v, 1:end] .!= 0)
+function neighbor(g::Graph, v::Int64)
+    neighbor_list = Int[]
+    for (i, v) in enumerate(g.relation[v, 1:end])
+        v == 0 && continue
+        push!(neighbor_list, i)
+    end
 
-relate(g::AdjacencyMatrix, v1::Int64, v2::Int64) = (g.relation[v1, v2] = true)
+    return neighbor_list
+end
 
-relate(g::WeightedAdjacencyMatrix{T}, v1::Int64, v2::Int64, w::T) where T =
+relate!(g::AdjacencyMatrix, v1::Int64, v2::Int64) = (g.relation[v1, v2] = true)
+
+relate!(g::WeightedAdjacencyMatrix{T}, v1::Int64, v2::Int64, w::T) where T =
     (g.relation[v1, v2] = w)
 
 weight(g::WeightedAdjacencyMatrix) = g.relation

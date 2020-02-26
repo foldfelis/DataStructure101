@@ -85,7 +85,7 @@ module DataStructure101
     AdjacencyMatrix,
     nv,
     ne,
-    relate,
+    relate!,
     neighbor,
     WeightedAdjacencyMatrix
 
