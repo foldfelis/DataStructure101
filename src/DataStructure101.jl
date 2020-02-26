@@ -84,7 +84,10 @@ module DataStructure101
     Graph,
     AdjacencyMatrix,
     nv,
-    ne
+    ne,
+    relate,
+    neighbor,
+    WeightedAdjacencyMatrix
 
     filename = [
         "stack",
