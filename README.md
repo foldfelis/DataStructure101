@@ -26,8 +26,8 @@ In this reop, I implement some common and useful data structures. Do not expect 
 ### Hierarchical Data Structure
 - [x] Binary Tree
 - [x] Heap (100 days: 86)
-- [ ] Minmax Heap
-- [ ] Priority Queue
+- [x] Minmax Heap
+- [x] Priority Queue
 - [ ] Trie
 
 ### Indexing Data Structure
@@ -36,5 +36,5 @@ In this reop, I implement some common and useful data structures. Do not expect 
 - [ ] Hash Table - open addressing (100 days: 72)
 
 ## Graph
-- [ ] Adjacency Matrix
+- [x] Adjacency Matrix
 - [ ] Adjacency List

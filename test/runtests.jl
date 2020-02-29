@@ -13,6 +13,7 @@ filename = [
     "heap",
     "minmaxheap",
     "priorityqueue",
+    "adjacencymatrix",
 ]
 
 for f in filename
