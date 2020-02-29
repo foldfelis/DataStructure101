@@ -51,9 +51,8 @@ end
 
 function randonwalk(g::WeightedAdjacencyMatrix{T}, x::Vector{T}, steps::Int64) where T
     p = probability(g)
-    while steps > 0
-        x = (x' * p)'
-        steps -= 1
+    if steps > 0
+        x = (x' * p^n)'
     end
 
     return x
