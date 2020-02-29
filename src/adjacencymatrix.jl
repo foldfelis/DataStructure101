@@ -9,8 +9,8 @@ end
 
 function show(io::IO, g::Graph)
     println(io, "Graph(")
-    for j = 1:g.n_vertices
-        for i = 1:g.n_vertices print(io, "\t $(g.relation[i, j])") end
+    for i = 1:g.n_vertices
+        for j = 1:g.n_vertices print(io, "\t $(g.relation[i, j])") end
         println(io)
     end
     print(io, ")")
