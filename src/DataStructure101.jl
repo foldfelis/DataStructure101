@@ -89,7 +89,7 @@ module DataStructure101
     neighbor,
     WeightedAdjacencyMatrix,
     probability,
-    randonwalk
+    randomwalk
 
     filename = [
         "stack",

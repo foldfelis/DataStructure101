@@ -36,7 +36,7 @@ using LinearAlgebra
     end
 
     @testset "Random Walk" begin
-        n = 5
+        n = 100
         city = WeightedAdjacencyMatrix{Float64}(n=n, random_g=true)
         p = probability(city)
 
@@ -46,7 +46,7 @@ using LinearAlgebra
 
         # Random Walk Begin
         x = collect(1.0:n)
-        x = randonwalk(city, x, 1000000)
+        x = randomwalk(city, x, 1000000)
         @test p' * x ≈ x
     end
 
