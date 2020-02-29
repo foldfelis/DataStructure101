@@ -46,15 +46,7 @@ relate!(g::WeightedAdjacencyMatrix{T}, v1::Int64, v2::Int64, w::T) where T =
 weight(g::WeightedAdjacencyMatrix) = g.relation
 
 function probability(g::WeightedAdjacencyMatrix)
-    n = nv(g)
-    prob = zeros(Float64, n, n)
-    for i = 1:n
-        row = g.relation[i, 1:end]
-        row_sum = sum(row)
-        prob[i, 1:end] = row ./ row_sum
-    end
-
-    return prob
+    g.relation ./ sum(g.relation, dims=2)
 end
 
 function randonwalk(g::WeightedAdjacencyMatrix{T}, x::Vector{T}, steps::Int64) where T
