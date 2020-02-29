@@ -1,13 +1,3 @@
-#=
-- [x] `nv(g)`: number of vertices in graph
-- [x] `ne(g)`: number of edges in graph
-- [x] `neighbor(g, v)`: vertices that are the neighbors of vertex `v` in graph `g`
-- [x] `Base.show(g)`: show graph `g`
-- [x] `weight(g)`: weighted matrix of a graph `g`
-- [ ] `probability(g)`: probability matrix of a graph `g`
-- [ ] `randonwalk(g, x, n)`: perform random walk on graph `g` starting from state `x` with `n` steps
-=#
-
 abstract type Graph end
 
 mutable struct AdjacencyMatrix <: Graph
@@ -30,7 +20,8 @@ mutable struct WeightedAdjacencyMatrix{T <: Number} <: Graph
     relation::Array{T}
     n_vertices::Int64
 
-    WeightedAdjacencyMatrix{T}(n::Int64) where T = new(zeros(T, n, n), n)
+    WeightedAdjacencyMatrix{T}(; n::Int64, random_g::Bool=true) where T =
+        random_g ? new(abs.(rand(T, n, n)), n) : new(zeros(T, n, n), n)
 end
 
 nv(g::Graph) = g.n_vertices
@@ -53,3 +44,25 @@ relate!(g::WeightedAdjacencyMatrix{T}, v1::Int64, v2::Int64, w::T) where T =
     (g.relation[v1, v2] = w)
 
 weight(g::WeightedAdjacencyMatrix) = g.relation
+
+function probability(g::WeightedAdjacencyMatrix)
+    n = nv(g)
+    prob = zeros(Float64, n, n)
+    for i = 1:n
+        row = g.relation[i, 1:end]
+        row_sum = sum(row)
+        prob[i, 1:end] = row ./ row_sum
+    end
+
+    return prob
+end
+
+function randonwalk(g::WeightedAdjacencyMatrix{T}, x::Vector{T}, steps::Int64) where T
+    p = probability(g)
+    while steps > 0
+        x = (x' * p)'
+        steps -= 1
+    end
+
+    return x
+end

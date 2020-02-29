@@ -87,7 +87,9 @@ module DataStructure101
     ne,
     relate!,
     neighbor,
-    WeightedAdjacencyMatrix
+    WeightedAdjacencyMatrix,
+    probability,
+    randonwalk
 
     filename = [
         "stack",
