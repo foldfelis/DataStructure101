@@ -37,4 +37,4 @@ In this reop, I implement some common and useful data structures. Do not expect 
 
 ## Graph
 - [x] Adjacency Matrix
-- [ ] Adjacency List
+- [x] Adjacency List
