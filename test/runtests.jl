@@ -14,6 +14,7 @@ filename = [
     "minmaxheap",
     "priorityqueue",
     "adjacencymatrix",
+    "adjacencylist",
 ]
 
 for f in filename

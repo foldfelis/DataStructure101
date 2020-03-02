@@ -89,7 +89,14 @@ module DataStructure101
     neighbor,
     WeightedAdjacencyMatrix,
     probability,
-    randomwalk
+    randomwalk,
+
+    # AdjacencyList
+    AbstractVertex,
+    AdjacencyList,
+    Vertex,
+    degree,
+    bfs
 
     filename = [
         "stack",
@@ -104,6 +111,7 @@ module DataStructure101
         "minmaxheap",
         "priorityqueue",
         "adjacencymatrix",
+        "adjacencylist",
     ]
 
     for f in filename
