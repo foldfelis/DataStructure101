@@ -95,8 +95,7 @@ module DataStructure101
     AbstractVertex,
     AdjacencyList,
     Vertex,
-    degree,
-    bfs
+    degree
 
     filename = [
         "stack",

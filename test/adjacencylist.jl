@@ -28,5 +28,4 @@
 
     @test repr(g) == "AdjacencyList{Int64}(Vertex{Int64}[1[], 2[], 3[], 4[], 5[], 6[1], 7[3, 2], 8[5, 4], 9[7, 6], 10[9, 8]])"
 
-    @test bfs(g, g[10]) == [i for i=10:-1:1]
 end

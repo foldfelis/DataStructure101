@@ -51,20 +51,3 @@ function degree(g::AdjacencyList,  v::Vertex)
 
     return deg
 end
-
-function bfs(g::AdjacencyList, v::Vertex)
-    traversed = []
-    queue = []
-    push!(queue, v)
-
-    while length(queue) > 0
-        current_v = queue[1]
-        push!(traversed, popfirst!(queue).data)
-
-        for related in current_v.related
-            push!(queue, related)
-        end
-    end
-
-    return traversed
-end
