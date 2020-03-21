@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.com/foldfelis/DataStructure101.svg?token=sCvSBz8RcnVXPVQx1yrZ&branch=master)](https://travis-ci.com/foldfelis/DataStructure101)
 [![codecov](https://codecov.io/gh/foldfelis/DataStructure101/branch/master/graph/badge.svg?token=MGL8OHD107)](https://codecov.io/gh/foldfelis/DataStructure101)
+[![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/invenia/BlueStyle)
 
 ###### tags: `DataStructure101`
 
