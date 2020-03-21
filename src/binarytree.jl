@@ -1,6 +1,8 @@
-#############
-# Tree Node #
-#############
+import Base
+
+export TreeNode, BinaryTree
+export String, value, leftchild, rightchild, root, tree_repr
+
 mutable struct TreeNode{T} <: AbstractNode
     value::T
     index::Int
@@ -12,14 +14,14 @@ mutable struct TreeNode{T} <: AbstractNode
         new(value, index, NullNode(), NullNode(), NullNode())
 end
 
-function String(node::AbstractNode)
+function Base.String(node::AbstractNode)
     if node isa NullNode return "" end
 
     return "$(node.value)"
 end
 
 
-function show(io::IO, node::TreeNode{T}) where T
+function Base.show(io::IO, node::TreeNode{T}) where T
     println(io, "TreeNode{$T}( index=$(node.index)")
     if !(node.parent isa NullNode)
         println(io, " Parent($(String(node.parent)))")
@@ -59,9 +61,6 @@ value(tn::TreeNode) = tn.value
 
 value(tn::NullNode) = nothing
 
-###############
-# Binary Tree #
-###############
 mutable struct BinaryTree{T}
     root::TreeNode{T}
     length::Int
@@ -71,9 +70,9 @@ end
 
 BinaryTree{T}(root_val::T) where T = BinaryTree{T}(root_val, 1)
 
-eltype(bt::BinaryTree{T}) where {T} = T
+Base.eltype(bt::BinaryTree{T}) where {T} = T
 
-function show(io::IO, bt::BinaryTree{T}) where T
+function Base.show(io::IO, bt::BinaryTree{T}) where T
     println(io, "BinaryTree{$T}(\n$(tree_repr(bt.root))\n)")
 end
 
@@ -116,7 +115,7 @@ function getpath(bt::BinaryTree, path::BitArray)
     return node
 end
 
-function push!(bt::BinaryTree{T}, v::T) where T
+function Base.push!(bt::BinaryTree{T}, v::T) where T
     index = bt.length + 1
     node = TreeNode{T}(v, index)
 
@@ -144,7 +143,7 @@ function checkboundary(bt::BinaryTree, i::Int)
     return true
 end
 
-function getindex(bt::BinaryTree, i::Int)
+function Base.getindex(bt::BinaryTree, i::Int)
     if !checkboundary(bt, i) return NullNode() end
 
     path = calc_path(i)
