@@ -53,4 +53,8 @@
         end
     end
     @test all(passed_check_length)
+
+    new_sa = T(10, 5)
+    new_sa[3, 3] = 53
+    @test repr(new_sa) == "SparseArray{Int64}(10, 5)[\n\t[3, 3]: 53\n]"
 end
