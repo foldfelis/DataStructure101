@@ -27,4 +27,6 @@
     end
     @test all(passed_check_data)
 
+    @test repr(stake) == "Stack([15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0])"
+
 end
