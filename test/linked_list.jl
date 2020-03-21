@@ -9,6 +9,8 @@
     # Node type test:
     @test node isa T
 
+    @test repr(node) == "Null => Node(0) => Null"
+
 end
 
 @testset "Test LinkedList" begin
@@ -40,6 +42,7 @@ end
     # Move Test
     passed_move = []
     move_ptr(ll, -5)
+    @test repr(ll.current_node) == "PrevNode(14) => Node(15) => NextNode(16)"
     value = len - 5
     push!(passed_move, ll.current_node.data == value)
     move_ptr(ll, 3)
