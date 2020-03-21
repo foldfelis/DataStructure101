@@ -2,12 +2,12 @@ using DataStructure101
 using Test
 
 filename = [
-    "linkedlist",
     "stack",
     "queue",
-    "circularqueue",
     "deque",
+    "circularqueue",
     "sparsearray",
+    "linkedlist",
     "binarytree",
     "unionfind",
     "heap",

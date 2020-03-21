@@ -1,3 +1,8 @@
+import Base
+
+export Heap, MaxHeap, MinHeap
+export heapify!, build!
+
 abstract type Heap{T} end
 
 mutable struct MaxHeap{T} <: Heap{T}
@@ -14,7 +19,7 @@ mutable struct MinHeap{T} <: Heap{T}
     MinHeap{T}() where T = new(T[], true)
 end
 
-function show(io::IO, heap::Heap{T}) where T
+function Base.show(io::IO, heap::Heap{T}) where T
     print(io, "Heap{$T}(\n$(tree_repr(heap, root(heap), length(heap)))\n)")
 end
 
@@ -36,11 +41,11 @@ function tree_repr(
     return treestr
 end
 
-getindex(heap::Heap, i::Int64) = heap.data[i]
+Base.getindex(heap::Heap, i::Int64) = heap.data[i]
 
-setindex!(heap::Heap{T}, v::T, i::Int64) where T = (heap.data[i] = v)
+Base.setindex!(heap::Heap{T}, v::T, i::Int64) where T = (heap.data[i] = v)
 
-length(heap::Heap) = length(heap.data)
+Base.length(heap::Heap) = length(heap.data)
 
 root(heap::Heap) = 1
 
@@ -104,12 +109,12 @@ function build!(heap::Heap)
     heap.heapified = true
 end
 
-function push!(heap::Heap{T}, v::T) where T
+function Base.push!(heap::Heap{T}, v::T) where T
     push!(heap.data, v)
     heap.heapified = false
 end
 
-function pop!(heap::Heap)
+function Base.pop!(heap::Heap)
     if !heapified(heap) throw("Not Heap") end
 
     len = length(heap)
@@ -120,7 +125,7 @@ function pop!(heap::Heap)
     return value
 end
 
-function sort!(heap::Heap{T}) where T
+function Base.sort!(heap::Heap{T}) where T
     if !heapified(heap) throw("Not Heap") end
 
     sorted = T[]

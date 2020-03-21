@@ -1,3 +1,7 @@
+import Base
+
+export CircularQueue
+
 mutable struct CircularQueue{T}
     data::Vector{T}
     length::Int64
@@ -9,7 +13,7 @@ mutable struct CircularQueue{T}
         new(Vector{T}(undef, n), 0, n, 0, 0)
 end
 
-length(cl::CircularQueue) = cl.length
+Base.length(cl::CircularQueue) = cl.length
 
 function nextindex(i::Int64, limit::Int64)
     #=
@@ -23,7 +27,7 @@ function nextindex(i::Int64, limit::Int64)
     return i
 end
 
-function show(io::IO, cl::CircularQueue{T}) where T
+function Base.show(io::IO, cl::CircularQueue{T}) where T
     length = cl.length
     limit = cl.limit
     head = cl.head
@@ -47,7 +51,7 @@ function show(io::IO, cl::CircularQueue{T}) where T
     print(io, "])")
 end
 
-function pushfirst!(cl::CircularQueue, data)
+function Base.pushfirst!(cl::CircularQueue, data)
     limit = cl.limit
 
     cl.head = nextindex(cl.head, limit)
@@ -72,7 +76,7 @@ function pushfirst!(cl::CircularQueue, data)
     cl.tail = index
 end
 
-function pop!(cl::CircularQueue)
+function Base.pop!(cl::CircularQueue)
     limit = cl.limit
 
     if cl.length < 1

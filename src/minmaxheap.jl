@@ -1,3 +1,8 @@
+import Base
+
+export MinMaxHeap
+export popmin!, popmax!, bubble_up!, pushbubble!
+
 mutable struct MinMaxHeap{T} <: Heap{T}
     data::Vector{T}
     heapified::Bool
@@ -90,9 +95,9 @@ end
 heapify!(heap::MinMaxHeap, i::Int64, n::Int64) =
     isminlevel(heap, i) ? min_heapify!(heap, i, n) : max_heapify!(heap, i, n)
 
-minimum(heap::MinMaxHeap) = heapified(heap) ? heap.data[1] : throw("Not Heap")
+Base.minimum(heap::MinMaxHeap) = heapified(heap) ? heap.data[1] : throw("Not Heap")
 
-maximum(heap::MinMaxHeap) = heapified(heap) ?
+Base.maximum(heap::MinMaxHeap) = heapified(heap) ?
     (heap.data[2] > heap.data[3] ? heap.data[2] : heap.data[3]) : throw("Not Heap")
 
 function popmin!(heap::MinMaxHeap)
