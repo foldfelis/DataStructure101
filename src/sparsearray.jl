@@ -1,3 +1,7 @@
+import Base
+
+export ValueEntry, SparseArray
+
 mutable struct ValueEntry{T}
     row_i::Int
     col_i::Int
@@ -18,7 +22,7 @@ mutable struct SparseArray{T}
     )
 end
 
-function show(io::IO, sa::SparseArray{T}) where T
+function Base.show(io::IO, sa::SparseArray{T}) where T
     println(io, "SparseArray{$T}$(size(sa))[")
     for value in sa.data
         println(io, "\t[$(value.row_i), $(value.col_i)]: $(value.value)")
@@ -43,12 +47,12 @@ function find(sa::SparseArray, row_i::Int, col_i::Int)
     return -1
 end
 
-function push!(sa::SparseArray{T}, row_i::Int, col_i::Int, value::T) where T
+function Base.push!(sa::SparseArray{T}, row_i::Int, col_i::Int, value::T) where T
     valueentry = ValueEntry{T}(row_i, col_i, value)
     push!(sa.data, valueentry)
 end
 
-function setindex!(sa::SparseArray{T}, value::T, row_i::Int, col_i::Int) where T
+function Base.setindex!(sa::SparseArray{T}, value::T, row_i::Int, col_i::Int) where T
     if !checkboundary(sa, row_i, col_i) throw(BoundsError()) end
 
     i = find(sa, row_i, col_i)
@@ -64,7 +68,7 @@ function setindex!(sa::SparseArray{T}, value::T, row_i::Int, col_i::Int) where T
     end
 end
 
-function getindex(sa::SparseArray{T}, row_i::Int, col_i::Int) where T
+function Base.getindex(sa::SparseArray{T}, row_i::Int, col_i::Int) where T
     if !checkboundary(sa, row_i, col_i) throw(BoundsError()) end
 
     i = find(sa, row_i, col_i)
@@ -73,8 +77,8 @@ function getindex(sa::SparseArray{T}, row_i::Int, col_i::Int) where T
     return zero(T)
 end
 
-size(sa::SparseArray) = (sa.n_row, sa.n_col)
+Base.size(sa::SparseArray) = (sa.n_row, sa.n_col)
 
-length(sa::SparseArray) = length(sa.data)
+Base.length(sa::SparseArray) = length(sa.data)
 
-eltype(sa::SparseArray{T}) where {T} = T
+Base.eltype(sa::SparseArray{T}) where {T} = T
