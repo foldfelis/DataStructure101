@@ -46,7 +46,7 @@ using LinearAlgebra
 
         # Random Walk Begin
         x = collect(1.0:n)
-        x = randomwalk(city, x, 1000000)
+        x = random_walk(city, x, 10000)
         @test p' * x ≈ x
     end
 

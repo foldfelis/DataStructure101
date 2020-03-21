@@ -1,7 +1,7 @@
 using DataStructure101
 using Test
 
-filename = [
+file_name = [
     "stack",
     "queue",
     "deque",
@@ -17,7 +17,7 @@ filename = [
     "adjacency_list",
 ]
 
-for f in filename
+for f in file_name
     teststr = "# Test '$(f)' #"
     len = length(teststr)
     teststr = "\n$("#"^len)\n$(teststr)\n$("#"^len)\n"

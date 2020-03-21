@@ -30,7 +30,7 @@ function Base.show(io::IO, sa::SparseArray{T}) where T
     print(io, "]")
 end
 
-function checkboundary(sa::SparseArray, row_i::Int, col_i::Int)
+function check_boundary(sa::SparseArray, row_i::Int, col_i::Int)
     if row_i > sa.n_row || row_i < 1 return false end
     if col_i > sa.n_col || col_i < 1 return false end
 
@@ -38,8 +38,8 @@ function checkboundary(sa::SparseArray, row_i::Int, col_i::Int)
 end
 
 function find(sa::SparseArray, row_i::Int, col_i::Int)
-    for (i, valueentry) in enumerate(sa.data)
-        if valueentry.row_i == row_i && valueentry.col_i == col_i
+    for (i, value_entry) in enumerate(sa.data)
+        if value_entry.row_i == row_i && value_entry.col_i == col_i
              return i
          end
     end
@@ -48,12 +48,12 @@ function find(sa::SparseArray, row_i::Int, col_i::Int)
 end
 
 function Base.push!(sa::SparseArray{T}, row_i::Int, col_i::Int, value::T) where T
-    valueentry = ValueEntry{T}(row_i, col_i, value)
-    push!(sa.data, valueentry)
+    value_entry = ValueEntry{T}(row_i, col_i, value)
+    push!(sa.data, value_entry)
 end
 
 function Base.setindex!(sa::SparseArray{T}, value::T, row_i::Int, col_i::Int) where T
-    if !checkboundary(sa, row_i, col_i) throw(BoundsError()) end
+    if !check_boundary(sa, row_i, col_i) throw(BoundsError()) end
 
     i = find(sa, row_i, col_i)
     if i != -1
@@ -69,7 +69,7 @@ function Base.setindex!(sa::SparseArray{T}, value::T, row_i::Int, col_i::Int) wh
 end
 
 function Base.getindex(sa::SparseArray{T}, row_i::Int, col_i::Int) where T
-    if !checkboundary(sa, row_i, col_i) throw(BoundsError()) end
+    if !check_boundary(sa, row_i, col_i) throw(BoundsError()) end
 
     i = find(sa, row_i, col_i)
     if i != -1 return sa.data[i].value end

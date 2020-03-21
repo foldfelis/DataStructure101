@@ -12,8 +12,8 @@
     ]
     @test all(passed_node)
 
-    @test leftchild(tn) isa NullNode
-    @test rightchild(tn) isa NullNode
+    @test left_child(tn) isa NullNode
+    @test right_child(tn) isa NullNode
     @test value(tn) == 1
     @test value(NullNode()) == nothing
 
@@ -41,10 +41,10 @@ end
     @test value(bt, 10) == 10
 
     # Value Test: Get Left child of 10th value from tree
-    @test value(leftchild(bt, 10)) == 20
+    @test value(left_child(bt, 10)) == 20
 
     # Value Test: Get Right child of 10th value from tree
-    @test value(rightchild(bt, 10)) == 21
+    @test value(right_child(bt, 10)) == 21
 
     # Get Root
     @test String(root(bt)) == "1"

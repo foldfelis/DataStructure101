@@ -12,15 +12,15 @@
     @test maximum(heap) == 30
     @test minimum(heap) == 1
 
-    @test popmax!(heap) == 30
-    @test popmin!(heap) == 1
+    @test pop_max!(heap) == 30
+    @test pop_min!(heap) == 1
 
-    pushbubble!(heap, 1)
+    push_bubble!(heap, 1)
     @test minimum(heap) == 1
 
-    pushbubble!(heap, 30)
+    push_bubble!(heap, 30)
     @test maximum(heap) == 30
 
     @test sort!(heap) == collect(1:30)
-    
+
 end

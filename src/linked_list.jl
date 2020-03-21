@@ -1,7 +1,7 @@
 import Base
 
 export AbstractNode, NullNode, Node, LinkedList
-export head, tail, movePtr, movePtr2head, movePtr2tail
+export head, tail, move_ptr, move_ptr2head, move_ptr2tail
 
 abstract type AbstractNode end
 
@@ -89,7 +89,7 @@ function Base.show(io::IO, ll::LinkedList)
     print(io, ")")
 end
 
-function movePtr(ll::LinkedList, n)
+function move_ptr(ll::LinkedList, n)
     if n > 0
         while n != 0
             if ll.current_node.next isa NullNode
@@ -109,11 +109,11 @@ function movePtr(ll::LinkedList, n)
     end
 end
 
-function movePtr2head(ll::LinkedList)
+function move_ptr2head(ll::LinkedList)
     ll.current_node = head(ll)
 end
 
-function movePtr2tail(ll::LinkedList)
+function move_ptr2tail(ll::LinkedList)
     ll.current_node = tail(ll)
 end
 
@@ -149,12 +149,12 @@ end
 
 function Base.insert!(ll::LinkedList, data, i::Int64)
     if i > 1
-        movePtr2head(ll)
-        movePtr(ll, i-2)
+        move_ptr2head(ll)
+        move_ptr(ll, i-2)
         push!(ll, data)
     elseif i < 0
-        movePtr2tail(ll)
-        movePtr(ll, i+1)
+        move_ptr2tail(ll)
+        move_ptr(ll, i+1)
         push!(ll, data)
     else
         pushfirst!(ll, data)
@@ -182,17 +182,17 @@ end
 
 function Base.delete!(ll::LinkedList, i::Int64)
     if i > 1
-        movePtr2head(ll)
-        movePtr(ll, i-2)
+        move_ptr2head(ll)
+        move_ptr(ll, i-2)
         current_data = delete!(ll)
         return current_data
     elseif i < 0
-        movePtr2tail(ll)
-        movePtr(ll, i+1)
+        move_ptr2tail(ll)
+        move_ptr(ll, i+1)
         current_data = delete!(ll)
         return current_data
     else
-        movePtr2head(ll)
+        move_ptr2head(ll)
         current_data = delete!(ll)
         return current_data
     end

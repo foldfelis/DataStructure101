@@ -16,37 +16,37 @@
 
     # Push test: Push data into CircularQueue 5 times by -5:-1
     passed_push = []
-    headindex = 0
+    head_index = 0
     for i = -5:-1
         pushfirst!(cl, i)
 
-        headindex += 1
-        push!(passed_push, cl.data[headindex] == i)
-        push!(passed_push, cl.head == headindex)
+        head_index += 1
+        push!(passed_push, cl.data[head_index] == i)
+        push!(passed_push, cl.head == head_index)
         push!(passed_push, cl.tail == 1)
-        push!(passed_push, cl.length == headindex)
+        push!(passed_push, cl.length == head_index)
         push!(passed_push, cl.limit == mem)
     end
     @test all(passed_push)
 
     # Pop test
     real_data = cl.data
-    tailindex = 1
+    tail_index = 1
     len = 5
     passed_pop = []
     for i = -5:10
         data = pop!(cl)
 
-        if tailindex <= headindex
-            tailindex += 1
+        if tail_index <= head_index
+            tail_index += 1
             len -= 1
             push!(passed_pop, data == i)
-            push!(passed_pop, cl.tail == tailindex)
+            push!(passed_pop, cl.tail == tail_index)
             push!(passed_pop, cl.length == len)
         end
 
         push!(passed_pop, cl.data == real_data)
-        push!(passed_pop, cl.head == headindex)
+        push!(passed_pop, cl.head == head_index)
         push!(passed_pop, cl.limit == mem)
     end
     @test all(passed_pop)
@@ -55,9 +55,9 @@
     for i = 1:25
         pushfirst!(cl, i)
 
-        if headindex < mem headindex += 1 else headindex = 1 end
-        push!(passed_push, cl.data[headindex] == i)
-        push!(passed_push, cl.head == headindex)
+        if head_index < mem head_index += 1 else head_index = 1 end
+        push!(passed_push, cl.data[head_index] == i)
+        push!(passed_push, cl.head == head_index)
 
         if i > mem
             len = mem
@@ -67,15 +67,15 @@
         push!(passed_push, cl.length == len)
 
         # adjust tail
-        tailindex = headindex
-        tailindex -= 1
-        tailindex -= len-1
-        tailindex %= len
-        if tailindex < 0
-            tailindex += len
+        tail_index = head_index
+        tail_index -= 1
+        tail_index -= len-1
+        tail_index %= len
+        if tail_index < 0
+            tail_index += len
         end
-        tailindex += 1
-        push!(passed_push, cl.tail == tailindex)
+        tail_index += 1
+        push!(passed_push, cl.tail == tail_index)
 
         push!(passed_push, cl.limit == mem)
     end
@@ -85,16 +85,16 @@
     for i = 1:15
         data = pop!(cl)
 
-        if tailindex <= headindex
-            tailindex %= mem
-            tailindex += 1
+        if tail_index <= head_index
+            tail_index %= mem
+            tail_index += 1
             push!(passed_pop, data == i)
-            push!(passed_pop, cl.tail == tailindex)
+            push!(passed_pop, cl.tail == tail_index)
             push!(passed_pop, cl.length == len)
         end
 
         push!(passed_pop, cl.data == real_data)
-        push!(passed_pop, cl.head == headindex)
+        push!(passed_pop, cl.head == head_index)
         push!(passed_pop, cl.limit == mem)
     end
     @test all(passed_pop)

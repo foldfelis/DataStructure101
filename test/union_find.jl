@@ -1,9 +1,9 @@
 @testset "Union Find" begin
 
     n = 16
-    set = makeset(n)
+    set = make_set(n)
     @test set == -ones(Int64, n)
-    
+
     passed_find = []
     for i in 1:n
         push!(passed_find, find(set, i) == i)
