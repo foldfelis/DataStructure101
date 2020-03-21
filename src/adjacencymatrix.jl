@@ -1,3 +1,9 @@
+import Base
+
+export Graph, AdjacencyMatrix, WeightedAdjacencyMatrix
+export nv, ne, relate!, neighbor
+export probability, randomwalk
+
 abstract type Graph end
 
 mutable struct AdjacencyMatrix <: Graph
@@ -7,7 +13,7 @@ mutable struct AdjacencyMatrix <: Graph
     AdjacencyMatrix(n::Int64) = new(zeros(Bool, n, n), n)
 end
 
-function show(io::IO, g::Graph)
+function Base.show(io::IO, g::Graph)
     println(io, "Graph(")
     for i = 1:g.n_vertices
         for j = 1:g.n_vertices print(io, "\t $(g.relation[i, j])") end
