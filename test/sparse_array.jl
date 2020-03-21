@@ -29,28 +29,28 @@
     # SetIndex test: SetIndex many data into SparseArray
     sa = T(n_row, n_col)
     len = 0
-    passed_checkvalue = []
-    passed_checklength = []
+    passed_check_value = []
+    passed_check_length = []
     for i = 1:n_row
         for j = 1:n_col
             len += 1
             sa[i, j] = len
-            push!(passed_checkvalue, sa[i, j] == len)
-            push!(passed_checklength, length(sa) == len)
+            push!(passed_check_value, sa[i, j] == len)
+            push!(passed_check_length, length(sa) == len)
         end
     end
-    @test all(passed_checkvalue)
-    @test all(passed_checklength)
+    @test all(passed_check_value)
+    @test all(passed_check_length)
 
     # SetIndex test: SetIndex many 0 into SparseArray
     len = length(sa)
-    passed_checklength = []
+    passed_check_length = []
     for i = 2:n_row
         for j = 2:n_col
             sa[i, j] = 0
             len -= 1
-            push!(passed_checklength, length(sa) == len)
+            push!(passed_check_length, length(sa) == len)
         end
     end
-    @test all(passed_checklength)
+    @test all(passed_check_length)
 end

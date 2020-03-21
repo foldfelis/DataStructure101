@@ -15,7 +15,7 @@ end
 
 Base.length(cl::CircularQueue) = cl.length
 
-function nextindex(i::Int64, limit::Int64)
+function next_index(i::Int64, limit::Int64)
     #=
     to move next, i += 1 must apply,
     yet change i to 0-based i -= 1 must apply as well.
@@ -54,7 +54,7 @@ end
 function Base.pushfirst!(cl::CircularQueue, data)
     limit = cl.limit
 
-    cl.head = nextindex(cl.head, limit)
+    cl.head = next_index(cl.head, limit)
     cl.data[cl.head] = data
     cl.length += 1
     if cl.length > limit
@@ -84,7 +84,7 @@ function Base.pop!(cl::CircularQueue)
     end
 
     data = cl.data[cl.tail]
-    cl.tail = nextindex(cl.tail, limit)
+    cl.tail = next_index(cl.tail, limit)
     cl.length -= 1
 
     return data

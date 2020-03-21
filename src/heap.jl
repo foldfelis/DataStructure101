@@ -23,19 +23,20 @@ function Base.show(io::IO, heap::Heap{T}) where T
     print(io, "Heap{$T}(\n$(tree_repr(heap, root(heap), length(heap)))\n)")
 end
 
-function tree_repr(
-    heap::Heap, i::Int64, n::Int64,
-    treestr::String="", level::Int64=0)
-
-    right_index = rightchild(heap, i)
-    left_index = leftchild(heap, i)
+function tree_repr(heap::Heap, i::Int64, n::Int64; tree_str::String="", level::Int64=0)
+    right_index = right_child(heap, i)
+    left_index = left_child(heap, i)
 
     if right_index <= n
-        treestr = tree_repr(heap, rightchild(heap, i), length(heap), treestr, level+1)
+        tree_str = tree_repr(
+            heap, rightchild(heap, i), length(heap), tree_str=tree_str, level=level+1
+        )
     end
-    treestr = "$(treestr)\n$("\t"^level)HeapNode($(heap[i]))"
+    tree_str = "$(treestr)\n$("\t"^level)HeapNode($(heap[i]))"
     if left_index <= n
-        treestr = tree_repr(heap, leftchild(heap, i), length(heap), treestr, level+1)
+        tree_str = tree_repr(
+            heap, leftchild(heap, i), length(heap), tree_str=tree_str, level=level+1
+        )
     end
 
     return treestr

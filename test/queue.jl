@@ -11,21 +11,21 @@
     @test queue isa T
 
     # Push test: Push data into queue 20 times by 1:20
-    passed_checkdata = []
+    passed_check_data = []
     for i = 1:20
         push!(queue, i)
         push!(data, i)
-        push!(passed_checkdata, queue.data == data)
+        push!(passed_check_data, queue.data == data)
     end
-    @test all(passed_checkdata)
+    @test all(passed_check_data)
 
     # Pop test: Pop data from queue 5 times
-    passed_checkdata = []
+    passed_check_data = []
     for i = 1:5
         pop!(queue)
         popfirst!(data)
-        push!(passed_checkdata, queue.data == data)
+        push!(passed_check_data, queue.data == data)
     end
-    @test all(passed_checkdata)
+    @test all(passed_check_data)
 
 end

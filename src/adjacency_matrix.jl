@@ -2,7 +2,7 @@ import Base
 
 export Graph, AdjacencyMatrix, WeightedAdjacencyMatrix
 export nv, ne, relate!, neighbor
-export probability, randomwalk
+export probability, random_walk
 
 abstract type Graph end
 
@@ -55,7 +55,7 @@ function probability(g::WeightedAdjacencyMatrix)
     g.relation ./ sum(g.relation, dims=2)
 end
 
-function randomwalk(g::WeightedAdjacencyMatrix{T}, x::Vector{T}, steps::Int64) where T
+function random_walk(g::WeightedAdjacencyMatrix{T}, x::Vector{T}, steps::Int64) where T
     p = probability(g)
     if steps > 0
         x = p'^steps * x

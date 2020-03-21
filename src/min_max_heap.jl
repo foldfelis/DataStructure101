@@ -1,7 +1,7 @@
 import Base
 
 export MinMaxHeap
-export popmin!, popmax!, bubble_up!, pushbubble!
+export pop_min!, pop_max!, bubble_up!, push_bubble!
 
 mutable struct MinMaxHeap{T} <: Heap{T}
     data::Vector{T}
@@ -100,7 +100,7 @@ Base.minimum(heap::MinMaxHeap) = heapified(heap) ? heap.data[1] : throw("Not Hea
 Base.maximum(heap::MinMaxHeap) = heapified(heap) ?
     (heap.data[2] > heap.data[3] ? heap.data[2] : heap.data[3]) : throw("Not Heap")
 
-function popmin!(heap::MinMaxHeap)
+function pop_min!(heap::MinMaxHeap)
     if !heapified(heap) throw("Not Heap") end
 
     len = length(heap)
@@ -111,7 +111,7 @@ function popmin!(heap::MinMaxHeap)
     return value
 end
 
-function popmax!(heap::MinMaxHeap)
+function pop_max!(heap::MinMaxHeap)
     if !heapified(heap) throw("Not Heap") end
 
     index = heap.data[2] > heap.data[3] ? 2 : 3
@@ -161,7 +161,7 @@ function bubble_up!(heap::MinMaxHeap, i::Int64)
     end
 end
 
-function pushbubble!(heap::MinMaxHeap{T}, v::T) where T
+function push_bubble!(heap::MinMaxHeap{T}, v::T) where T
     push!(heap, v)
     bubble_up!(heap, length(heap))
     heap.heapified = true

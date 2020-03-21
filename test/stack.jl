@@ -10,21 +10,21 @@
 
     # Push test: Push data into stake 20 times by 1:20
     data= T_e[0]
-    passed_checkdata = []
+    passed_check_data = []
     for i = 1:20
         push!(stake, i)
         pushfirst!(data, i)
-        push!(passed_checkdata, stake.data == data)
+        push!(passed_check_data, stake.data == data)
     end
-    @test all(passed_checkdata)
+    @test all(passed_check_data)
 
     # Pop test: Pop data from stack 5 times
-    passed_checkdata = []
+    passed_check_data = []
     for i = 1:5
         pop!(stake)
         deleteat!(data, 1)
-        push!(passed_checkdata, stake.data == data)
+        push!(passed_check_data, stake.data == data)
     end
-    @test all(passed_checkdata)
+    @test all(passed_check_data)
 
 end

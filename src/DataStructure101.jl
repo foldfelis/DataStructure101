@@ -1,6 +1,6 @@
 module DataStructure101
 
-    filename = [
+    file_name = [
         "stack",
         "queue",
         "deque",
@@ -16,7 +16,7 @@ module DataStructure101
         "adjacency_list",
     ]
 
-    for f in filename
+    for f in file_name
         fname = string(f, ".jl")
         include(fname)
     end

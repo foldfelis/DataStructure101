@@ -1,7 +1,7 @@
 import Base
 
 export PriorityQueue
-export update!, popmin!, popmax!
+export update!, pop_min!, pop_max!
 
 mutable struct PriorityQueue{T}
     priority::MinMaxHeap{Int64}
@@ -17,22 +17,22 @@ end
 function Base.push!(pq::PriorityQueue{T}, v::T) where T
     push!(pq.data, v)
     priority = length(pq.data)
-    pushbubble!(pq.priority, priority)
+    push_bubble!(pq.priority, priority)
 end
 
 Base.minimum(pq::PriorityQueue) = minimum(pq.priority) => pq.data[minimum(pq.priority)]
 
 Base.maximum(pq::PriorityQueue) = maximum(pq.priority) => pq.data[maximum(pq.priority)]
 
-function popmin!(pq::PriorityQueue)
-    popmin!(pq.priority)
+function pop_min!(pq::PriorityQueue)
+    pop_min!(pq.priority)
     pq.priority.data .-= 1
 
     return popfirst!(pq.data)
 end
 
-function popmax!(pq::PriorityQueue)
-    popmax!(pq.priority)
+function pop_max!(pq::PriorityQueue)
+    pop_max!(pq.priority)
 
     return pop!(pq.data)
 end
