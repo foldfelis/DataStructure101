@@ -12,17 +12,17 @@ end
 
 level(heap::Heap, i::Int64) = floor(Int, log2(i)) + 1
 
-isminlevel(heap::MinMaxHeap, i::Int64) = isodd(level(heap, i))
+is_min_level(heap::MinMaxHeap, i::Int64) = isodd(level(heap, i))
 
 function min_heapify!(heap::MinMaxHeap, i::Int64, n::Int64)
     smallest_i = i
 
-    right_i = rightchild(heap, i)
-    right_grand_right_i = rightchild(heap, right_i)
-    right_grand_left_i = leftchild(heap, right_i)
-    left_i = leftchild(heap, i)
-    left_grand_right_i = rightchild(heap, left_i)
-    left_grand_left_i = leftchild(heap, left_i)
+    right_i = right_child(heap, i)
+    right_grand_right_i = right_child(heap, right_i)
+    right_grand_left_i = left_child(heap, right_i)
+    left_i = left_child(heap, i)
+    left_grand_right_i = right_child(heap, left_i)
+    left_grand_left_i = left_child(heap, left_i)
 
     if right_i <= n && heap[i] > heap[right_i]
         smallest_i = right_i end
@@ -56,12 +56,12 @@ end
 function max_heapify!(heap::MinMaxHeap, i::Int64, n::Int64)
     largest_i = i
 
-    right_i = rightchild(heap, i)
-    right_grand_right_i = rightchild(heap, right_i)
-    right_grand_left_i = leftchild(heap, right_i)
-    left_i = leftchild(heap, i)
-    left_grand_right_i = rightchild(heap, left_i)
-    left_grand_left_i = leftchild(heap, left_i)
+    right_i = right_child(heap, i)
+    right_grand_right_i = right_child(heap, right_i)
+    right_grand_left_i = left_child(heap, right_i)
+    left_i = left_child(heap, i)
+    left_grand_right_i = right_child(heap, left_i)
+    left_grand_left_i = left_child(heap, left_i)
 
     if right_i <= n && heap[i] < heap[right_i]
         largest_i = right_i end
@@ -93,7 +93,7 @@ function max_heapify!(heap::MinMaxHeap, i::Int64, n::Int64)
 end
 
 heapify!(heap::MinMaxHeap, i::Int64, n::Int64) =
-    isminlevel(heap, i) ? min_heapify!(heap, i, n) : max_heapify!(heap, i, n)
+    is_min_level(heap, i) ? min_heapify!(heap, i, n) : max_heapify!(heap, i, n)
 
 Base.minimum(heap::MinMaxHeap) = heapified(heap) ? heap.data[1] : throw("Not Heap")
 
@@ -143,7 +143,7 @@ end
 function bubble_up!(heap::MinMaxHeap, i::Int64)
     if i > 1
         p = parent(heap, i)
-        if isminlevel(heap, i)
+        if is_min_level(heap, i)
             if heap[i] > heap[p]
                 heap[i], heap[p] = heap[p], heap[i]
                 max_bubble_up!(heap, p)

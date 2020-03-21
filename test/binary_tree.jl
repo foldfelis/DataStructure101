@@ -17,6 +17,8 @@
     @test value(tn) == 1
     @test value(NullNode()) == nothing
 
+    @test repr(tn) ==
+        "TreeNode{Int64}( index=1\n Current node is root\n \tNode(1)\n \t\tNull\n \t\tNull\n)"
 end
 
 @testset "Test BinaryTree" begin
@@ -29,6 +31,8 @@ end
     ]
     @test all(passed_initial)
 
+    @test eltype(bt) == Int64
+
     # Push Test: Push 2:25 value into tree
     passed_push = []
     for i=2:27
@@ -36,6 +40,8 @@ end
         push!(passed_push, bt[i].value == i)
     end
     @test all(passed_push)
+
+    @test level(bt[10]) == 4
 
     # Value Test: Get 10th value from tree
     @test value(bt, 10) == 10
@@ -48,5 +54,35 @@ end
 
     # Get Root
     @test String(root(bt)) == "1"
+
+    @test repr(bt) == "BinaryTree{Int64}("*
+        "\n\n\t\t\tTreeNode(15)"*
+        "\n\t\tTreeNode(7)"*
+        "\n\t\t\tTreeNode(14)"*
+        "\n\tTreeNode(3)"*
+        "\n\t\t\t\tTreeNode(27)"*
+        "\n\t\t\tTreeNode(13)"*
+        "\n\t\t\t\tTreeNode(26)"*
+        "\n\t\tTreeNode(6)"*
+        "\n\t\t\t\tTreeNode(25)"*
+        "\n\t\t\tTreeNode(12)"*
+        "\n\t\t\t\tTreeNode(24)"*
+        "\nTreeNode(1)"*
+        "\n\t\t\t\tTreeNode(23)"*
+        "\n\t\t\tTreeNode(11)"*
+        "\n\t\t\t\tTreeNode(22)"*
+        "\n\t\tTreeNode(5)"*
+        "\n\t\t\t\tTreeNode(21)"*
+        "\n\t\t\tTreeNode(10)"*
+        "\n\t\t\t\tTreeNode(20)"*
+        "\n\tTreeNode(2)"*
+        "\n\t\t\t\tTreeNode(19)"*
+        "\n\t\t\tTreeNode(9)"*
+        "\n\t\t\t\tTreeNode(18)"*
+        "\n\t\tTreeNode(4)"*
+        "\n\t\t\t\tTreeNode(17)"*
+        "\n\t\t\tTreeNode(8)"*
+        "\n\t\t\t\tTreeNode(16)"*
+    "\n)\n"
 
 end

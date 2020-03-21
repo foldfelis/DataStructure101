@@ -29,17 +29,17 @@ function tree_repr(heap::Heap, i::Int64, n::Int64; tree_str::String="", level::I
 
     if right_index <= n
         tree_str = tree_repr(
-            heap, rightchild(heap, i), length(heap), tree_str=tree_str, level=level+1
+            heap, right_child(heap, i), length(heap), tree_str=tree_str, level=level+1
         )
     end
-    tree_str = "$(treestr)\n$("\t"^level)HeapNode($(heap[i]))"
+    tree_str = "$(tree_str)\n$("\t"^level)HeapNode($(heap[i]))"
     if left_index <= n
         tree_str = tree_repr(
-            heap, leftchild(heap, i), length(heap), tree_str=tree_str, level=level+1
+            heap, left_child(heap, i), length(heap), tree_str=tree_str, level=level+1
         )
     end
 
-    return treestr
+    return tree_str
 end
 
 Base.getindex(heap::Heap, i::Int64) = heap.data[i]
@@ -56,16 +56,16 @@ function parent(heap::Heap, i::Int64)
     return floor(Int, i/2)
 end
 
-leftchild(heap::Heap, i::Int64) = 2 * i
+left_child(heap::Heap, i::Int64) = 2 * i
 
-rightchild(heap::Heap, i::Int64) = 2 * i + 1
+right_child(heap::Heap, i::Int64) = 2 * i + 1
 
 heapified(heap::Heap) = heap.heapified
 
 function heapify!(heap::MaxHeap, i::Int64, n::Int64)
     largest_index = i
-    right_index = rightchild(heap, i)
-    left_index = leftchild(heap, i)
+    right_index = right_child(heap, i)
+    left_index = left_child(heap, i)
 
     if right_index <= n && heap[i] < heap[right_index]
         largest_index = right_index
@@ -82,8 +82,8 @@ end
 
 function heapify!(heap::MinHeap, i::Int64, n::Int64)
     smallest_index = i
-    right_index = rightchild(heap, i)
-    left_index = leftchild(heap, i)
+    right_index = right_child(heap, i)
+    left_index = left_child(heap, i)
 
     if right_index <= n && heap[i] > heap[right_index]
         smallest_index = right_index

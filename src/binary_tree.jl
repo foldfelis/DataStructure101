@@ -1,7 +1,7 @@
 import Base
 
 export TreeNode, BinaryTree
-export String, value, left_child, right_child, root, tree_repr
+export String, value, left_child, right_child, root, tree_repr, level
 
 mutable struct TreeNode{T} <: AbstractNode
     value::T
@@ -76,17 +76,17 @@ function Base.show(io::IO, bt::BinaryTree{T}) where T
     println(io, "BinaryTree{$T}(\n$(tree_repr(bt.root))\n)")
 end
 
-tree_repr(node::NullNode, treestr="", level=0) = treestr
+tree_repr(node::NullNode; tree_str="", level=0) = tree_str
 
-function tree_repr(node::TreeNode, treestr="", level=0)
-    treestr = tree_repr(node.right, treestr, level+1)
-    treestr = "$(treestr)\n$("\t"^level)TreeNode($(String(node)))"
-    treestr = tree_repr(node.left, treestr, level+1)
+function tree_repr(node::TreeNode; tree_str="", level=0)
+    tree_str = tree_repr(node.right, tree_str=tree_str, level=level+1)
+    tree_str = "$(tree_str)\n$("\t"^level)TreeNode($(String(node)))"
+    tree_str = tree_repr(node.left, tree_str=tree_str, level=level+1)
 
-    return treestr
+    return tree_str
 end
 
-function calc_path(index::Int, getparent=false)
+function calc_path(index::Int; get_parent=false)
     path = []
     while index != 1
         push!(path, rem(index, 2))
@@ -95,7 +95,7 @@ function calc_path(index::Int, getparent=false)
 
     path = BitArray(reverse(path))
 
-    if getparent
+    if get_parent
         return path[1:end-1]
     else
         return path
@@ -104,8 +104,8 @@ end
 
 function get_path(bt::BinaryTree, path::BitArray)
     node = bt.root
-    for isright in path
-        if isright
+    for is_right in path
+        if is_right
             node = node.right
         else
             node = node.left

@@ -28,6 +28,7 @@
         push!(passed_push, cl.limit == mem)
     end
     @test all(passed_push)
+    @test length(cl) == 5
 
     # Pop test
     real_data = cl.data
@@ -50,6 +51,7 @@
         push!(passed_pop, cl.limit == mem)
     end
     @test all(passed_pop)
+    @test length(cl) == 0
 
     # Push test: Push data into CircularQueue 25 times by 1:25
     for i = 1:25
@@ -80,6 +82,7 @@
         push!(passed_push, cl.limit == mem)
     end
     @test all(passed_push)
+    @test length(cl) == mem
 
     # Pop test
     for i = 1:15
@@ -98,5 +101,8 @@
         push!(passed_pop, cl.limit == mem)
     end
     @test all(passed_pop)
+    @test length(cl) == mem - 15
+
+    @test repr(cl) == "CircularQueue{Int64, mem:4/19}([25, 24, 23, 22, ])"
 
 end

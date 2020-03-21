@@ -1,7 +1,7 @@
 import Base
 
 export Graph, AdjacencyMatrix, WeightedAdjacencyMatrix
-export nv, ne, relate!, neighbor
+export nv, ne, relate!, neighbor, weight
 export probability, random_walk
 
 abstract type Graph end
