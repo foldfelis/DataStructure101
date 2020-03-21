@@ -33,6 +33,10 @@ using LinearAlgebra
         relate!(g, 2, 5, 10.5)
         @test ne(g) == 1
         @test neighbor(g, 2) == Int[5]
+
+        w = zeros(Float64, n, n)
+        w[2, 5] = 10.5
+        @test weight(g) == w
     end
 
     @testset "Random Walk" begin
@@ -46,7 +50,7 @@ using LinearAlgebra
 
         # Random Walk Begin
         x = collect(1.0:n)
-        x = randomwalk(city, x, 1000000)
+        x = random_walk(city, x, 10000)
         @test p' * x ≈ x
     end
 

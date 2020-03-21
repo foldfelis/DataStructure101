@@ -9,6 +9,8 @@
     # Node type test:
     @test node isa T
 
+    @test repr(node) == "Null => Node(0) => Null"
+
 end
 
 @testset "Test LinkedList" begin
@@ -32,12 +34,18 @@ end
     end
     @test all(passed_push)
 
+    @test length(ll) == 20
+
+    @test repr(ll) == "LinkedList(\n\t There are 20 nodes in the LinkedList\n\t "*
+        "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, *20]\n)"
+
     # Move Test
     passed_move = []
-    movePtr(ll, -5)
+    move_ptr(ll, -5)
+    @test repr(ll.current_node) == "PrevNode(14) => Node(15) => NextNode(16)"
     value = len - 5
     push!(passed_move, ll.current_node.data == value)
-    movePtr(ll, 3)
+    move_ptr(ll, 3)
     value +=  3
     push!(passed_move, ll.current_node.data == value)
     @test all(passed_move)
@@ -62,11 +70,11 @@ end
     @test all(passed_delete)
 
     # Move 2 head Test
-    movePtr2head(ll)
+    move_ptr2head(ll)
     @test ll.current_node.data == 1
 
     # Move 2 tail Test
-    movePtr2tail(ll)
+    move_ptr2tail(ll)
     @test ll.current_node.data == len
 
     # Pushfirst Test
@@ -81,13 +89,13 @@ end
 
     # Delete first Node Test
     deleted_data = delete!(ll, 1)
-    passed_deletefirst = [
+    passed_delete_first = [
         deleted_data == value,
         ll.current_node.prev isa NullNode,
         ll.current_node.data == 1,
         ll.current_node.next.data == 2,
     ]
-    @test all(passed_deletefirst)
+    @test all(passed_delete_first)
 
     passed_insert = []
     # Insert Test: Insert '5987' to index=5

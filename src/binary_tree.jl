@@ -1,6 +1,8 @@
-#############
-# Tree Node #
-#############
+import Base
+
+export TreeNode, BinaryTree
+export String, value, left_child, right_child, root, tree_repr, level
+
 mutable struct TreeNode{T} <: AbstractNode
     value::T
     index::Int
@@ -12,14 +14,14 @@ mutable struct TreeNode{T} <: AbstractNode
         new(value, index, NullNode(), NullNode(), NullNode())
 end
 
-function String(node::AbstractNode)
+function Base.String(node::AbstractNode)
     if node isa NullNode return "" end
 
     return "$(node.value)"
 end
 
 
-function show(io::IO, node::TreeNode{T}) where T
+function Base.show(io::IO, node::TreeNode{T}) where T
     println(io, "TreeNode{$T}( index=$(node.index)")
     if !(node.parent isa NullNode)
         println(io, " Parent($(String(node.parent)))")
@@ -51,17 +53,14 @@ function level(node::AbstractNode)
     return
 end
 
-leftchild(tn::TreeNode) = tn.left
+left_child(tn::TreeNode) = tn.left
 
-rightchild(tn::TreeNode) = tn.right
+right_child(tn::TreeNode) = tn.right
 
 value(tn::TreeNode) = tn.value
 
 value(tn::NullNode) = nothing
 
-###############
-# Binary Tree #
-###############
 mutable struct BinaryTree{T}
     root::TreeNode{T}
     length::Int
@@ -71,23 +70,23 @@ end
 
 BinaryTree{T}(root_val::T) where T = BinaryTree{T}(root_val, 1)
 
-eltype(bt::BinaryTree{T}) where {T} = T
+Base.eltype(bt::BinaryTree{T}) where {T} = T
 
-function show(io::IO, bt::BinaryTree{T}) where T
+function Base.show(io::IO, bt::BinaryTree{T}) where T
     println(io, "BinaryTree{$T}(\n$(tree_repr(bt.root))\n)")
 end
 
-tree_repr(node::NullNode, treestr="", level=0) = treestr
+tree_repr(node::NullNode; tree_str="", level=0) = tree_str
 
-function tree_repr(node::TreeNode, treestr="", level=0)
-    treestr = tree_repr(node.right, treestr, level+1)
-    treestr = "$(treestr)\n$("\t"^level)TreeNode($(String(node)))"
-    treestr = tree_repr(node.left, treestr, level+1)
+function tree_repr(node::TreeNode; tree_str="", level=0)
+    tree_str = tree_repr(node.right, tree_str=tree_str, level=level+1)
+    tree_str = "$(tree_str)\n$("\t"^level)TreeNode($(String(node)))"
+    tree_str = tree_repr(node.left, tree_str=tree_str, level=level+1)
 
-    return treestr
+    return tree_str
 end
 
-function calc_path(index::Int, getparent=false)
+function calc_path(index::Int; get_parent=false)
     path = []
     while index != 1
         push!(path, rem(index, 2))
@@ -96,17 +95,17 @@ function calc_path(index::Int, getparent=false)
 
     path = BitArray(reverse(path))
 
-    if getparent
+    if get_parent
         return path[1:end-1]
     else
         return path
     end
 end
 
-function getpath(bt::BinaryTree, path::BitArray)
+function get_path(bt::BinaryTree, path::BitArray)
     node = bt.root
-    for isright in path
-        if isright
+    for is_right in path
+        if is_right
             node = node.right
         else
             node = node.left
@@ -116,12 +115,12 @@ function getpath(bt::BinaryTree, path::BitArray)
     return node
 end
 
-function push!(bt::BinaryTree{T}, v::T) where T
+function Base.push!(bt::BinaryTree{T}, v::T) where T
     index = bt.length + 1
     node = TreeNode{T}(v, index)
 
     path = calc_path(index)
-    parent = getpath(bt, path[1:end-1])
+    parent = get_path(bt, path[1:end-1])
 
     node.parent = parent
 
@@ -135,7 +134,7 @@ function push!(bt::BinaryTree{T}, v::T) where T
     bt.length += 1
 end
 
-function checkboundary(bt::BinaryTree, i::Int)
+function check_boundary(bt::BinaryTree, i::Int)
     if i > bt.length
         throw(BoundsError())
         return false
@@ -144,29 +143,29 @@ function checkboundary(bt::BinaryTree, i::Int)
     return true
 end
 
-function getindex(bt::BinaryTree, i::Int)
-    if !checkboundary(bt, i) return NullNode() end
+function Base.getindex(bt::BinaryTree, i::Int)
+    if !check_boundary(bt, i) return NullNode() end
 
     path = calc_path(i)
-    node = getpath(bt, path)
+    node = get_path(bt, path)
 
     return node
 end
 
-function leftchild(bt::BinaryTree, i::Int)
-    if !checkboundary(bt, i) return NullNode() end
+function left_child(bt::BinaryTree, i::Int)
+    if !check_boundary(bt, i) return NullNode() end
 
     return bt[i].left
 end
 
-function rightchild(bt::BinaryTree, i::Int)
-    if !checkboundary(bt, i) return NullNode() end
+function right_child(bt::BinaryTree, i::Int)
+    if !check_boundary(bt, i) return NullNode() end
 
     return bt[i].right
 end
 
 function value(bt::BinaryTree, i::Int)
-    if !checkboundary(bt, i) return NullNode() end
+    if !check_boundary(bt, i) return NullNode() end
     node = bt[i]
 
     return node.value

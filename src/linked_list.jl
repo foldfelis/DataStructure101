@@ -1,3 +1,8 @@
+import Base
+
+export AbstractNode, NullNode, Node, LinkedList
+export head, tail, move_ptr, move_ptr2head, move_ptr2tail
+
 abstract type AbstractNode end
 
 struct NullNode <: AbstractNode end
@@ -10,7 +15,7 @@ mutable struct Node{T} <: AbstractNode
     Node{T}(data::T) where T = new(data, NullNode(), NullNode())
 end
 
-function show(io::IO, node::Node)
+function Base.show(io::IO, node::Node)
     if !(node.prev isa NullNode)
         print(io, "PrevNode($(node.prev.data)) => ")
     else
@@ -49,7 +54,7 @@ function tail(ll::LinkedList)
     return node
 end
 
-function length(ll::LinkedList)
+function Base.length(ll::LinkedList)
     node = head(ll)
     i = 0
     while !(node isa NullNode)
@@ -60,7 +65,7 @@ function length(ll::LinkedList)
     return i
 end
 
-function show(io::IO, ll::LinkedList)
+function Base.show(io::IO, ll::LinkedList)
     println(io, "LinkedList(")
     println(io, "\t There are $(length(ll)) nodes in the LinkedList")
 
@@ -84,7 +89,7 @@ function show(io::IO, ll::LinkedList)
     print(io, ")")
 end
 
-function movePtr(ll::LinkedList, n)
+function move_ptr(ll::LinkedList, n)
     if n > 0
         while n != 0
             if ll.current_node.next isa NullNode
@@ -104,15 +109,15 @@ function movePtr(ll::LinkedList, n)
     end
 end
 
-function movePtr2head(ll::LinkedList)
+function move_ptr2head(ll::LinkedList)
     ll.current_node = head(ll)
 end
 
-function movePtr2tail(ll::LinkedList)
+function move_ptr2tail(ll::LinkedList)
     ll.current_node = tail(ll)
 end
 
-function push!(ll::LinkedList, data)
+function Base.push!(ll::LinkedList, data)
     T = typeof(data)
     node = Node{T}(data)
     if !(ll.current_node.next isa NullNode)
@@ -131,7 +136,7 @@ function push!(ll::LinkedList, data)
     ll.current_node = node
 end
 
-function pushfirst!(ll::LinkedList, data)
+function Base.pushfirst!(ll::LinkedList, data)
     T = typeof(data)
     node = Node{T}(data)
     current_node = head(ll)
@@ -142,21 +147,21 @@ function pushfirst!(ll::LinkedList, data)
     ll.current_node = head(ll)
 end
 
-function insert!(ll::LinkedList, data, i::Int64)
+function Base.insert!(ll::LinkedList, data, i::Int64)
     if i > 1
-        movePtr2head(ll)
-        movePtr(ll, i-2)
+        move_ptr2head(ll)
+        move_ptr(ll, i-2)
         push!(ll, data)
     elseif i < 0
-        movePtr2tail(ll)
-        movePtr(ll, i+1)
+        move_ptr2tail(ll)
+        move_ptr(ll, i+1)
         push!(ll, data)
     else
         pushfirst!(ll, data)
     end
 end
 
-function delete!(ll::LinkedList)
+function Base.delete!(ll::LinkedList)
     current_node = ll.current_node
 
     if !(current_node.prev isa NullNode)
@@ -175,19 +180,19 @@ function delete!(ll::LinkedList)
     return current_node.data
 end
 
-function delete!(ll::LinkedList, i::Int64)
+function Base.delete!(ll::LinkedList, i::Int64)
     if i > 1
-        movePtr2head(ll)
-        movePtr(ll, i-2)
+        move_ptr2head(ll)
+        move_ptr(ll, i-2)
         current_data = delete!(ll)
         return current_data
     elseif i < 0
-        movePtr2tail(ll)
-        movePtr(ll, i+1)
+        move_ptr2tail(ll)
+        move_ptr(ll, i+1)
         current_data = delete!(ll)
         return current_data
     else
-        movePtr2head(ll)
+        move_ptr2head(ll)
         current_data = delete!(ll)
         return current_data
     end

@@ -1,119 +1,22 @@
 module DataStructure101
-    import  Base: show, push!, pop!, pushfirst!, popfirst!, length, union!,
-     delete!, insert!, setindex!, getindex, String, size, eltype, sort!,
-     maximum, minimum
 
-    export
-
-    # LinkedList
-    AbstractNode,
-    NullNode,
-    Node,
-    show,
-    LinkedList,
-    head,
-    tail,
-    length,
-    movePtr,
-    movePtr2head,
-    movePtr2tail,
-    push!,
-    pushfirst!,
-    insert!,
-    delete!,
-
-    # Queue
-    Queue,
-    pop!,
-
-    # Stack
-    Stack,
-
-    # CircularDeque
-    CircularQueue,
-
-    # Deque
-    Deque,
-    popfirst!,
-
-    # Sparse Array
-    ValueEntry,
-    SparseArray,
-    setindex!,
-    getindex,
-    eltype,
-
-    # BinaryTree
-    TreeNode,
-    String,
-    BinaryTree,
-    getindex,
-    value,
-    leftchild,
-    rightchild,
-    root,
-    tree_repr,
-
-    # UnionFind
-    makeset,
-    find,
-    union!,
-
-    # Heap
-    Heap,
-    MaxHeap,
-    MinHeap,
-    heapify!,
-    build!,
-    sort!,
-
-    # MinMaxHeap
-    MinMaxHeap,
-    maximum,
-    minimum,
-    popmin!,
-    popmax!,
-    bubble_up!,
-    pushbubble!,
-
-    # PriorityQueue
-    PriorityQueue,
-    update!,
-
-    # AdjacencyMatrix
-    Graph,
-    AdjacencyMatrix,
-    nv,
-    ne,
-    relate!,
-    neighbor,
-    WeightedAdjacencyMatrix,
-    probability,
-    randomwalk,
-
-    # AdjacencyList
-    AbstractVertex,
-    AdjacencyList,
-    Vertex,
-    degree
-
-    filename = [
+    file_name = [
         "stack",
-        "linkedlist",
         "queue",
-        "circularqueue",
         "deque",
-        "sparsearray",
-        "binarytree",
-        "unionfind",
+        "circular_queue",
+        "sparse_array",
+        "linked_list",
+        "binary_tree",
+        "union_find",
         "heap",
-        "minmaxheap",
-        "priorityqueue",
-        "adjacencymatrix",
-        "adjacencylist",
+        "min_max_heap",
+        "priority_queue",
+        "adjacency_matrix",
+        "adjacency_list",
     ]
 
-    for f in filename
+    for f in file_name
         fname = string(f, ".jl")
         include(fname)
     end

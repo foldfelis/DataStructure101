@@ -1,23 +1,23 @@
 using DataStructure101
 using Test
 
-filename = [
-    "linkedlist",
+file_name = [
     "stack",
     "queue",
-    "circularqueue",
     "deque",
-    "sparsearray",
-    "binarytree",
-    "unionfind",
+    "circular_queue",
+    "sparse_array",
+    "linked_list",
+    "binary_tree",
+    "union_find",
     "heap",
-    "minmaxheap",
-    "priorityqueue",
-    "adjacencymatrix",
-    "adjacencylist",
+    "min_max_heap",
+    "priority_queue",
+    "adjacency_matrix",
+    "adjacency_list",
 ]
 
-for f in filename
+for f in file_name
     teststr = "# Test '$(f)' #"
     len = length(teststr)
     teststr = "\n$("#"^len)\n$(teststr)\n$("#"^len)\n"

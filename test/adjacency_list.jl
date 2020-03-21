@@ -26,6 +26,8 @@
     @test degree(g, g[8]) == 2
     @test degree(g, g[6]) == 1
 
+    @test neighbor(g, g[10]) == [g[9], g[8]]
+
     @test repr(g) == "AdjacencyList{Int64}(Vertex{Int64}[1[], 2[], 3[], 4[], 5[], 6[1], 7[3, 2], 8[5, 4], 9[7, 6], 10[9, 8]])"
 
 end
