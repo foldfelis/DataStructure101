@@ -1,3 +1,8 @@
+import Base
+
+export PriorityQueue
+export update!, popmin!, popmax!
+
 mutable struct PriorityQueue{T}
     priority::MinMaxHeap{Int64}
     data::Vector{T}
@@ -5,19 +10,19 @@ mutable struct PriorityQueue{T}
     PriorityQueue{T}() where T = new(MinMaxHeap{Int64}(), T[])
 end
 
-function show(io::IO, pq::PriorityQueue{T}) where T
+function Base.show(io::IO, pq::PriorityQueue{T}) where T
     print(io, "PriorityQueue{$T}($(pq.data)")
 end
 
-function push!(pq::PriorityQueue{T}, v::T) where T
+function Base.push!(pq::PriorityQueue{T}, v::T) where T
     push!(pq.data, v)
     priority = length(pq.data)
     pushbubble!(pq.priority, priority)
 end
 
-minimum(pq::PriorityQueue) = minimum(pq.priority) => pq.data[minimum(pq.priority)]
+Base.minimum(pq::PriorityQueue) = minimum(pq.priority) => pq.data[minimum(pq.priority)]
 
-maximum(pq::PriorityQueue) = maximum(pq.priority) => pq.data[maximum(pq.priority)]
+Base.maximum(pq::PriorityQueue) = maximum(pq.priority) => pq.data[maximum(pq.priority)]
 
 function popmin!(pq::PriorityQueue)
     popmin!(pq.priority)
