@@ -1,57 +1,48 @@
 import Base
 
-export AdjacencyList, Vertex
+export AdjacencyList
 export relate!, nv, ne, degree
 
-mutable struct Vertex{T}
-    data::T
-    related::Vector{Vertex{T}}
+# mutable struct Vertex{T}
+#     data::T
+#     related::Vector{Vertex{T}}
+#
+#     Vertex{T}(data::T) where T = new(data, Vertex{T}[])
+# end
 
-    Vertex{T}(data::T) where T = new(data, Vertex{T}[])
-end
+# function Base.show(io::IO, v::Vertex)
+#     related = [i.data for i in v.related]
+#     length(related) > 0 ?
+#         print(io, "$(v.data)$(related)") : print(io, "$(v.data)[]")
+# end
 
-function Base.show(io::IO, v::Vertex)
-    related = [i.data for i in v.related]
-    length(related) > 0 ?
-        print(io, "$(v.data)$(related)") : print(io, "$(v.data)[]")
-end
-
-mutable struct AdjacencyList{T}
-    vertices::Vector{Vertex{T}}
+mutable struct AdjacencyList <: Graph
+    relation::Vector{Vector{Int64}}
     n_vertices::Int64
 
-    AdjacencyList{T}() where T = new(Vertex{T}[], 0)
+    function AdjacencyList(n::Int64)
+        new([Int[] for i=1:n], n)
+    end
 end
 
-function Base.show(io::IO, g::AdjacencyList{T}) where T
-    print(io, "AdjacencyList{$T}($([v for v in g.vertices]))")
+function Base.show(io::IO, g::AdjacencyList)
+    print(io, "AdjacencyList(")
+    for i=1:g.n_vertices
+        print(io, "$i($(g.relation[i]))")
+    end
+    print(io, ")")
 end
 
-Base.getindex(g::AdjacencyList, i::Int64) = g.vertices[i]
+Base.getindex(g::AdjacencyList, i::Int64) = 0 < i < g.n_vertices ? i : -1
 
 nv(g::AdjacencyList) = g.n_vertices
 
-ne(g::AdjacencyList) = sum([length(v.related) for v in g.vertices])
+ne(g::AdjacencyList) = sum([length(g.relation[v]) for v in 1:(g.n_vertices)])
 
-neighbor(g::AdjacencyList, v::Vertex) = v.related
+neighbor(g::AdjacencyList, v::Int64) = g.relation[v]
 
-function Base.push!(g::AdjacencyList, v::Vertex)
-    push!(g.vertices, v)
-    g.n_vertices += 1
+function relate!(g::AdjacencyList, v1::Int64, v2::Int64)
+    push!(g.relation[v1], v2)
 end
 
-function relate!(g::AdjacencyList, v1::Vertex, v2::Vertex)
-    push!(v1.related, v2)
-end
-
-function degree(g::AdjacencyList,  v::Vertex)
-    related = v.related
-    deg = length(related)
-
-    # self-loop is counted twice
-    for vertex in related
-        if vertex == v deg += 1 end
-    end
-
-    return deg
-end
+degree(g::AdjacencyList,  v::Int64) = length(g.relation[v])
