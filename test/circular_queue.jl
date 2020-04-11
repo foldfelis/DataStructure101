@@ -12,7 +12,7 @@ const DS = DataStructure101
 
     @test cl isa T
     @test length(cl) == 0
-    @test size(cl) == mem
+    @test size(cl) == (mem)
     @test repr(cl) == "CircularQueue{Int64, mem:0/5}([])"
 
     # Initial test data
@@ -29,7 +29,7 @@ const DS = DataStructure101
         @test cl.data[head_index] == i
         @test cl.head == head_index
         @test length(cl) == len
-        @test size(cl) == mem
+        @test size(cl) == (mem)
     end
 
     @test repr(cl) == "CircularQueue{Int64, mem:3/5}([3, 2, 1, ])"
@@ -49,7 +49,7 @@ const DS = DataStructure101
         @test cl.data == real_data
         @test cl.head == head_index
         @test length(cl) == len
-        @test size(cl) == mem
+        @test size(cl) == (mem)
     end
 
     @test repr(cl) == "CircularQueue{Int64, mem:0/5}([])"
@@ -65,7 +65,7 @@ const DS = DataStructure101
         @test cl.data[head_index] == i
         @test cl.head == head_index
         @test length(cl) == len
-        @test size(cl) == mem
+        @test size(cl) == (mem)
     end
 
     @test repr(cl) == "CircularQueue{Int64, mem:3/5}([3, 2, 1, ])"
