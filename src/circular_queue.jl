@@ -6,8 +6,7 @@ mutable struct CircularQueue{T}
     max_size::Int64
     head::Int64
 
-    CircularQueue{T}(n::Int64) where T =
-        new(Vector{T}(undef, n), 0, n, 0)
+    CircularQueue{T}(n::Int64) where T = new(Vector{T}(undef, n), 0, n, 0)
 end
 
 Base.length(cl::CircularQueue) = cl.length

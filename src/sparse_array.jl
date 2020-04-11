@@ -1,5 +1,3 @@
-import Base
-
 export ValueEntry, SparseArray
 
 mutable struct ValueEntry{T}
@@ -8,7 +6,9 @@ mutable struct ValueEntry{T}
     value::T
 
     ValueEntry{T}(row_i::Int, col_i::Int, value::T) where T = new(
-        row_i, col_i, value
+        row_i,
+        col_i,
+        value
     )
 end
 
@@ -18,9 +18,17 @@ mutable struct SparseArray{T}
     data::Vector{ValueEntry{T}}
 
     SparseArray{T}(n_row::Int, n_col::Int) where T = new(
-        n_row, n_col, Vector{ValueEntry{T}}()
+        n_row,
+        n_col,
+        Vector{ValueEntry{T}}()
     )
 end
+
+Base.size(sa::SparseArray) = (sa.n_row, sa.n_col)
+
+Base.length(sa::SparseArray) = length(sa.data)
+
+Base.eltype(sa::SparseArray{T}) where {T} = T
 
 function Base.show(io::IO, sa::SparseArray{T}) where T
     println(io, "SparseArray{$T}$(size(sa))[")
@@ -48,8 +56,7 @@ function find(sa::SparseArray, row_i::Int, col_i::Int)
 end
 
 function Base.push!(sa::SparseArray{T}, row_i::Int, col_i::Int, value::T) where T
-    value_entry = ValueEntry{T}(row_i, col_i, value)
-    push!(sa.data, value_entry)
+    push!(sa.data, ValueEntry{T}(row_i, col_i, value))
 end
 
 function Base.setindex!(sa::SparseArray{T}, value::T, row_i::Int, col_i::Int) where T
@@ -76,9 +83,3 @@ function Base.getindex(sa::SparseArray{T}, row_i::Int, col_i::Int) where T
 
     return zero(T)
 end
-
-Base.size(sa::SparseArray) = (sa.n_row, sa.n_col)
-
-Base.length(sa::SparseArray) = length(sa.data)
-
-Base.eltype(sa::SparseArray{T}) where {T} = T

@@ -1,10 +1,14 @@
+using Test
+using DataStructure101
+const DS = DataStructure101
+
 @testset "Test SparseArray" begin
     n_row = 100
     n_col = 110
 
     # Initial a SparseArray with size(10, 11)
     T_e = Int64
-    T = SparseArray{T_e}
+    T = DS.SparseArray{T_e}
     sa = T(n_row, n_col)
     @test sa isa T
     @test size(sa) == (n_row, n_col)
