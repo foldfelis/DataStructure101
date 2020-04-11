@@ -1,5 +1,3 @@
-import Base
-
 export Deque
 
 mutable struct Deque{T}
