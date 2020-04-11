@@ -2,7 +2,7 @@ file_name = [
     "stack",
     "queue",
     "deque",
-    # "circular_queue",
+    "circular_queue",
     # "sparse_array",
     # "linked_list",
     # "binary_tree",
