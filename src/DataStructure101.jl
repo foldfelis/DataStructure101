@@ -6,7 +6,7 @@ module DataStructure101
         "deque",
         "circular_queue",
         "sparse_array",
-        # "linked_list",
+        "linked_list",
         # "binary_tree",
         # "union_find",
         # "heap",

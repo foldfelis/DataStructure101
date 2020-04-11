@@ -1,175 +1,48 @@
-@testset "Test Node" begin
-
-    # Initial a Node with data '0'
-    T_e = Int64
-    T = Node{T_e}
-    node = T(0)
-    @test node.data == 0
-
-    # Node type test:
-    @test node isa T
-
-    @test repr(node) == "Null => Node(0) => Null"
-
-end
+using Test
+using DataStructure101
+const DS = DataStructure101
 
 @testset "Test LinkedList" begin
-
-    # Initial a Linked List with data '1'
+    # Initial a LinkedList
     T_e = Int64
-    T = LinkedList{T_e}
-    value = 1
-    ll = T(value)
-    @test ll.current_node.data == value
+    T = DS.LinkedList{T_e}
+    ll = T()
 
-    # Linked List type test:
-    @test ll isa T
+    @test length(ll) == 0
+    @test repr(ll) == "LinkedList{$T_e}([])"
 
-    # Push test: Push data into LinkedList 20 times by 2:20
-    passed_push = []
-    len = 20
-    for i=2:len
+    for i=1:5
         push!(ll, i)
-        push!(passed_push, ll.current_node.data == i)
+        @test ll[i] == i
     end
-    @test all(passed_push)
 
-    @test length(ll) == 20
+    @test repr(ll) == "LinkedList{$T_e}([1, 2, 3, 4, 5])"
 
-    @test repr(ll) == "LinkedList(\n\t There are 20 nodes in the LinkedList\n\t "*
-        "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, *20]\n)"
+    for i=1:5
+        @test popfirst!(ll) == i
+    end
 
-    # Move Test
-    passed_move = []
-    move_ptr(ll, -5)
-    @test repr(ll.current_node) == "PrevNode(14) => Node(15) => NextNode(16)"
-    value = len - 5
-    push!(passed_move, ll.current_node.data == value)
-    move_ptr(ll, 3)
-    value +=  3
-    push!(passed_move, ll.current_node.data == value)
-    @test all(passed_move)
+    @test repr(ll) == "LinkedList{$T_e}([])"
 
-    # Push test: Push data into the middle of LinkedList
-    push!(ll, 100)
-    passed_push_middle = [
-        ll.current_node.prev.data == value,
-        ll.current_node.data == 100,
-        ll.current_node.next.data == value + 1,
-    ]
-    @test all(passed_push_middle)
+    for i=6:10
+        pushfirst!(ll, i)
+        @test ll[1] == i
+    end
 
-    # Delete Current Node Test
-    deleted_data = delete!(ll)
-    passed_delete = [
-        deleted_data == 100,
-        ll.current_node.prev.data == value,
-        ll.current_node.data == value + 1,
-        ll.current_node.next.data == value + 2,
-    ]
-    @test all(passed_delete)
+    @test repr(ll) == "LinkedList{$T_e}([10, 9, 8, 7, 6])"
 
-    # Move 2 head Test
-    move_ptr2head(ll)
-    @test ll.current_node.data == 1
+    for i=6:10
+        @test pop!(ll) == i
+    end
 
-    # Move 2 tail Test
-    move_ptr2tail(ll)
-    @test ll.current_node.data == len
+    @test repr(ll) == "LinkedList{$T_e}([])"
 
-    # Pushfirst Test
-    value = 123
-    pushfirst!(ll, value)
-    passed_pushfirst = [
-        ll.current_node.prev isa NullNode,
-        ll.current_node.data == value,
-        ll.current_node.next.data == 1,
-    ]
-    @test all(passed_pushfirst)
+    # Setindex Test
+    push!(ll, 1)
+    ll[1] = 10
+    @test ll[1] == 10
+    @test repr(ll) == "LinkedList{$T_e}([10])"
 
-    # Delete first Node Test
-    deleted_data = delete!(ll, 1)
-    passed_delete_first = [
-        deleted_data == value,
-        ll.current_node.prev isa NullNode,
-        ll.current_node.data == 1,
-        ll.current_node.next.data == 2,
-    ]
-    @test all(passed_delete_first)
-
-    passed_insert = []
-    # Insert Test: Insert '5987' to index=5
-    value = 5987
-    index = 5
-    insert!(ll, value, index)
-    push!(passed_insert, ll.current_node.prev.data == index - 1)
-    push!(passed_insert, ll.current_node.data == value)
-    push!(passed_insert, ll.current_node.next.data == index)
-    delete!(ll)
-
-    # Insert Test: Insert '8745' to index=-5
-    value = 8745
-    index = -5
-    insert!(ll, value, index)
-    push!(passed_insert, ll.current_node.prev.data == len+index + 1)
-    push!(passed_insert, ll.current_node.data == value)
-    push!(passed_insert, ll.current_node.next.data == len+index + 2)
-    delete!(ll)
-
-    # Insert Test: Insert '1010' to index=0
-    value = 1010
-    index = 1
-    insert!(ll, value, 0)
-    push!(passed_insert, ll.current_node.prev isa NullNode)
-    push!(passed_insert, ll.current_node.data == value)
-    push!(passed_insert, ll.current_node.next.data == index)
-    delete!(ll)
-
-    # Insert Test: Insert '1111' to index=1
-    value = 1111
-    index = 1
-    insert!(ll, value, 1)
-    push!(passed_insert, ll.current_node.prev isa NullNode)
-    push!(passed_insert, ll.current_node.data == value)
-    push!(passed_insert, ll.current_node.next.data == index)
-    delete!(ll)
-
-    # Insert Test: Insert '-1111' to index=-1
-    value = -1111
-    index = len
-    insert!(ll, value, -1)
-    push!(passed_insert, ll.current_node.prev.data == index)
-    push!(passed_insert, ll.current_node.data == value)
-    push!(passed_insert, ll.current_node.next isa NullNode)
-    delete!(ll)
-
-    @test all(passed_insert)
-
-    passed_deleted = []
-    index = 1
-    # Delete Test: Delete data from index=0
-    deleted_data = delete!(ll, 0)
-    push!(passed_deleted, deleted_data == index)
-    push!(passed_deleted, ll.current_node.prev isa NullNode)
-    push!(passed_deleted, ll.current_node.data == index + 1)
-    push!(passed_deleted, ll.current_node.next.data == index + 2)
-
-    index += 1
-    # Delete Test: Delete data from index=1
-    deleted_data = delete!(ll, 1)
-    push!(passed_deleted, deleted_data == index)
-    push!(passed_deleted, ll.current_node.prev isa NullNode)
-    push!(passed_deleted, ll.current_node.data == index + 1)
-    push!(passed_deleted, ll.current_node.next.data == index + 2)
-
-    index = len
-    # Delete Test: Delete data from index=-1"
-    deleted_data = delete!(ll, -1)
-    push!(passed_deleted, deleted_data == index)
-    push!(passed_deleted, ll.current_node.prev.data == index - 2)
-    push!(passed_deleted, ll.current_node.data == index - 1)
-    push!(passed_deleted, ll.current_node.next isa NullNode)
-
-    @test all(passed_deleted)
+    # Insert Test
 
 end
