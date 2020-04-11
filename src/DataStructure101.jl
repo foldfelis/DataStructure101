@@ -1,9 +1,9 @@
 module DataStructure101
 
     file_name = [
-        # "stack",
-        # "queue",
-        # "deque",
+        "stack",
+        "queue",
+        "deque",
         "circular_queue",
         # "sparse_array",
         # "linked_list",

@@ -1,5 +1,3 @@
-import Base
-
 export Stack
 
 mutable struct Stack{T}

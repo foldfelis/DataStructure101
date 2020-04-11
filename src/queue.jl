@@ -1,5 +1,3 @@
-import Base
-
 export Queue
 
 mutable struct Queue{T}
