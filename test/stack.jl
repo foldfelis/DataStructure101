@@ -1,8 +1,12 @@
+using Test
+using DataStructure101
+const DS = DataStructure101
+
 @testset "Test Stack" begin
 
     # Initial a Stack with data '0'
     T_e = Int64
-    T = Stack{T_e}
+    T = DS.Stack{T_e}
     stake = T(0)
 
     # Type test
@@ -27,6 +31,7 @@
     end
     @test all(passed_check_data)
 
+    # Show Test
     @test repr(stake) == "Stack([15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0])"
 
 end

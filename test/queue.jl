@@ -1,13 +1,17 @@
+using Test
+using DataStructure101
+const DS = DataStructure101
+
 @testset "Test Queue" begin
 
     # Initial a Queue with data '0'
     T_e = Int64
-    T = Queue{T_e}
+    T = DS.Queue{T_e}
     data= T_e[0]
     queue = T(0)
     @test queue.data == data
 
-    # Type test:
+    # Type test
     @test queue isa T
 
     # Push test: Push data into queue 20 times by 1:20
@@ -28,6 +32,7 @@
     end
     @test all(passed_check_data)
 
+    # Show Test
     @test repr(queue) == "Queue(["*
         "5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]"*
     ")"
