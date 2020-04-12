@@ -41,15 +41,6 @@ is_empty(ll::LinkedList) = (ll.length < 1)
 
 head(ll::LinkedList) = ll.head_node
 
-function tail(ll::LinkedList)
-    node = head(ll)
-    while !(next(node) isa NullNode)
-        node = next(node)
-    end
-
-    return node
-end
-
 function Base.show(io::IO, ll::LinkedList{T}) where T
     print(io, "LinkedList{$T}([")
 
