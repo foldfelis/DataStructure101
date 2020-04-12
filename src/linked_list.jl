@@ -53,7 +53,7 @@ function Base.show(io::IO, ll::LinkedList{T}) where T
     print(io, "$(node)])")
 end
 
-function n_node(ll::LinkedList, n::Int64)
+function _getindex(ll::LinkedList, n::Int64)
     if is_empty(ll) throw(BoundsError("List is empty.")) end
     if ll.length < n throw(BoundsError("Out of boundary.")) end
 
@@ -65,10 +65,10 @@ function n_node(ll::LinkedList, n::Int64)
     return node
 end
 
-Base.getindex(ll::LinkedList, i::Int64) = value(n_node(ll, i))
+Base.getindex(ll::LinkedList, i::Int64) = value(_getindex(ll, i))
 
 function Base.setindex!(ll::LinkedList{T}, data::T, i::Int64) where T
-    n_node(ll, i).data = data
+    _getindex(ll, i).data = data
 end
 
 function Base.pushfirst!(ll::LinkedList, data::T) where T
@@ -89,7 +89,7 @@ function Base.insert!(ll::LinkedList, data::T, i::Int64) where T
         Base.pushfirst!(ll, data)
     else
         node = ListNode{T}(data)
-        current_node = n_node(ll, i-1)
+        current_node = _getindex(ll, i-1)
         next_node = next(current_node)
 
         node.prev = current_node
@@ -121,7 +121,7 @@ function Base.delete!(ll::LinkedList, i::Int64)
     if i < 2
         return Base.popfirst!(ll)
     else
-        current_node = n_node(ll, i)
+        current_node = _getindex(ll, i)
         prev_node = prev(current_node)
         next_node = next(current_node)
 
