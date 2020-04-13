@@ -8,7 +8,7 @@ module DataStructure101
         "sparse_array",
         "linked_list",
         # "binary_tree",
-        # "union_find",
+        "union_find",
         # "heap",
         # "min_max_heap",
         # "priority_queue",
@@ -17,8 +17,7 @@ module DataStructure101
     ]
 
     for f in file_name
-        fname = string(f, ".jl")
-        include(fname)
+        include("$f.jl")
     end
 
 end  # module DataStructure101

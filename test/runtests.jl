@@ -6,7 +6,7 @@ file_name = [
     "sparse_array",
     "linked_list",
     # "binary_tree",
-    # "union_find",
+    "union_find",
     # "heap",
     # "min_max_heap",
     # "priority_queue",
@@ -21,6 +21,5 @@ for f in file_name
     println()
     @info teststr
 
-    fname = string(f, ".jl")
-    include(fname)
+    include("$f.jl")
 end
