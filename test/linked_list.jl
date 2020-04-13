@@ -80,4 +80,12 @@ end
 
     @test delete!(ll, 1) == 20
     @test repr(ll) == "LinkedList{$T_e}([])"
+
+    # Throws Test
+    ll = T()
+    @test_throws BoundsError ll[1]
+    insert!(ll, 1, 1)
+    @test_throws BoundsError ll[0]
+    @test ll[1] == 1
+    @test_throws BoundsError ll[2]
 end
