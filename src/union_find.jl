@@ -1,18 +1,21 @@
-import Base
+export DisjointSet
+export find
 
-export make_set, find, union!
+mutable struct DisjointSet
+    parent::Vector{Int64}
 
-make_set(n::Int64) = -ones(Int64, n)
+    DisjointSet(n::Int64) = new(-ones(Int64, n))
+end
 
-parent(set::Vector{Int64}, element::Int64) = set[element]
+parent(set::DisjointSet, element::Int64) = set.parent[element]
 
-function find(set::Vector{Int64}, element::Int64)
+function find(set::DisjointSet, element::Int64)
     p = parent(set, element)
     if p == -1 return element end
     find(set, p)
 end
 
-function Base.union!(set::Vector{Int64}, a::Int64, b::Int64)
+function Base.union!(set::DisjointSet, a::Int64, b::Int64)
     root = find(set, a)
-    set[b] = root
+    set.parent[b] = root
 end
