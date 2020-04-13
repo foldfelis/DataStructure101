@@ -1,29 +1,29 @@
-import Base
+const DS = DataStructure101
 
 export TreeNode, BinaryTree
-export String, value, left_child, right_child, root, tree_repr, level
+export value, left_child, right_child, root, tree_repr, level
 
-mutable struct TreeNode{T} <: AbstractNode
+mutable struct TreeNode{T} <: DS.AbstractNode
     value::T
     index::Int
-    parent::AbstractNode
-    left::AbstractNode
-    right::AbstractNode
+    parent::DS.AbstractNode
+    left::DS.AbstractNode
+    right::DS.AbstractNode
 
     TreeNode{T}(value::T, index::Int) where T =
-        new(value, index, NullNode(), NullNode(), NullNode())
+        new(value, index, DS.NullNode(), DS.NullNode(), DS.NullNode())
 end
 
-function Base.String(node::AbstractNode)
-    if node isa NullNode return "" end
+function Base.String(node::DS.AbstractNode)
+    if node isa DS.NullNode return "" end
 
     return "$(node.value)"
 end
 
 
-function Base.show(io::IO, node::TreeNode{T}) where T
+function Base.show(io::IO, node::DS.TreeNode{T}) where T
     println(io, "TreeNode{$T}( index=$(node.index)")
-    if !(node.parent isa NullNode)
+    if !(node.parent isa DS.NullNode)
         println(io, " Parent($(String(node.parent)))")
     else
         println(io, " Current node is root")
@@ -31,13 +31,13 @@ function Base.show(io::IO, node::TreeNode{T}) where T
 
     println(io, " \tNode($(String(node)))")
 
-    if !(node.right isa NullNode)
+    if !(node.right isa DS.NullNode)
         println(io, " \t\tRightChild($(String(node.right)))")
     else
         println(io, " \t\tNull")
     end
 
-    if !(node.left isa NullNode)
+    if !(node.left isa DS.NullNode)
         println(io, " \t\tLeftChild($(String(node.left)))")
     else
         println(io, " \t\tNull")
@@ -45,7 +45,7 @@ function Base.show(io::IO, node::TreeNode{T}) where T
     print(io, ")")
 end
 
-function level(node::AbstractNode)
+function level(node::DS.AbstractNode)
     if node isa TreeNode
         return Int(floor(log2(node.index))+1)
     end
@@ -59,7 +59,7 @@ right_child(tn::TreeNode) = tn.right
 
 value(tn::TreeNode) = tn.value
 
-value(tn::NullNode) = nothing
+value(tn::DS.NullNode) = nothing
 
 mutable struct BinaryTree{T}
     root::TreeNode{T}
@@ -76,7 +76,7 @@ function Base.show(io::IO, bt::BinaryTree{T}) where T
     println(io, "BinaryTree{$T}(\n$(tree_repr(bt.root))\n)")
 end
 
-tree_repr(node::NullNode; tree_str="", level=0) = tree_str
+tree_repr(node::DS.NullNode; tree_str="", level=0) = tree_str
 
 function tree_repr(node::TreeNode; tree_str="", level=0)
     tree_str = tree_repr(node.right, tree_str=tree_str, level=level+1)
@@ -144,7 +144,7 @@ function check_boundary(bt::BinaryTree, i::Int)
 end
 
 function Base.getindex(bt::BinaryTree, i::Int)
-    if !check_boundary(bt, i) return NullNode() end
+    if !check_boundary(bt, i) return DS.NullNode() end
 
     path = calc_path(i)
     node = get_path(bt, path)
@@ -153,19 +153,19 @@ function Base.getindex(bt::BinaryTree, i::Int)
 end
 
 function left_child(bt::BinaryTree, i::Int)
-    if !check_boundary(bt, i) return NullNode() end
+    if !check_boundary(bt, i) return DS.NullNode() end
 
     return bt[i].left
 end
 
 function right_child(bt::BinaryTree, i::Int)
-    if !check_boundary(bt, i) return NullNode() end
+    if !check_boundary(bt, i) return DS.NullNode() end
 
     return bt[i].right
 end
 
 function value(bt::BinaryTree, i::Int)
-    if !check_boundary(bt, i) return NullNode() end
+    if !check_boundary(bt, i) return DS.NullNode() end
     node = bt[i]
 
     return node.value

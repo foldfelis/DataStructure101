@@ -1,21 +1,25 @@
+using Test
+using DataStructure101
+const DS = DataStructure101
+
 @testset "Test TreeNode" begin
 
     # Initial a TreeNode with data '1'
-    tn = TreeNode{Int64}(1, 1)
+    tn = DS.TreeNode{Int64}(1, 1)
 
     passed_node = [
         tn.value == 1,
         tn.index == 1,
-        tn.parent isa NullNode,
-        tn.left isa NullNode,
-        tn.right isa NullNode,
+        tn.parent isa DS.NullNode,
+        tn.left isa DS.NullNode,
+        tn.right isa DS.NullNode,
     ]
     @test all(passed_node)
 
-    @test left_child(tn) isa NullNode
-    @test right_child(tn) isa NullNode
-    @test value(tn) == 1
-    @test value(NullNode()) == nothing
+    @test DS.left_child(tn) isa DS.NullNode
+    @test DS.right_child(tn) isa DS.NullNode
+    @test DS.value(tn) == 1
+    @test DS.value(DS.NullNode()) == nothing
 
     @test repr(tn) ==
         "TreeNode{Int64}( index=1\n Current node is root\n \tNode(1)\n \t\tNull\n \t\tNull\n)"
@@ -24,7 +28,7 @@ end
 @testset "Test BinaryTree" begin
 
     # Initial a Binary Tree with data '1'
-    bt = BinaryTree{Int64}(1)
+    bt = DS.BinaryTree{Int64}(1)
     passed_initial = [
         bt.root.value == 1,
         bt.length == 1,
@@ -41,19 +45,19 @@ end
     end
     @test all(passed_push)
 
-    @test level(bt[10]) == 4
+    @test DS.level(bt[10]) == 4
 
     # Value Test: Get 10th value from tree
-    @test value(bt, 10) == 10
+    @test DS.value(bt, 10) == 10
 
     # Value Test: Get Left child of 10th value from tree
-    @test value(left_child(bt, 10)) == 20
+    @test DS.value(DS.left_child(bt, 10)) == 20
 
     # Value Test: Get Right child of 10th value from tree
-    @test value(right_child(bt, 10)) == 21
+    @test DS.value(DS.right_child(bt, 10)) == 21
 
     # Get Root
-    @test String(root(bt)) == "1"
+    @test String(DS.root(bt)) == "1"
 
     @test repr(bt) == "BinaryTree{Int64}("*
         "\n\n\t\t\tTreeNode(15)"*
