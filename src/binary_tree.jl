@@ -1,108 +1,93 @@
 const DS = DataStructure101
 
 export TreeNode, BinaryTree
-export value, left_child, right_child, root, tree_repr, level
+export value, parent, left_child, right_child, level
+export root, tree_repr
 
 mutable struct TreeNode{T} <: DS.AbstractNode
     value::T
-    index::Int
     parent::DS.AbstractNode
     left::DS.AbstractNode
     right::DS.AbstractNode
 
-    TreeNode{T}(value::T, index::Int) where T =
-        new(value, index, DS.NullNode(), DS.NullNode(), DS.NullNode())
+    TreeNode{T}(value::T) where T =new(
+        value,
+        DS.NullNode(),
+        DS.NullNode(),
+        DS.NullNode()
+    )
 end
 
-function Base.String(node::DS.AbstractNode)
-    if node isa DS.NullNode return "" end
+value(tn::TreeNode) = tn.value
 
-    return "$(node.value)"
-end
-
-
-function Base.show(io::IO, node::DS.TreeNode{T}) where T
-    println(io, "TreeNode{$T}( index=$(node.index)")
-    if !(node.parent isa DS.NullNode)
-        println(io, " Parent($(String(node.parent)))")
-    else
-        println(io, " Current node is root")
-    end
-
-    println(io, " \tNode($(String(node)))")
-
-    if !(node.right isa DS.NullNode)
-        println(io, " \t\tRightChild($(String(node.right)))")
-    else
-        println(io, " \t\tNull")
-    end
-
-    if !(node.left isa DS.NullNode)
-        println(io, " \t\tLeftChild($(String(node.left)))")
-    else
-        println(io, " \t\tNull")
-    end
-    print(io, ")")
-end
-
-function level(node::DS.AbstractNode)
-    if node isa TreeNode
-        return Int(floor(log2(node.index))+1)
-    end
-
-    return
-end
+parent(tn::TreeNode) = tn.parent
 
 left_child(tn::TreeNode) = tn.left
 
 right_child(tn::TreeNode) = tn.right
 
-value(tn::TreeNode) = tn.value
+parent(tn::DS.NullNode) = DS.NullNode()
 
-value(tn::DS.NullNode) = nothing
+left_child(tn::DS.NullNode) = DS.NullNode()
 
-mutable struct BinaryTree{T}
-    root::TreeNode{T}
+right_child(tn::DS.NullNode) = DS.NullNode()
+
+function Base.show(io::IO, node::DS.TreeNode{T}) where T
+    print(io, "TreeNode{$T}($(value(node)))")
+end
+
+function level(node::DS.AbstractNode)
+    !(node isa DS.TreeNode) && (return -1)
+
+    level = 0
+    while !(parent(node) isa DS.NullNode)
+        node = parent(node)
+        level += 1
+    end
+
+    return level
+end
+
+mutable struct BinaryTree
+    root::DS.AbstractNode
     length::Int
-
-    BinaryTree{T}(val::T, index::Int) where T = new(TreeNode{T}(val, index), 1)
 end
 
-BinaryTree{T}(root_val::T) where T = BinaryTree{T}(root_val, 1)
+BinaryTree(value::Int64) = BinaryTree(TreeNode{Int64}(value), 1)
 
-Base.eltype(bt::BinaryTree{T}) where {T} = T
+BinaryTree() = BinaryTree(DS.NullNode(), 0)
 
-function Base.show(io::IO, bt::BinaryTree{T}) where T
-    println(io, "BinaryTree{$T}(\n$(tree_repr(bt.root))\n)")
-end
+root(bt::BinaryTree) = bt.root
 
-tree_repr(node::DS.NullNode; tree_str="", level=0) = tree_str
+Base.length(bt::BinaryTree) = bt.length
+
+Base.eltype(bt::BinaryTree) = Int64
+
+tree_repr(node::DS.NullNode; tree_str="", level=0) = "$(tree_str)\n"
 
 function tree_repr(node::TreeNode; tree_str="", level=0)
     tree_str = tree_repr(node.right, tree_str=tree_str, level=level+1)
-    tree_str = "$(tree_str)\n$("\t"^level)TreeNode($(String(node)))"
+    tree_str = "$(tree_str)\n$("\t"^level)TreeNode($(value(node)))"
     tree_str = tree_repr(node.left, tree_str=tree_str, level=level+1)
 
     return tree_str
 end
 
-function calc_path(index::Int; get_parent=false)
+function Base.show(io::IO, bt::BinaryTree)
+    print(io, "BinaryTree($(tree_repr(bt.root)))")
+end
+
+function Base.getindex(bt::BinaryTree, i::Int)
+    # calculate path
     path = []
-    while index != 1
-        push!(path, rem(index, 2))
-        index = div(index, 2)
+    while i != 1
+        push!(path, rem(i, 2))
+        i = div(i, 2)
     end
 
     path = BitArray(reverse(path))
 
-    if get_parent
-        return path[1:end-1]
-    else
-        return path
-    end
-end
-
-function get_path(bt::BinaryTree, path::BitArray)
+    # search node
     node = bt.root
     for is_right in path
         if is_right
@@ -115,60 +100,15 @@ function get_path(bt::BinaryTree, path::BitArray)
     return node
 end
 
-function Base.push!(bt::BinaryTree{T}, v::T) where T
-    index = bt.length + 1
-    node = TreeNode{T}(v, index)
+function Base.setindex!(bt::BinaryTree, v::Int64, i::Int64)
+    node = TreeNode{Int64}(v)
+    (bt.root isa DS.NullNode && i == 1) && (bt.root = node; return)
 
-    path = calc_path(index)
-    parent = get_path(bt, path[1:end-1])
-
+    parent = Base.getindex(bt, div(i, 2))
+    is_right = Bool(rem(i, 2))
+    !(parent isa TreeNode) && (throw(BoundsError("parent of $(i)th node not found")))
     node.parent = parent
-
-    isright = path[end]
-    if isright
-        parent.right = node
-    else
-        parent.left = node
-    end
+    is_right ? (parent.right = node) : (parent.left = node)
 
     bt.length += 1
 end
-
-function check_boundary(bt::BinaryTree, i::Int)
-    if i > bt.length
-        throw(BoundsError())
-        return false
-    end
-
-    return true
-end
-
-function Base.getindex(bt::BinaryTree, i::Int)
-    if !check_boundary(bt, i) return DS.NullNode() end
-
-    path = calc_path(i)
-    node = get_path(bt, path)
-
-    return node
-end
-
-function left_child(bt::BinaryTree, i::Int)
-    if !check_boundary(bt, i) return DS.NullNode() end
-
-    return bt[i].left
-end
-
-function right_child(bt::BinaryTree, i::Int)
-    if !check_boundary(bt, i) return DS.NullNode() end
-
-    return bt[i].right
-end
-
-function value(bt::BinaryTree, i::Int)
-    if !check_boundary(bt, i) return DS.NullNode() end
-    node = bt[i]
-
-    return node.value
-end
-
-root(bt::BinaryTree) = bt.root
