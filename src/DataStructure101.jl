@@ -7,7 +7,7 @@ module DataStructure101
         "circular_queue",
         "sparse_array",
         "linked_list",
-        # "binary_tree",
+        "binary_tree",
         "union_find",
         # "heap",
         # "min_max_heap",

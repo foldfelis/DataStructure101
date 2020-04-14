@@ -4,9 +4,15 @@ const DS = DataStructure101
 
 @testset "Test Nodes" begin
     node = DS.NullNode()
+    @test DS.value(node) == nothing
+    @test DS.next(node) isa DS.NullNode
+    @test DS.prev(node) isa DS.NullNode
     @test repr(node) == ""
 
     node = DS.ListNode{Int64}(10)
+    @test DS.value(node) == 10
+    @test DS.next(node) isa DS.NullNode
+    @test DS.prev(node) isa DS.NullNode
     @test repr(node) == "10"
 end
 
@@ -80,4 +86,14 @@ end
 
     @test delete!(ll, 1) == 20
     @test repr(ll) == "LinkedList{$T_e}([])"
+
+    # Throws Test
+    ll = T()
+    @test_throws BoundsError ll[1]
+    insert!(ll, 1, 1)
+    @test_throws BoundsError ll[0]
+    @test ll[1] == 1
+    @test_throws BoundsError ll[2]
+    @test_throws BoundsError insert!(ll, 0, 0)
+    @test_throws BoundsError delete!(ll, 0)
 end

@@ -4,11 +4,11 @@ abstract type AbstractNode end
 
 struct NullNode <: AbstractNode end
 
-# value(node::NullNode) = nothing
+value(node::NullNode) = nothing
 
 next(node::NullNode) = NullNode()
 
-# prev(node::NullNode) = NullNode()
+prev(node::NullNode) = NullNode()
 
 Base.show(io::IO, node::NullNode) = nothing
 
@@ -55,7 +55,7 @@ end
 
 function _getindex(ll::LinkedList, n::Int64)
     if is_empty(ll) throw(BoundsError("List is empty.")) end
-    if ll.length < n throw(BoundsError("Out of boundary.")) end
+    if !(0 < n <= ll.length) throw(BoundsError("Out of boundary.")) end
 
     node = head(ll)
     for index=2:n
@@ -85,7 +85,9 @@ function Base.pushfirst!(ll::LinkedList, data::T) where T
 end
 
 function Base.insert!(ll::LinkedList, data::T, i::Int64) where T
-    if i < 2
+    if i < 1
+        throw(BoundsError("Out of boundary."))
+    elseif i < 2
         Base.pushfirst!(ll, data)
     else
         node = ListNode{T}(data)
@@ -118,7 +120,9 @@ function Base.popfirst!(ll::LinkedList)
 end
 
 function Base.delete!(ll::LinkedList, i::Int64)
-    if i < 2
+    if i < 1
+        throw(BoundsError("Out of boundary."))
+    elseif i < 2
         return Base.popfirst!(ll)
     else
         current_node = _getindex(ll, i)
