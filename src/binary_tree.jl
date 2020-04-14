@@ -74,7 +74,7 @@ function tree_repr(node::TreeNode; tree_str="", level=0)
 end
 
 function Base.show(io::IO, bt::BinaryTree)
-    print(io, "BinaryTree($(tree_repr(bt.root)))")
+    print(io, "BinaryTree($(tree_repr(root(bt))))")
 end
 
 function Base.getindex(bt::BinaryTree, i::Int)
@@ -88,12 +88,12 @@ function Base.getindex(bt::BinaryTree, i::Int)
     path = BitArray(reverse(path))
 
     # search node
-    node = bt.root
+    node = root(bt)
     for is_right in path
         if is_right
-            node = node.right
+            node = right_child(node)
         else
-            node = node.left
+            node = left_child(node)
         end
     end
 
@@ -102,7 +102,7 @@ end
 
 function Base.setindex!(bt::BinaryTree, v::Int64, i::Int64)
     node = TreeNode{Int64}(v)
-    (bt.root isa DS.NullNode && i == 1) && (bt.root = node; return)
+    (root(bt) isa DS.NullNode && i == 1) && (bt.root = node; return)
 
     parent = Base.getindex(bt, div(i, 2))
     is_right = Bool(rem(i, 2))

@@ -38,6 +38,11 @@ end
         @test DS.value(bt[i]) == i
     end
 
+    @test DS.parent(bt[100]) isa DS.NullNode
+    @test DS.right_child(bt[100]) isa DS.NullNode
+    @test DS.left_child(bt[100]) isa DS.NullNode
+    @test DS.level(bt[25]) == 4
+
     @test repr(bt) == "BinaryTree(\n" *
         "\n\t\t\tTreeNode(15)\n" *
         "\n\t\tTreeNode(7)\n" *
