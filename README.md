@@ -10,7 +10,10 @@ This repository is not just an implement yet a learning process to fully underst
 
 In this reop, I implement some common and useful data structures. Do not expect the implementations to be perfect, but do expect to see code written in haste.
 
-**Reference:** [DataStructures.jl](https://github.com/JuliaCollections/DataStructures.jl)
+**Reference:**
+
+[DataStructures.jl](https://github.com/JuliaCollections/DataStructures.jl)
+[AbstractTrees.jl](https://github.com/JuliaCollections/AbstractTrees.jl)
 
 ### Prepare
 - [x] Enthusiasm
