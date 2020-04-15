@@ -9,9 +9,9 @@ module DataStructure101
         "linked_list",
         "binary_tree",
         "union_find",
-        # "heap",
-        # "min_max_heap",
-        # "priority_queue",
+        "heap",
+        "min_max_heap",
+        "priority_queue",
         # "adjacency_matrix",
         # "adjacency_list",
     ]
