@@ -7,6 +7,10 @@ const DS = DataStructure101
     for i = 1:26
         push!(pq, '`'+i)
     end
+    @test repr(pq) == "PriorityQueue{Char}([" *
+        "'a', 'b', 'c', 'd', 'e', 'f', 'g', " *
+        "'h', 'i', 'j', 'k', 'l', 'm', 'n', " *
+        "'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']"
     @test minimum(pq) == (1 => 'a')
     @test maximum(pq) == (26 => 'z')
     @test DS.pop_min!(pq) == 'a'
