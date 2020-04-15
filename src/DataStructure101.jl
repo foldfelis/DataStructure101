@@ -11,7 +11,7 @@ module DataStructure101
         "union_find",
         "heap",
         "min_max_heap",
-        # "priority_queue",
+        "priority_queue",
         # "adjacency_matrix",
         # "adjacency_list",
     ]
