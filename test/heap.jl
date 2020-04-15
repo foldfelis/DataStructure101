@@ -16,7 +16,13 @@ const DS = DataStructure101
         push!(heap, i)
     end
     DS.build!(heap)
+
+    @test length(heap) == 30
+    @test DS.level(heap, 5) == 3
     @test DS.root(heap) == 1
+    @test DS.left_child(heap, 5) == 10
+    @test DS.right_child(heap, 5) == 11
+
     @test repr(heap) == "Heap(\n" *
         "\n\t\t\tHeapNode(16)\n" *
         "\t\t\t\tHeapNode(24)\n" *

@@ -1,7 +1,7 @@
 const DS = DataStructure101
 
 export Heap, MaxHeap, MinHeap
-export root, parent, left_child, right_child, heapify!, build!
+export level, root, parent, left_child, right_child, heapify!, build!
 
 abstract type Heap end
 
@@ -24,6 +24,8 @@ Base.getindex(heap::Heap, i::Int64) = heap.data[i]
 Base.setindex!(heap::Heap, v::Int64, i::Int64) = (heap.data[i] = v)
 
 Base.length(heap::Heap) = length(heap.data)
+
+level(heap::Heap, i::Int64) = floor(Int, log2(i)) + 1
 
 root(heap::Heap) = 1
 
