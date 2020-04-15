@@ -12,7 +12,7 @@ module DataStructure101
         "heap",
         "min_max_heap",
         "priority_queue",
-        "adjacency_matrix",
+        "graph",
     ]
 
     for f in file_name

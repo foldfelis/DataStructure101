@@ -1,17 +1,17 @@
-export Graph, AdjacencyMatrix, WeightedAdjacencyMatrix, AdjacencyList
+export AbstractGraph, AdjacencyMatrix, WeightedAdjacencyMatrix, AdjacencyList, Graph
 export nv, ne, relate!, neighbor, weight, degree
 export probability, random_walk
 
-abstract type Graph end
+abstract type AbstractGraph end
 
-mutable struct AdjacencyMatrix <: Graph
+mutable struct AdjacencyMatrix <: AbstractGraph
     relation::BitArray
     n_vertices::Int64
 
     AdjacencyMatrix(n::Int64) = new(zeros(Bool, n, n), n)
 end
 
-mutable struct WeightedAdjacencyMatrix{T <: Number} <: Graph
+mutable struct WeightedAdjacencyMatrix{T <: Number} <: AbstractGraph
     relation::Array{T}
     n_vertices::Int64
 
@@ -20,11 +20,11 @@ mutable struct WeightedAdjacencyMatrix{T <: Number} <: Graph
     end
 end
 
-nv(g::Graph) = g.n_vertices
+nv(g::AbstractGraph) = g.n_vertices
 
-ne(g::Graph) = sum(g.relation .!= 0)
+ne(g::AbstractGraph) = sum(g.relation .!= 0)
 
-function neighbor(g::Graph, v::Int64)
+function neighbor(g::AbstractGraph, v::Int64)
     neighbor_list = Int[]
     for (i, v) in enumerate(g.relation[v, 1:end])
         v == 0 && continue
@@ -40,7 +40,7 @@ function probability(g::WeightedAdjacencyMatrix)
     g.relation ./ sum(g.relation, dims=2)
 end
 
-function Base.show(io::IO, g::Graph)
+function Base.show(io::IO, g::AbstractGraph)
     println(io, "Graph(")
     for i = 1:g.n_vertices
         for j = 1:g.n_vertices print(io, "\t $(g.relation[i, j])") end
@@ -64,12 +64,14 @@ function random_walk(g::WeightedAdjacencyMatrix{T}, x::Vector{T}, steps::Int64)
     return x
 end
 
-mutable struct AdjacencyList <: Graph
+mutable struct AdjacencyList <: AbstractGraph
     relation::Vector{Vector{Int64}}
     n_vertices::Int64
 
     AdjacencyList(n::Int64) = new([Int[] for i=1:n], n)
 end
+
+# TODO: WeightedAdjacencyList
 
 Base.getindex(g::AdjacencyList, i::Int64) = 0 < i < g.n_vertices ? i : -1
 
@@ -91,4 +93,13 @@ end
 
 function relate!(g::AdjacencyList, v1::Int64, v2::Int64)
     push!(g.relation[v1], v2)
+end
+
+function Graph(n::Int64; representation, random_g::Bool=true, T=Float64)
+    (representation == AdjacencyMatrix) &&
+        (return AdjacencyMatrix(n))
+    (representation == AdjacencyList) &&
+        (return AdjacencyList(n))
+    (representation == WeightedAdjacencyMatrix) &&
+        (return WeightedAdjacencyMatrix{T}(n=n, random_g=random_g))
 end
