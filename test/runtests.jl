@@ -1,6 +1,3 @@
-using DataStructure101
-using Test
-
 file_name = [
     "stack",
     "queue",
@@ -13,8 +10,7 @@ file_name = [
     "heap",
     "min_max_heap",
     "priority_queue",
-    "adjacency_matrix",
-    "adjacency_list",
+    "graph",
 ]
 
 for f in file_name
@@ -24,6 +20,5 @@ for f in file_name
     println()
     @info teststr
 
-    fname = string(f, ".jl")
-    include(fname)
+    include("$f.jl")
 end

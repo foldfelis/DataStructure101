@@ -12,13 +12,11 @@ module DataStructure101
         "heap",
         "min_max_heap",
         "priority_queue",
-        "adjacency_matrix",
-        "adjacency_list",
+        "graph",
     ]
 
     for f in file_name
-        fname = string(f, ".jl")
-        include(fname)
+        include("$f.jl")
     end
 
 end  # module DataStructure101

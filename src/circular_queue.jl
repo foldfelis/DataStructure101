@@ -1,38 +1,24 @@
-import Base
-
 export CircularQueue
 
 mutable struct CircularQueue{T}
     data::Vector{T}
     length::Int64
-    limit::Int64
+    max_size::Int64
     head::Int64
-    tail::Int64
 
-    CircularQueue{T}(n::Int64) where T =
-        new(Vector{T}(undef, n), 0, n, 0, 0)
+    CircularQueue{T}(n::Int64) where T = new(Vector{T}(undef, n), 0, n, 0)
 end
 
 Base.length(cl::CircularQueue) = cl.length
 
-function next_index(i::Int64, limit::Int64)
-    #=
-    to move next, i += 1 must apply,
-    yet change i to 0-based i -= 1 must apply as well.
-    Skiped those to reduce calculation.
-    =#
-    i %= limit
-    i += 1 # change to 1-based index
-
-    return i
-end
+Base.size(cl::CircularQueue) = (cl.max_size)
 
 function Base.show(io::IO, cl::CircularQueue{T}) where T
     length = cl.length
-    limit = cl.limit
+    max_size = cl.max_size
     head = cl.head
 
-    print(io, "CircularQueue{$(T), mem:$(length)/$(limit)}([")
+    print(io, "CircularQueue{$(T), mem:$(length)/$(max_size)}([")
 
     if length < 1
         print(io, "])")
@@ -40,10 +26,7 @@ function Base.show(io::IO, cl::CircularQueue{T}) where T
     end
 
     for i = head.-collect(1:length) # change to 0-based index
-        if i < 0
-            i += length
-        end
-        i %= limit
+        i = (i + max_size) % max_size # circular
         i += 1 # change to 1-based index
         print(io, "$(cl.data[i]), ")
     end
@@ -52,40 +35,36 @@ function Base.show(io::IO, cl::CircularQueue{T}) where T
 end
 
 function Base.pushfirst!(cl::CircularQueue, data)
-    limit = cl.limit
+    max_size = cl.max_size
 
-    cl.head = next_index(cl.head, limit)
+    #=
+        cl.head += 1 # move to next index
+        cl.head -= 1 # change to 0-based index
+        Skiped those to reduce calculation.
+    =#
+    cl.head %= max_size # circular
+    cl.head += 1 # change to 1-based index
+
     cl.data[cl.head] = data
     cl.length += 1
-    if cl.length > limit
-        cl.length = limit
+    if cl.length > max_size
+        cl.length = max_size
     end
-
-    # adjust tail
-    length = cl.length
-    index = cl.head
-
-    index -= 1 # change to 0-based index
-    index -= length-1
-    index %= length
-    if index < 0
-        index += length
-    end
-    index += 1 # change to 1-based index
-
-    cl.tail = index
 end
 
 function Base.pop!(cl::CircularQueue)
-    limit = cl.limit
+    max_size = cl.max_size
+    length = cl.length
 
-    if cl.length < 1
-        return
-    end
+    if length < 1 return end
 
-    data = cl.data[cl.tail]
-    cl.tail = next_index(cl.tail, limit)
+    index = cl.head
+    index -= 1 # change to 0-based index
+    index -= (length - 1) # move from head to tail
+    index = (index + max_size) % max_size # circular
+    index += 1 # change to 1-based index
+
     cl.length -= 1
 
-    return data
+    return cl.data[index]
 end
