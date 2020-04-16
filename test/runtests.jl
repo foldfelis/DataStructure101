@@ -10,8 +10,7 @@ file_name = [
     "heap",
     "min_max_heap",
     "priority_queue",
-    # "adjacency_matrix",
-    # "adjacency_list",
+    "graph",
 ]
 
 for f in file_name
