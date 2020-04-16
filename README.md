@@ -29,15 +29,15 @@ In this reop, I implement some common and useful data structures. Do not expect 
 
 ### Hierarchical Data Structure
 - [x] Binary Tree
-- [x] Heap (100 days: 86)
+- [x] Heap
 - [x] Minmax Heap
 - [x] Priority Queue
 - [ ] Trie
 
 ### Indexing Data Structure
-- [x] Union-find structure (100 days: 41)
-- [ ] Hash Table - chaining (100 days: 71)
-- [ ] Hash Table - open addressing (100 days: 72)
+- [x] Union-find structure
+- [ ] Hash Table - chaining
+- [ ] Hash Table - open addressing
 
 ## Graph
 - [x] Adjacency Matrix
