@@ -8,7 +8,7 @@ const DS = DataStructure101
         @testset "Basic operate" begin
             n = 10
 
-            g = DS.Graph(n, representation=DS.AdjacencyMatrix)
+            g = DS.Graph(n, :matrix)
             row_str = "\t false" ^ n
             data_str = "$row_str\n" ^ n
             @test repr(g) == "Graph(\n$data_str)"
@@ -22,11 +22,7 @@ const DS = DataStructure101
             @test DS.ne(g) == 1
             @test DS.neighbor(g, 2) == Int[5]
 
-            g = DS.Graph(
-                n,
-                representation=DS.WeightedAdjacencyMatrix,
-                random_g=false
-            )
+            g = DS.Graph(n, :w_matrix, random=false)
 
             row_str = "\t 0.0" ^ n
             data_str = "$row_str\n" ^ n
@@ -48,7 +44,7 @@ const DS = DataStructure101
 
         @testset "Random Walk" begin
             n = 100
-            city = DS.Graph(n, representation=DS.WeightedAdjacencyMatrix)
+            city = DS.Graph(n, :w_matrix)
             p = DS.probability(city)
 
             test_prob = []
@@ -64,7 +60,7 @@ const DS = DataStructure101
     end
 
     @testset "AdjacencyList" begin
-        g = DS.Graph(10, representation=DS.AdjacencyList)
+        g = DS.Graph(10, :list)
         @test g isa DS.AbstractGraph
         @test g isa DS.AdjacencyList
 

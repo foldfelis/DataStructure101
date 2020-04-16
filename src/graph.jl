@@ -15,8 +15,8 @@ mutable struct WeightedAdjacencyMatrix{T <: Number} <: AbstractGraph
     relation::Array{T}
     n_vertices::Int64
 
-    function WeightedAdjacencyMatrix{T}(; n::Int64, random_g::Bool=true) where T
-        return random_g ? new(abs.(rand(T, n, n)), n) : new(zeros(T, n, n), n)
+    function WeightedAdjacencyMatrix{T}(; n::Int64, random::Bool=true) where T
+        return random ? new(abs.(rand(T, n, n)), n) : new(zeros(T, n, n), n)
     end
 end
 
@@ -95,11 +95,11 @@ function relate!(g::AdjacencyList, v1::Int64, v2::Int64)
     push!(g.relation[v1], v2)
 end
 
-function Graph(n::Int64; representation, random_g::Bool=true, T=Float64)
-    (representation == AdjacencyMatrix) &&
+function Graph(n::Int64, representation::Symbol; random::Bool=true, T=Float64)
+    (representation == :matrix) &&
         (return AdjacencyMatrix(n))
-    (representation == AdjacencyList) &&
+    (representation == :list) &&
         (return AdjacencyList(n))
-    (representation == WeightedAdjacencyMatrix) &&
-        (return WeightedAdjacencyMatrix{T}(n=n, random_g=random_g))
+    (representation == :w_matrix) &&
+        (return WeightedAdjacencyMatrix{T}(n=n, random=random))
 end
