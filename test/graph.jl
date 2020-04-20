@@ -117,9 +117,9 @@ const DS = DataStructure101
         DS.relate!(g, 6, 1, 1.0)
 
         @test DS.nv(g) == 10
-        @test DS.ne(g) == 18
-        @test DS.degree(g, 8) == 3
-        @test DS.degree(g, 6) == 2
+        @test DS.ne(g) == 9
+        @test DS.degree(g, 8) == 17
+        @test DS.degree(g, 6) == 7
 
         @test DS.neighbor(g, 10) == [9, 8]
 
@@ -130,6 +130,9 @@ const DS = DataStructure101
             "9[10(9.0), 7(7.0), 6(6.0), ], 10[9(9.0), 8(8.0), ], )"
 
         DS.unrelate!(g, 6, 1)
+        @test DS.ne(g) == 8
+        @test DS.degree(g, 1) == 0
+        @test DS.degree(g, 6) == 6
         @test repr(g) == "WeightedAdjacencyList{Float64}(" *
             "1[], 2[7(2.0), ], 3[7(3.0), ], 4[8(4.0), ], " *
             "5[8(5.0), ], 6[9(6.0), ], " *

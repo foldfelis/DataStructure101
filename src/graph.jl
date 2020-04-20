@@ -17,7 +17,7 @@ mutable struct WeightedDiAdjacencyMatrix{T <: Number} <: AbstractGraph
     relation::Array{T}
     n_vertices::Int64
 
-    function WeightedDiAdjacencyMatrix{T}(; n::Int64, random::Bool=true) where T
+    function WeightedDiAdjacencyMatrix{T}(n::Int64; random::Bool=true) where T
         return random ? new(abs.(rand(T, n, n)), n) : new(zeros(T, n, n), n)
     end
 end
@@ -89,32 +89,15 @@ end
 
 const AdjacencyListLike = Union{DiAdjacencyList, WeightedAdjacencyList}
 
-function Base.getindex(
-    g::AdjacencyListLike,
-    i::Int64
-)
-    return 0 < i < g.n_vertices ? i : -1
-end
+Base.getindex(g::AdjacencyListLike, i::Int64) = 0 < i < g.n_vertices ? i : -1
 
 nv(g::AdjacencyListLike) = g.n_vertices
 
-function ne(g::AdjacencyListLike)
-    return sum([length(g.relation[v]) for v in 1:(g.n_vertices)])
-end
+neighbor(g::AdjacencyListLike, v::Int64) = g.relation[v]
 
-function neighbor(
-    g::AdjacencyListLike,
-    v::Int64
-)
-    return g.relation[v]
-end
+ne(g::DiAdjacencyList) = sum([length(g.relation[v]) for v in 1:(g.n_vertices)])
 
-function degree(
-    g::AdjacencyListLike,
-    v::Int64
-)
-    return length(g.relation[v])
-end
+degree(g::DiAdjacencyList, v::Int64) = length(g.relation[v])
 
 function Base.show(io::IO, g::DiAdjacencyList)
     print(io, "DiAdjacencyList(")
@@ -131,8 +114,12 @@ end
 relate!(g::DiAdjacencyList, v1::Int64, v2::Int64) = push!(g.relation[v1], v2)
 
 function unrelate!(g::DiAdjacencyList, v1::Int64, v2::Int64)
-    deleteat!(g.relation[v1], findall(x->x==v2, g.relation[v1]))
+    deleteat!(g.relation[v1], findall(x -> x == v2, g.relation[v1]))
 end
+
+ne(g::WeightedAdjacencyList) = sum([length(g.relation[v]) for v in 1:(g.n_vertices)])/2
+
+degree(g::WeightedAdjacencyList, v::Int64) = sum(g.weight[v])
 
 function Base.show(io::IO, g::WeightedAdjacencyList{T}) where T
     print(io, "WeightedAdjacencyList{$T}(")
@@ -146,23 +133,14 @@ function Base.show(io::IO, g::WeightedAdjacencyList{T}) where T
     print(io, ")")
 end
 
-function relate!(
-    g::WeightedAdjacencyList{T},
-    v1::Int64,
-    v2::Int64,
-    w::T
-) where T
+function relate!(g::WeightedAdjacencyList{T}, v1::Int64, v2::Int64, w::T) where T
     push!(g.relation[v1], v2)
     push!(g.relation[v2], v1)
     push!(g.weight[v1], w)
     push!(g.weight[v2], w)
 end
 
-function unrelate!(
-    g::WeightedAdjacencyList{T},
-    v1::Int64,
-    v2::Int64,
-) where T
+function unrelate!(g::WeightedAdjacencyList{T}, v1::Int64, v2::Int64) where T
     indexes = findall(x->x==v2, g.relation[v1])
     deleteat!(g.relation[v1], indexes)
     deleteat!(g.weight[v1], indexes)
@@ -177,7 +155,7 @@ function Graph(n::Int64, representation::Symbol; random::Bool=true, T=Float64)
     elseif representation == :di_list
         return DiAdjacencyList(n)
     elseif representation == :w_di_matrix
-        return WeightedDiAdjacencyMatrix{T}(n=n, random=random)
+        return WeightedDiAdjacencyMatrix{T}(n, random=random)
     elseif representation == :w_list
         return WeightedAdjacencyList{T}(n)
     end
