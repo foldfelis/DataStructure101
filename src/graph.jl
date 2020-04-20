@@ -17,7 +17,7 @@ mutable struct WeightedDiAdjacencyMatrix{T <: Number} <: AbstractGraph
     relation::Array{T}
     n_vertices::Int64
 
-    function WeightedDiAdjacencyMatrix{T}(n::Int64; random::Bool=true) where T
+    function WeightedDiAdjacencyMatrix{T}(n::Int64; random::Bool=true) where {T <: Number}
         return random ? new(abs.(rand(T, n, n)), n) : new(zeros(T, n, n), n)
     end
 end
@@ -78,7 +78,7 @@ mutable struct WeightedAdjacencyList{T} <: AbstractGraph
     weight::Vector{Vector{T}}
     n_vertices::Int64
 
-    function WeightedAdjacencyList{T}(n::Int64) where T
+    function WeightedAdjacencyList{T}(n::Int64) where {T <: Number}
         return new(
             [Int[] for i=1:n],
             [T[] for i=1:n],
