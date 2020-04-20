@@ -4,17 +4,17 @@ using DataStructure101
 const DS = DataStructure101
 
 @testset "Graph" begin
-    @testset "Adjacency Matrix" begin
+    @testset "Di Adjacency Matrix" begin
         @testset "Basic operate" begin
             n = 10
 
-            g = DS.Graph(n, :matrix)
+            g = DS.Graph(n, :di_matrix)
             row_str = "\t false" ^ n
             data_str = "$row_str\n" ^ n
             @test repr(g) == "Graph(\n$data_str)"
 
             @test g isa DS.AbstractGraph
-            @test g isa DS.AdjacencyMatrix
+            @test g isa DS.DiAdjacencyMatrix
             @test DS.nv(g) == n
             @test DS.ne(g) == 0
 
@@ -22,14 +22,14 @@ const DS = DataStructure101
             @test DS.ne(g) == 1
             @test DS.neighbor(g, 2) == Int[5]
 
-            g = DS.Graph(n, :w_matrix, random=false)
+            g = DS.Graph(n, :w_di_matrix, random=false)
 
             row_str = "\t 0.0" ^ n
             data_str = "$row_str\n" ^ n
             @test repr(g) == "Graph(\n$data_str)"
 
             @test g isa DS.AbstractGraph
-            @test g isa DS.WeightedAdjacencyMatrix
+            @test g isa DS.WeightedDiAdjacencyMatrix
             @test DS.nv(g) == n
             @test DS.ne(g) == 0
 
@@ -44,7 +44,7 @@ const DS = DataStructure101
 
         @testset "Random Walk" begin
             n = 100
-            city = DS.Graph(n, :w_matrix)
+            city = DS.Graph(n, :w_di_matrix)
             p = DS.probability(city)
 
             test_prob = []
@@ -59,10 +59,10 @@ const DS = DataStructure101
 
     end
 
-    @testset "AdjacencyList" begin
-        g = DS.Graph(10, :list)
+    @testset "Di AdjacencyList" begin
+        g = DS.Graph(10, :di_list)
         @test g isa DS.AbstractGraph
-        @test g isa DS.AdjacencyList
+        @test g isa DS.DiAdjacencyList
 
         @test g[8] == 8
         @test g[11] == -1
@@ -86,8 +86,57 @@ const DS = DataStructure101
 
         @test DS.neighbor(g, 10) == [9, 8]
 
-        @test repr(g) == "AdjacencyList(" *
-            "1(Int64[])2(Int64[])3(Int64[])4(Int64[])5(Int64[])" *
-            "6([1])7([3, 2])8([5, 4])9([7, 6])10([9, 8]))"
+        @test repr(g) == "DiAdjacencyList(" *
+            "1[], 2[], 3[], 4[], 5[], " *
+            "6[1, ], 7[3, 2, ], 8[5, 4, ], 9[7, 6, ], 10[9, 8, ], )"
+
+        DS.unrelate!(g, 6, 1)
+        @test repr(g) == "DiAdjacencyList(" *
+            "1[], 2[], 3[], 4[], 5[], " *
+            "6[], 7[3, 2, ], 8[5, 4, ], 9[7, 6, ], 10[9, 8, ], )"
+    end
+
+    @testset "WeightedAdjacencyList" begin
+        g = DS.Graph(10, :w_list)
+        @test g isa DS.WeightedAdjacencyList
+        @test g isa DS.AbstractGraph
+
+        @test g[8] == 8
+        @test g[11] == -1
+
+        DS.relate!(g, 10, 9, 9.0)
+        DS.relate!(g, 10, 8, 8.0)
+
+        DS.relate!(g, 9, 7, 7.0)
+        DS.relate!(g, 9, 6, 6.0)
+        DS.relate!(g, 8, 5, 5.0)
+        DS.relate!(g, 8, 4, 4.0)
+
+        DS.relate!(g, 7, 3, 3.0)
+        DS.relate!(g, 7, 2, 2.0)
+        DS.relate!(g, 6, 1, 1.0)
+
+        @test DS.nv(g) == 10
+        @test DS.ne(g) == 9
+        @test DS.degree(g, 8) == 17
+        @test DS.degree(g, 6) == 7
+
+        @test DS.neighbor(g, 10) == [9, 8]
+
+        @test repr(g) == "WeightedAdjacencyList{Float64}(" *
+            "1[6(1.0), ], 2[7(2.0), ], 3[7(3.0), ], 4[8(4.0), ], " *
+            "5[8(5.0), ], 6[9(6.0), 1(1.0), ], " *
+            "7[9(7.0), 3(3.0), 2(2.0), ], 8[10(8.0), 5(5.0), 4(4.0), ], " *
+            "9[10(9.0), 7(7.0), 6(6.0), ], 10[9(9.0), 8(8.0), ], )"
+
+        DS.unrelate!(g, 6, 1)
+        @test DS.ne(g) == 8
+        @test DS.degree(g, 1) == 0
+        @test DS.degree(g, 6) == 6
+        @test repr(g) == "WeightedAdjacencyList{Float64}(" *
+            "1[], 2[7(2.0), ], 3[7(3.0), ], 4[8(4.0), ], " *
+            "5[8(5.0), ], 6[9(6.0), ], " *
+            "7[9(7.0), 3(3.0), 2(2.0), ], 8[10(8.0), 5(5.0), 4(4.0), ], " *
+            "9[10(9.0), 7(7.0), 6(6.0), ], 10[9(9.0), 8(8.0), ], )"
     end
 end
