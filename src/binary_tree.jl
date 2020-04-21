@@ -4,7 +4,7 @@ export TreeNode, BinaryTree
 export value, parent, left_child, right_child, level
 export root, tree_repr
 
-mutable struct TreeNode{T} <: DS.AbstractNode
+mutable struct TreeNode{T} <: DS.AbstractNode{T}
     value::T
     parent::DS.AbstractNode
     left::DS.AbstractNode
