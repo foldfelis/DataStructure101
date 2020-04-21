@@ -10,8 +10,15 @@ mutable struct TreeNode{T} <: DS.AbstractNode
     left::DS.AbstractNode
     right::DS.AbstractNode
 
-    TreeNode{T}(value::T) where T =new(
-        value,
+    TreeNode{T}(value) where T = new{T}(
+        T(value),
+        DS.NullNode(),
+        DS.NullNode(),
+        DS.NullNode()
+    )
+
+    TreeNode(value::T) where T = new{T}(
+        T(value),
         DS.NullNode(),
         DS.NullNode(),
         DS.NullNode()
