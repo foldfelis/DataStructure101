@@ -38,6 +38,8 @@ end
         @test DS.value(bt[i]) == i
     end
 
+    @test length(bt) == 27
+
     @test DS.parent(bt[100]) isa DS.NullNode
     @test DS.right_child(bt[100]) isa DS.NullNode
     @test DS.left_child(bt[100]) isa DS.NullNode

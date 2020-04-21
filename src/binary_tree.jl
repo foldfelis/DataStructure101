@@ -102,7 +102,11 @@ end
 
 function Base.setindex!(bt::BinaryTree, v::Int64, i::Int64)
     node = TreeNode{Int64}(v)
-    (root(bt) isa DS.NullNode && i == 1) && (bt.root = node; return)
+    if (root(bt) isa DS.NullNode && i == 1)
+        bt.root = node
+        bt.length += 1
+        return
+    end
 
     parent = Base.getindex(bt, div(i, 2))
     is_right = Bool(rem(i, 2))
