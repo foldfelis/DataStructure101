@@ -14,6 +14,7 @@ const DS = DataStructure101
     @test DS.left_child(tn) isa DS.NullNode
     @test DS.right_child(tn) isa DS.NullNode
     @test DS.level(tn) == 0
+    @test eltype(tn) == T_e
 
     @test repr(tn) == "TreeNode{$T_e}(1)"
 end

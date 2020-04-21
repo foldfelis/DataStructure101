@@ -18,7 +18,7 @@ mutable struct TreeNode{T} <: DS.AbstractNode{T}
     )
 
     TreeNode(value::T) where T = new{T}(
-        T(value),
+        value,
         DS.NullNode(),
         DS.NullNode(),
         DS.NullNode()
@@ -32,6 +32,8 @@ parent(tn::TreeNode) = tn.parent
 left_child(tn::TreeNode) = tn.left
 
 right_child(tn::TreeNode) = tn.right
+
+Base.eltype(tn::TreeNode{T}) where T = T
 
 parent(tn::DS.NullNode) = DS.NullNode()
 
