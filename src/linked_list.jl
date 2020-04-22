@@ -1,8 +1,9 @@
 export AbstractNode, NullNode, ListNode, LinkedList
 
-abstract type AbstractNode end
+abstract type AbstractNode{T} end
+const AbstractNullNode = AbstractNode{Any}
 
-struct NullNode <: AbstractNode end
+struct NullNode <: AbstractNullNode end
 
 value(node::NullNode) = nothing
 
@@ -12,7 +13,7 @@ prev(node::NullNode) = NullNode()
 
 Base.show(io::IO, node::NullNode) = nothing
 
-mutable struct ListNode{T} <: AbstractNode
+mutable struct ListNode{T} <: AbstractNode{T}
     data::T
     prev::AbstractNode
     next::AbstractNode

@@ -4,13 +4,20 @@ export TreeNode, BinaryTree
 export value, parent, left_child, right_child, level
 export root, tree_repr
 
-mutable struct TreeNode{T} <: DS.AbstractNode
+mutable struct TreeNode{T} <: DS.AbstractNode{T}
     value::T
     parent::DS.AbstractNode
     left::DS.AbstractNode
     right::DS.AbstractNode
 
-    TreeNode{T}(value::T) where T =new(
+    TreeNode{T}(value) where T = new{T}(
+        T(value),
+        DS.NullNode(),
+        DS.NullNode(),
+        DS.NullNode()
+    )
+
+    TreeNode(value::T) where T = new{T}(
         value,
         DS.NullNode(),
         DS.NullNode(),
@@ -25,6 +32,8 @@ parent(tn::TreeNode) = tn.parent
 left_child(tn::TreeNode) = tn.left
 
 right_child(tn::TreeNode) = tn.right
+
+Base.eltype(tn::TreeNode{T}) where T = T
 
 parent(tn::DS.NullNode) = DS.NullNode()
 

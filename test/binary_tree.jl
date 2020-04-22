@@ -8,11 +8,13 @@ const DS = DataStructure101
     T_e = Int64
     tn = DS.TreeNode{T_e}(1)
 
+    @test DS.TreeNode(1) isa DS.TreeNode{Int64}
     @test DS.value(tn) == 1
     @test DS.parent(tn) isa DS.NullNode
     @test DS.left_child(tn) isa DS.NullNode
     @test DS.right_child(tn) isa DS.NullNode
     @test DS.level(tn) == 0
+    @test eltype(tn) == T_e
 
     @test repr(tn) == "TreeNode{$T_e}(1)"
 end
