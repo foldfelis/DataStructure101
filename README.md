@@ -4,8 +4,6 @@
 [![codecov](https://codecov.io/gh/foldfelis/DataStructure101/branch/master/graph/badge.svg?token=MGL8OHD107)](https://codecov.io/gh/foldfelis/DataStructure101)
 [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/invenia/BlueStyle)
 
-###### tags: `DataStructure101`
-
 This repository is not just an implement yet a learning process to fully understand the data structures.
 
 In this reop, I implement some common and useful data structures. Do not expect the implementations to be perfect, but do expect to see code written in haste.
