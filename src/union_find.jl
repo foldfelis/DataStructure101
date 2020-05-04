@@ -16,6 +16,7 @@ function find(set::DisjointSet, element::Int64)
 end
 
 function Base.union!(set::DisjointSet, a::Int64, b::Int64)
-    root = find(set, a)
-    set.parent[b] = root
+    root1 = find(set, a)
+    root2 = find(set, b)
+    set.parent[root2] = root1
 end
